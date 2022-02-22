@@ -3,11 +3,15 @@ import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/actions/login";
 import {app} from "../../utils/firebase";
+import {useHistory, useLocation} from "react-router-dom";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch()
+    const location = useLocation()
+    const history = useHistory()
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!email || email === '') {
@@ -24,6 +28,12 @@ const LoginAndRegisterForm = (prop) => {
             return
         }
         dispatch(login(email,password,prop.islogin));
+        const { state } = location
+        if(!state){
+            history.replace('/')
+        }else {
+            history.replace(state.from)
+        }
 
     }
     return (

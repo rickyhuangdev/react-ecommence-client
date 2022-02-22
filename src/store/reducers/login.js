@@ -6,7 +6,7 @@ export const login = (state = initialState, action) => {
     const {type, payload} = action
     switch (type) {
         case 'login/token':
-            return {...payload}
+            return payload
         default:
             return state
 
