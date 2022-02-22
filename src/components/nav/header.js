@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Menu } from 'antd';
 import {UserOutlined, UserAddOutlined, HomeOutlined, SettingOutlined} from '@ant-design/icons';
+import {Link} from "react-router-dom";
 
 const { SubMenu } = Menu;
 const Header = () => {
@@ -12,18 +13,14 @@ const Header = () => {
         <div>
             <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
                 <Menu.Item key="home" icon={<HomeOutlined />}>
-                   Home
+                   <Link to='/'>Home</Link>
                 </Menu.Item>
                 <Menu.Item key="login" icon={<UserOutlined />} className="float-right">
-                    Login
+                    <Link to='/login'>Login</Link>
                 </Menu.Item>
-                <Menu.Item key="register" icon={<UserAddOutlined />}>
-                   Register
+                <Menu.Item key="register" icon={<UserAddOutlined />} className="float-right">
+                   <Link to="/register">Register</Link>
                 </Menu.Item>
-                <SubMenu key="SubMenu" icon={<SettingOutlined />} title="Register">
-                        <Menu.Item key="setting:1">Option 1</Menu.Item>
-                    <Menu.Item key="setting:2">Option 2</Menu.Item>
-                </SubMenu>
             </Menu>
         </div>
     );
