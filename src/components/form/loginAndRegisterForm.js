@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
-import {createUserWithEmailAndPassword, getAuth,signInWithEmailAndPassword} from "firebase/auth";
-import {setTokenInfo} from "../../utils/storage";
-import {app}from '../../utils/firebase'
+import {useDispatch} from "react-redux";
+import {login} from "../../store/actions/login";
+
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const dispatch = useDispatch()
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!email || email === '') {
@@ -21,95 +22,7 @@ const LoginAndRegisterForm = (prop) => {
             toast.warning("Password should be at least 6 characters")
             return
         }
-        const auth = getAuth();
-        if(prop.islogin !==true){
-            createUserWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    setTokenInfo(userCredential._tokenResponse.refreshToken)
-                    toast.success('Register Successfully!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                    console.log(userCredential)
-                    // ...
-                })
-
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    let message = null
-                    switch (errorCode) {
-                        case 'auth/weak-password':
-                            message = "Password should be at least 6 characters"
-                            break;
-                        case 'auth/email-already-in-use':
-                            message = "This email address is already being used"
-                            break;
-                        default:
-                            message = null;
-                    }
-
-                    toast.error(`${message}`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-
-                    // ..
-                });
-        }else{
-            signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                     setTokenInfo(userCredential._tokenResponse.refreshToken)
-                    toast.success('Login Successfully!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                    // ...
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    let message = null
-                    switch (errorCode) {
-                        case 'auth/wrong-password':
-                            message = "Invalid username or password, Please try again"
-                            break;
-                        case 'auth/user-not-found':
-                            message = "This email address does not exist"
-                            break;
-                        default:
-                            message = null;
-                    }
-                    toast.error(`${message}`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                });
-        }
-
+        dispatch(login(email,password,prop.islogin));
 
     }
     return (
