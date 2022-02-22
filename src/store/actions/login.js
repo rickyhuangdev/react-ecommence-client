@@ -1,17 +1,19 @@
 import {toast} from "react-toastify";
 import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {setTokenInfo} from "../../utils/storage";
-import {app}from '../../utils/firebase'
 
 export const login = (email, password, login = false) => {
     return async dispatch => {
         const auth = getAuth();
+        let tokenInfo = null
         if (!login) {
             createUserWithEmailAndPassword(auth, email, password)
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
-                    setTokenInfo(userCredential._tokenResponse.refreshToken)
+                     tokenInfo = userCredential._tokenResponse.refreshToken
+                 //   setTokenInfo(tokenInfo)
+                    dispatch(saveToken(tokenInfo))
                     toast.success('Register Successfully!', {
                         position: "top-right",
                         autoClose: 5000,
@@ -57,7 +59,9 @@ export const login = (email, password, login = false) => {
                 .then((userCredential) => {
                     // Signed in
                     const user = userCredential.user;
-                    setTokenInfo(userCredential._tokenResponse.refreshToken)
+                    tokenInfo = userCredential._tokenResponse.refreshToken
+                  //  setTokenInfo(tokenInfo)
+                    dispatch(saveToken(tokenInfo))
                     toast.success('Login Successfully!', {
                         position: "top-right",
                         autoClose: 5000,
@@ -95,4 +99,10 @@ export const login = (email, password, login = false) => {
         }
     }
 
+}
+
+export const saveToken = tokenInfo => {
+    return {
+        type: 'login/token', payload: tokenInfo
+    }
 }

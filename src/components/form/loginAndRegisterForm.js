@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/actions/login";
+import {app} from "../../utils/firebase";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
