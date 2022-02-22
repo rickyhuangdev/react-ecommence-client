@@ -1,5 +1,6 @@
-// import './assets/css/bootstrap.min.css';
+
 import 'antd/dist/antd.css'
+// import './assets/css/bootstrap.min.css';
 import {Route, Switch} from "react-router-dom";
 import React, {Fragment} from 'react';
 import Login from "./pages/auth/login";
