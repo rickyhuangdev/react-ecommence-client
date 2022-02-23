@@ -12,7 +12,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 let store = createStore(persistedReducer, {
-    login:[]
+    login:{
+        token:'',
+        userInfo: {}
+    }
     },
     composeWithDevTools(applyMiddleware(thunk)))
 

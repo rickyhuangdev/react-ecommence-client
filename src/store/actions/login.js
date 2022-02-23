@@ -106,3 +106,9 @@ export const saveToken = tokenInfo => {
         type: 'login/token', payload: tokenInfo
     }
 }
+
+export const saveUserInfo = userInfo => {
+    return {
+        type: 'login/info', payload: userInfo
+    }
+}
