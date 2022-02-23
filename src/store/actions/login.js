@@ -63,7 +63,8 @@ export const login = (email, password, login = false) => {
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveUserInfo({
                         email: user.email,
-                        token: idTokenResult.token
+                        token: idTokenResult.token,
+                        name:user.displayName??user.email
                     }))
                     toast.success('Login Successfully!', {
                         position: "top-right",
