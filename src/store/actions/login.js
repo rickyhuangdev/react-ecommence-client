@@ -1,10 +1,12 @@
 import {toast} from "react-toastify";
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,signOut} from "firebase/auth";
+import {auth} from "../../utils/firebase";
+
 
 export const login = (email, password, login = false) => {
 
     return async dispatch => {
-        const auth = getAuth();
+        let auth = getAuth();
         let tokenInfo = null
         if (!login) {
             createUserWithEmailAndPassword(auth, email, password)
@@ -111,4 +113,9 @@ export const saveUserInfo = userInfo => {
     return {
         type: 'login/info', payload: userInfo
     }
+}
+export const logout = async ()  => {
+    let auth = getAuth();
+ const result =  await auth.signOut()
+    console.log(result)
 }
