@@ -38,7 +38,7 @@ const LoginAndRegisterForm = (prop) => {
 
     }
     return (
-        <form className='mt-5' onSubmit={handleSubmit}>
+        <form className='mt-5'>
             <h1>{ prop.islogin}</h1>
             <div className="form-group">
                 <label htmlFor="exampleInputEmail1">Email address</label>
@@ -51,7 +51,7 @@ const LoginAndRegisterForm = (prop) => {
                        onChange={(event => setPassword(event.target.value))}/>
             </div>
             {/*<button type="submit" className="btn btn-success">Submit</button>*/}
-            <Button type="primary" ghost disabled={!email || password.length < 6}>
+            <Button type="primary" ghost disabled={!email || password.length < 6} onClick={handleSubmit}>
                 {prop.islogin?<MailOutlined />:''}   {prop.loginText}
             </Button>
         </form>

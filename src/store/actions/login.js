@@ -1,6 +1,5 @@
 import {toast} from "react-toastify";
-import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword,signOut} from "firebase/auth";
-import {auth} from "../../utils/firebase";
+import {createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword} from "firebase/auth";
 
 
 export const login = (email, password, login = false) => {
@@ -58,12 +57,14 @@ export const login = (email, password, login = false) => {
                 });
         } else {
             signInWithEmailAndPassword(auth, email, password)
-                .then((userCredential) => {
+                .then(async (userCredential) => {
                     // Signed in
                     const user = userCredential.user;
-                    tokenInfo = userCredential._tokenResponse.refreshToken
-                  //  setTokenInfo(tokenInfo)
-                    dispatch(saveToken(tokenInfo))
+                    const idTokenResult = await user.getIdTokenResult()
+                    dispatch(saveUserInfo({
+                        email: user.email,
+                        token: idTokenResult.token
+                    }))
                     toast.success('Login Successfully!', {
                         position: "top-right",
                         autoClose: 5000,
@@ -73,7 +74,7 @@ export const login = (email, password, login = false) => {
                         draggable: true,
                         progress: undefined,
                     });
-                    // ...
+
                 })
                 .catch((error) => {
                     const errorCode = error.code;

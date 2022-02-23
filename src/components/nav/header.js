@@ -18,7 +18,6 @@ const Header = () => {
     const [current, setCurrent] = useState('home')
     const history = useHistory()
     useEffect(() => {
-        console.log(history)
       setUser(userInfo)
     }, [])
     const handleClick = (e) => {
