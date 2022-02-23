@@ -6,7 +6,7 @@ const Login = () => {
             <div className="row d-flex align-items-center" style={{minHeight:'65vh'}}>
                 <div className="col col-md-6 offset-md-3 mx-auto">
                     <h4>Login</h4>
-                    <LoginAndRegisterForm islogin={true} />
+                    <LoginAndRegisterForm islogin={true} loginText="Login with Email/Password" />
                 </div>
             </div>
         </div>

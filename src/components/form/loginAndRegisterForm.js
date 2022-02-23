@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {login} from "../../store/actions/login";
-import {app} from "../../utils/firebase";
 import {useHistory, useLocation} from "react-router-dom";
+import {Button} from "antd";
+import {MailOutlined} from "@ant-design/icons";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -49,7 +50,10 @@ const LoginAndRegisterForm = (prop) => {
                 <input type="password" className="form-control" id="exampleInputPassword1"
                        onChange={(event => setPassword(event.target.value))}/>
             </div>
-            <button type="submit" className="btn btn-success">Submit</button>
+            {/*<button type="submit" className="btn btn-success">Submit</button>*/}
+            <Button type="primary" ghost disabled={!email || password.length < 6}>
+                {prop.islogin?<MailOutlined />:''}   {prop.loginText}
+            </Button>
         </form>
     );
 };
