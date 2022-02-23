@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {createOrUpdateUser, saveToken, saveUserInfo} from "../../store/actions/login";
+import {saveToken} from "../../store/actions/login";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
@@ -13,7 +13,7 @@ import {
     signInWithPopup
 } from "firebase/auth";
 import {setTokenInfo} from "../../utils/storage";
-import {setUser} from "../../store/actions/profile";
+import {createOrUpdateUser} from "../../store/actions/profile";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -51,13 +51,9 @@ const LoginAndRegisterForm = (prop) => {
                     const user = userCredential.user;
                     tokenInfo = userCredential._tokenResponse.refreshToken
                     const idTokenResult = await user.getIdTokenResult()
-                    dispatch(saveUserInfo({
-                        email: user.email,
-                        token: idTokenResult.token,
-                        name: user.displayName ?? user.email
-                    }))
                     dispatch(saveToken(idTokenResult.token))
-                    setTokenInfo(idTokenResult.token)
+                    await setTokenInfo(idTokenResult.token)
+                    await dispatch(createOrUpdateUser())
                     history.push('/')
                     toast.success('Register Successfully!', {
                         position: "top-right",
@@ -87,15 +83,7 @@ const LoginAndRegisterForm = (prop) => {
                             message = null;
                     }
                     setSendingData(false)
-                    toast.error(`${message}`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    toast.error(`${message}`);
 
                     // ..
                 });
@@ -108,21 +96,9 @@ const LoginAndRegisterForm = (prop) => {
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    setTokenInfo(idTokenResult.token)
-                    dispatch(saveUserInfo({
-                        email: user.email,
-                        token: idTokenResult.token,
-                        name: user.displayName ?? user.email
-                    }))
-                    toast.success('Login Successfully!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    await setTokenInfo(idTokenResult.token)
+                    await dispatch(createOrUpdateUser())
+                    toast.success('Login Successfully!');
                     history.push('/')
                 })
                 .catch((error) => {
@@ -139,15 +115,7 @@ const LoginAndRegisterForm = (prop) => {
                             message = null;
                     }
                     setSendingData(false)
-                    toast.error(`${message}`, {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
+                    toast.error(`${message}`);
                 });
         }
 }
@@ -163,11 +131,9 @@ const LoginAndRegisterForm = (prop) => {
                 // The signed-in user info.
                 const user = result.user;
                 const idTokenResult = await user.getIdTokenResult()
-                dispatch(saveUserInfo({
-                    email: user.email,
-                    token: idTokenResult.token,
-                    name: user.displayName ?? user.email
-                }))
+                dispatch(saveToken(idTokenResult.token))
+                await setTokenInfo(idTokenResult.token)
+                await dispatch(createOrUpdateUser())
                 toast.success("Login Successfully")
                 const {state} = location
                 if (!state) {

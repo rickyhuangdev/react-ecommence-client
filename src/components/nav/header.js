@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Menu} from 'antd';
 import {HomeOutlined, LogoutOutlined, ProfileOutlined, UserAddOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from "react-router-dom";
@@ -10,7 +10,7 @@ import {logout} from "../../store/actions/login";
 
 const {SubMenu} = Menu;
 const Header = () => {
-    const {user} = useSelector(state => state.profile)
+    const user = useSelector(state => state.profile.user)
     const [current, setCurrent] = useState('home')
     const dispatch = useDispatch()
     const history = useHistory()
@@ -21,7 +21,7 @@ const Header = () => {
         const auth = getAuth();
         signOut(auth).then(async () => {
             dispatch(logout())
-            toast.success("SignOut Successfully")
+            toast.info("SignOut Successfully")
             history.push('/login')
         }).catch((error) => {
             // An error happened.
@@ -44,7 +44,7 @@ const Header = () => {
                     </Menu.Item>
                 )}
                 {user.email && (
-                    <SubMenu key="SubMenu" title={`Hello, ${user.name}`} style={{marginLeft: 'auto'}}>
+                    <SubMenu key="SubMenu" title={`Hello, ${user.name ?? user.email}`} style={{marginLeft: 'auto'}}>
                         <Menu.Item key="setting:3" icon={<ProfileOutlined/>}>My Profile</Menu.Item>
                         <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>

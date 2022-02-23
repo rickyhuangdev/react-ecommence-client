@@ -23,9 +23,8 @@ instance.interceptors.request.use(config => {
     // 2. 判断是否有token
 
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.Authorization = token
     }
-    console.log(config)
     return config;
 }, error => {
     return Promise.reject(error)

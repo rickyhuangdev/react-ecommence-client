@@ -27,7 +27,7 @@ function App(props) {
                 }))
             }
         });
-    }, [])
+    }, [dispatch])
     return (
 
         <Fragment>

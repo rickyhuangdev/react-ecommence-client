@@ -12,11 +12,6 @@ export const saveToken = tokenInfo => {
     }
 }
 
-export const saveUserInfo = userInfo => {
-    return {
-        type: 'login/info', payload: userInfo
-    }
-}
 export const clearToken = () => {
     return {
         type: 'login/clear'
@@ -31,8 +26,4 @@ export const logout = () => {
     }
 }
 
-export const createOrUpdateUser = () => {
-    return async dispatch => {
-        const res = await request('/create-or-update-user')
-    }
-}
+
