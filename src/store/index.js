@@ -1,22 +1,14 @@
 import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
-import {persistReducer, persistStore} from 'redux-persist'
-import storage from 'redux-persist/lib/storage'
 import thunk from "redux-thunk";
 import rootReducer from "./reducers";
+import {getTokenInfo} from "../utils/storage";
 
-const persistConfig = {
-    key: 'root',
-    storage,
-}
-const persistedReducer = persistReducer(persistConfig, rootReducer)
 
-let store = createStore(persistedReducer, {
-    login:{
-        userInfo: {}
-    }
+let store = createStore(rootReducer, {
+    login:getTokenInfo()
     },
     composeWithDevTools(applyMiddleware(thunk)))
 
-export const persistor = persistStore(store)
+
 export default store

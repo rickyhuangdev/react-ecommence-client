@@ -1,11 +1,11 @@
 // 用户 Token 的本地缓存键名
-const TOKEN_KEY = 'auth_token'
+const TOKEN_KEY = 'persist:root'
 
 /**
  * 从本地缓存中获取 Token 信息
  */
 export const getTokenInfo = () => {
-    return JSON.parse(localStorage.getItem(TOKEN_KEY)) || {}
+    return JSON.parse(localStorage.getItem(TOKEN_KEY)) || []
 }
 
 /**

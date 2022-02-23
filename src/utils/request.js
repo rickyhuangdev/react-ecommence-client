@@ -4,8 +4,8 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {useSelector} from "react-redux";
 import {useLocation} from "react-router-dom";
+import {getTokenInfo} from "./storage";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -19,14 +19,15 @@ instance.interceptors.request.use(config => {
     // 进行请求配置的修改
     // 如果本地又token就在头部携带
     // 1. 获取用户信息对象
-    const userInfo = useSelector(state => state.login.userInfo)
+    const token = getTokenInfo().token || ''
     // 2. 判断是否有token
-    if (userInfo && userInfo.token) {
-        config.headers.Authorizaion = `Bearer ${userInfo.token}`
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`
     }
+
     return config;
 }, error => {
-    return Promise.reject(err)
+    return Promise.reject(error)
 })
 
 instance.interceptors.response.use(res => res.data, error => {
@@ -43,7 +44,7 @@ instance.interceptors.response.use(res => res.data, error => {
 })
 
 // 请求工具函数
-export default (url, method, submitData) => {
+export default (url, method = 'get', submitData) => {
     // 负责发请求：请求地址，请求方式，提交的数据
     return instance({
         url,

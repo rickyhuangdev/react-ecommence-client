@@ -5,22 +5,22 @@ import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth, signOut} from "firebase/auth";
 import {toast} from "react-toastify";
-import {logoutUser} from "../../store/actions/login";
+import {logout} from "../../store/actions/login";
 
 
 const {SubMenu} = Menu;
 const Header = () => {
-    const userInfo = useSelector(state => state.login.userInfo)
+    const token = useSelector(state => state.login)
     const [current, setCurrent] = useState('home')
     const dispatch = useDispatch()
     const history = useHistory()
     const handleClick = (e) => {
         setCurrent(e.key)
     }
-    const logout = () => {
+    const onLogout = () => {
         const auth = getAuth();
         signOut(auth).then(async () => {
-             dispatch(logoutUser())
+            dispatch(logout())
             toast.success("SignOut Successfully")
             history.push('/login')
         }).catch((error) => {
@@ -33,24 +33,22 @@ const Header = () => {
                 <Menu.Item key="home" icon={<HomeOutlined/>}>
                     <Link to='/'>Home</Link>
                 </Menu.Item>
-                {!userInfo &&(
+                {!token && (
                     <Menu.Item key="login" icon={<UserOutlined/>} style={{marginLeft: 'auto'}}>
                         <Link to='/login'>Login</Link>
                     </Menu.Item>
                 )}
-                {!userInfo &&(
+                {!token && (
                     <Menu.Item key="register" icon={<UserAddOutlined/>} className="float-right">
                         <Link to="/register">Register</Link>
                     </Menu.Item>
                 )}
-                {userInfo && (
-                    <SubMenu key="SubMenu" title={`Hello, ${userInfo.email}`} style={{marginLeft: 'auto'}}>
+                {token && (
+                    <SubMenu key="SubMenu" title={`Hello,`} style={{marginLeft: 'auto'}}>
                         <Menu.Item key="setting:3" icon={<ProfileOutlined/>}>My Profile</Menu.Item>
-                        <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={logout}>Logout</Menu.Item>
+                        <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>
                 )}
-
-
 
 
             </Menu>

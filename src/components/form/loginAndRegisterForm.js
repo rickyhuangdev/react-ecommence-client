@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {saveUserInfo} from "../../store/actions/login";
+import {createOrUpdateUser, saveToken, saveUserInfo} from "../../store/actions/login";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
@@ -12,6 +12,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from "firebase/auth";
+import {setTokenInfo} from "../../utils/storage";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -97,16 +98,14 @@ const LoginAndRegisterForm = (prop) => {
                 });
 
         } else {
-            signInWithEmailAndPassword(auth, email, password)
+
+            await signInWithEmailAndPassword(auth, email, password)
                 .then(async (userCredential) => {
                     // Signed in
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
-                    dispatch(saveUserInfo({
-                        email: user.email,
-                        token: idTokenResult.token,
-                        name: user.displayName ?? user.email
-                    }))
+                    dispatch(saveToken(idTokenResult.token))
+                    setTokenInfo(idTokenResult.token)
                     toast.success('Login Successfully!', {
                         position: "top-right",
                         autoClose: 5000,
