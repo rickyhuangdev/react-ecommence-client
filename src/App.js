@@ -1,5 +1,5 @@
 import 'antd/dist/antd.css'
-import './assets/css/bootstrap.min.css';
+import 'daemonite-material/css/material.min.css'
 import {Route, Switch} from "react-router-dom";
 import React, {Fragment, useEffect} from 'react';
 import {ToastContainer} from 'react-toastify';
@@ -11,6 +11,7 @@ import Header from "./components/nav/header";
 import {auth} from "./utils/firebase";
 import {useDispatch} from "react-redux";
 import {saveUserInfo} from "./store/actions/login";
+import ForgetPassword from "./pages/auth/forgetPassword";
 
 function App(props) {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function App(props) {
                 <Route path='/' component={Home} exact/>
                 <Route path='/login' component={Login}/>
                 <Route path='/register' component={Register}/>
+                <Route path='/resetPassword' component={ForgetPassword}/>
             </Switch>
       </Fragment>
 

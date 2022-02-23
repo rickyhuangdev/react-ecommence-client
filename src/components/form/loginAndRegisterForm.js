@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
 import {login, saveToken, saveUserInfo} from "../../store/actions/login";
-import {useHistory, useLocation} from "react-router-dom";
+import {Link, useHistory, useLocation} from "react-router-dom";
 import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
 import {
@@ -198,6 +198,9 @@ const LoginAndRegisterForm = (prop) => {
             <Button type="primary" danger onClick={handleGoogleLogin} block className="mt-3">
                 {prop.islogin ? <GoogleOutlined/> : ''} Login With Google
             </Button>
+            <div className="mt-3" style={{color:'red'}}>
+                <Link to="/resetPassword">Forgot Password ?</Link>
+            </div>
         </form>
     );
 };

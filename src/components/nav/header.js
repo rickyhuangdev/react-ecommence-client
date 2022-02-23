@@ -7,6 +7,7 @@ import {getAuth, signOut} from "firebase/auth";
 import {toast} from "react-toastify";
 import {logoutUser} from "../../store/actions/login";
 
+
 const {SubMenu} = Menu;
 const Header = () => {
     const userInfo = useSelector(state => state.login.userInfo)
@@ -16,7 +17,6 @@ const Header = () => {
     const history = useHistory()
     useEffect(() => {
         setUser(userInfo)
-        console.log(!userInfo)
     }, [dispatch])
     const handleClick = (e) => {
         setCurrent(e.key)
