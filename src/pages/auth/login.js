@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import LoginAndRegisterForm from "../../components/form/loginAndRegisterForm";
+import {useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
 const Login = () => {
+    const userInfo = useSelector(state => state.login.userInfo)
+    const history = useHistory()
+    useEffect(() => {
+        if(userInfo &&  userInfo.token) history.replace('/')
+    },[userInfo])
     return (
         <div className="container py-5">
             <div className="row d-flex align-items-center" style={{minHeight:'65vh'}}>

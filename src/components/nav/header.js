@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Menu} from 'antd';
 import {HomeOutlined, LogoutOutlined, ProfileOutlined, UserAddOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from "react-router-dom";
@@ -11,13 +11,9 @@ import {logoutUser} from "../../store/actions/login";
 const {SubMenu} = Menu;
 const Header = () => {
     const userInfo = useSelector(state => state.login.userInfo)
-    const [user, setUser] = useState({})
     const [current, setCurrent] = useState('home')
     const dispatch = useDispatch()
     const history = useHistory()
-    useEffect(() => {
-        setUser(userInfo)
-    }, [dispatch])
     const handleClick = (e) => {
         setCurrent(e.key)
     }

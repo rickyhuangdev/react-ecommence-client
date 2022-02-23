@@ -3,12 +3,15 @@ import {toast} from "react-toastify";
 import {auth} from "../../utils/firebase";
 import {sendPasswordResetEmail} from 'firebase/auth'
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const ForgetPassword = ({history}) => {
     let [email, setEmail] = useState('')
     let [loading, setLoading] = useState(false)
+    const userInfo = useSelector(state => state.login.userInfo)
     useEffect(() => {
-    })
+       if(userInfo &&  userInfo.token) history.push('/')
+    },[userInfo])
 
     const resetPasswordHandler = async (e) => {
         e.preventDefault()

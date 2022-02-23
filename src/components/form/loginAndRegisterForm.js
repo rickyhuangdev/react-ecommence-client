@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {login, saveToken, saveUserInfo} from "../../store/actions/login";
+import {saveUserInfo} from "../../store/actions/login";
 import {Link, useHistory, useLocation} from "react-router-dom";
 import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
@@ -16,23 +16,28 @@ import {
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [sendingData, setSendingData] = useState(false)
     const dispatch = useDispatch()
     const location = useLocation()
     const history = useHistory()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setSendingData(true)
         if (!email || email === '') {
             toast.warning("Please fill in the email")
+            setSendingData(false)
             return
         }
         if (!password || password === '') {
             toast.warning("Please fill in the password")
+            setSendingData(false)
             return
 
         }
         if (password.length < 6) {
             toast.warning("Password should be at least 6 characters")
+            setSendingData(false)
             return
         }
         let auth = getAuth();
@@ -77,7 +82,7 @@ const LoginAndRegisterForm = (prop) => {
                         default:
                             message = null;
                     }
-
+                    setSendingData(false)
                     toast.error(`${message}`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -126,6 +131,7 @@ const LoginAndRegisterForm = (prop) => {
                         default:
                             message = null;
                     }
+                    setSendingData(false)
                     toast.error(`${message}`, {
                         position: "top-right",
                         autoClose: 5000,
@@ -191,7 +197,7 @@ const LoginAndRegisterForm = (prop) => {
                        onChange={(event => setPassword(event.target.value))}/>
             </div>
             {/*<button type="submit" className="btn btn-success">Submit</button>*/}
-            <Button type="primary"  disabled={!email || password.length < 6} onClick={handleSubmit} block
+            <Button type="primary" disabled={!email || password.length < 6 || sendingData} onClick={handleSubmit} block
                     className="mt-3">
                 {prop.islogin ? <MailOutlined/> : ''} {prop.loginText}
             </Button>
