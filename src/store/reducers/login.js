@@ -1,16 +1,18 @@
 const initialState = {
-    token: '', refresh_token: '',userInfo:{}
+   userInfo: {}
 }
 
 export const login = (state = initialState, action) => {
     const {type, payload} = action
     switch (type) {
         case 'login/token':
-            return {...state,token: payload}
+            return {...state, token: payload}
         case 'login/info':
-            return {...state,userInfo: payload}
+            return {...state, userInfo: payload}
+        case 'logout':
+            return {...state, userInfo: payload}
         default:
-            return state
+            return state.userInfo = {}
 
     }
 }

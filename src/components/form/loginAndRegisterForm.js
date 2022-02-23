@@ -1,11 +1,17 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {login, saveUserInfo} from "../../store/actions/login";
+import {login, saveToken, saveUserInfo} from "../../store/actions/login";
 import {useHistory, useLocation} from "react-router-dom";
 import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
-import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {
+    createUserWithEmailAndPassword,
+    getAuth,
+    GoogleAuthProvider,
+    signInWithEmailAndPassword,
+    signInWithPopup
+} from "firebase/auth";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -25,19 +31,113 @@ const LoginAndRegisterForm = (prop) => {
             return
 
         }
-        if (password.length < 6 ){
+        if (password.length < 6) {
             toast.warning("Password should be at least 6 characters")
             return
         }
-        dispatch(login(email, password, prop.islogin));
-        const {state} = location
-        if (!state) {
-            history.replace('/')
-        } else {
-            history.replace(state.from)
-        }
+        let auth = getAuth();
+        let tokenInfo = null
+        if (!prop.islogin) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then(async (userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    tokenInfo = userCredential._tokenResponse.refreshToken
+                    const idTokenResult = await user.getIdTokenResult()
+                    dispatch(saveUserInfo({
+                        email: user.email,
+                        token: idTokenResult.token,
+                        name: user.displayName ?? user.email
+                    }))
+                    history.push('/')
+                    toast.success('Register Successfully!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    console.log(userCredential)
+                    // ...
+                })
 
-    }
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    let message = null
+                    switch (errorCode) {
+                        case 'auth/weak-password':
+                            message = "Password should be at least 6 characters"
+                            break;
+                        case 'auth/email-already-in-use':
+                            message = "This email address is already being used"
+                            break;
+                        default:
+                            message = null;
+                    }
+
+                    toast.error(`${message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+
+                    // ..
+                });
+
+        } else {
+            signInWithEmailAndPassword(auth, email, password)
+                .then(async (userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    const idTokenResult = await user.getIdTokenResult()
+                    dispatch(saveUserInfo({
+                        email: user.email,
+                        token: idTokenResult.token,
+                        name: user.displayName ?? user.email
+                    }))
+                    toast.success('Login Successfully!', {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                    history.push('/')
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    let message = null
+                    switch (errorCode) {
+                        case 'auth/wrong-password':
+                            message = "Invalid username or password, Please try again"
+                            break;
+                        case 'auth/user-not-found':
+                            message = "This email address does not exist"
+                            break;
+                        default:
+                            message = null;
+                    }
+                    toast.error(`${message}`, {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    });
+                });
+        }
+}
 
     const handleGoogleLogin = () => {
         const auth = getAuth();
