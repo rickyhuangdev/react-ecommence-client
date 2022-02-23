@@ -10,8 +10,8 @@ import Home from "./pages/home";
 import Header from "./components/nav/header";
 import {auth} from "./utils/firebase";
 import {useDispatch} from "react-redux";
-import {saveUserInfo} from "./store/actions/login";
 import ForgetPassword from "./pages/auth/forgetPassword";
+import {setUser} from "./store/actions/profile";
 
 function App(props) {
     const dispatch = useDispatch();
@@ -20,8 +20,9 @@ function App(props) {
             if (user) {
                 // User is signed in.
                 const idTokenResult = await user.getIdTokenResult()
-                dispatch(saveUserInfo({
+                dispatch(setUser({
                     email: user.email,
+                    name: user.displayName ?? user.email,
                     token: idTokenResult.token
                 }))
             }

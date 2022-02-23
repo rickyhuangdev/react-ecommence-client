@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Menu} from 'antd';
 import {HomeOutlined, LogoutOutlined, ProfileOutlined, UserAddOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from "react-router-dom";
@@ -10,7 +10,7 @@ import {logout} from "../../store/actions/login";
 
 const {SubMenu} = Menu;
 const Header = () => {
-    const token = useSelector(state => state.login)
+    const {user} = useSelector(state => state.profile)
     const [current, setCurrent] = useState('home')
     const dispatch = useDispatch()
     const history = useHistory()
@@ -33,18 +33,18 @@ const Header = () => {
                 <Menu.Item key="home" icon={<HomeOutlined/>}>
                     <Link to='/'>Home</Link>
                 </Menu.Item>
-                {!token && (
+                {!user.email && (
                     <Menu.Item key="login" icon={<UserOutlined/>} style={{marginLeft: 'auto'}}>
                         <Link to='/login'>Login</Link>
                     </Menu.Item>
                 )}
-                {!token && (
+                {!user.email && (
                     <Menu.Item key="register" icon={<UserAddOutlined/>} className="float-right">
                         <Link to="/register">Register</Link>
                     </Menu.Item>
                 )}
-                {token && (
-                    <SubMenu key="SubMenu" title={`Hello,`} style={{marginLeft: 'auto'}}>
+                {user.email && (
+                    <SubMenu key="SubMenu" title={`Hello, ${user.name}`} style={{marginLeft: 'auto'}}>
                         <Menu.Item key="setting:3" icon={<ProfileOutlined/>}>My Profile</Menu.Item>
                         <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>

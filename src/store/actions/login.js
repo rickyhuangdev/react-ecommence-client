@@ -34,6 +34,5 @@ export const logout = () => {
 export const createOrUpdateUser = () => {
     return async dispatch => {
         const res = await request('/create-or-update-user')
-        console.log(res)
     }
 }

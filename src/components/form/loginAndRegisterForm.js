@@ -13,6 +13,7 @@ import {
     signInWithPopup
 } from "firebase/auth";
 import {setTokenInfo} from "../../utils/storage";
+import {setUser} from "../../store/actions/profile";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -55,6 +56,8 @@ const LoginAndRegisterForm = (prop) => {
                         token: idTokenResult.token,
                         name: user.displayName ?? user.email
                     }))
+                    dispatch(saveToken(idTokenResult.token))
+                    setTokenInfo(idTokenResult.token)
                     history.push('/')
                     toast.success('Register Successfully!', {
                         position: "top-right",
@@ -106,6 +109,11 @@ const LoginAndRegisterForm = (prop) => {
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
                     setTokenInfo(idTokenResult.token)
+                    dispatch(saveUserInfo({
+                        email: user.email,
+                        token: idTokenResult.token,
+                        name: user.displayName ?? user.email
+                    }))
                     toast.success('Login Successfully!', {
                         position: "top-right",
                         autoClose: 5000,
