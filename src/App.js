@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {hasToken} from "./utils/storage";
 import {getUserProfile} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
+import UserRoutes from "./components/routes/UserRoutes";
 
 function App(props) {
     const dispatch = useDispatch()
@@ -32,6 +33,7 @@ function App(props) {
                     )
                 }
                 <AuthRoute path="/admin/dashboard" component={Dashboard}></AuthRoute>
+                <UserRoutes exact path="/user/history" ></UserRoutes>
             </Switch>
       </Fragment>
 
