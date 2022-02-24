@@ -6,6 +6,7 @@ import {
     HeartOutlined,
     HomeOutlined,
     LoginOutlined,
+    SettingOutlined,
     ShoppingCartOutlined,
     UserOutlined
 } from "@ant-design/icons";
@@ -27,18 +28,20 @@ const UserNav = () => {
                             </div>
                         </div>
                     </li>
-                    <li className="list-group-item"><Link to="/user/payment"><ShoppingCartOutlined className="mr-2"/>My
+                    <li className="list-group-item"><Link to="/user/order"><ShoppingCartOutlined className="mr-2"/>My
                         Order</Link></li>
-                    <li className="list-group-item"><Link to="/user/payment"><HeartOutlined
+                    <li className="list-group-item"><Link to="/user/wishlist"><HeartOutlined
                         className="mr-2"/>Wishlist</Link>
                     </li>
-                    <li className="list-group-item"><Link to="/user/payment"><UserOutlined className="mr-2"/>Profile
+                    <li className="list-group-item"><Link to="/user/profile"><UserOutlined className="mr-2"/>Profile
                         Info</Link></li>
-                    <li className="list-group-item"><Link to="/user/payment"><HomeOutlined
+                    <li className="list-group-item"><Link to="/user/address"><HomeOutlined
                         className="mr-2"/>Addresses</Link>
                     </li>
                     <li className="list-group-item"><Link to="/user/payment"><CreditCardOutlined className="mr-2"/>Payment
                         Methode</Link>
+                    </li>
+                    <li className="list-group-item"><Link to="/user/password"><SettingOutlined className="mr-2"/>Password Setting</Link>
                     </li>
                     <li className="list-group-item"><Link to="/user/payment"><LoginOutlined className="mr-2"/>Log
                         Out</Link></li>
