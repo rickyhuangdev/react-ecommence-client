@@ -10,6 +10,7 @@ import {logout} from "../../store/actions/login";
 const {SubMenu} = Menu;
 const Header = () => {
     const user = useSelector(state => state.profile.user)
+
     const dispatch = useDispatch();
     const [current, setCurrent] = useState('home')
     const history = useHistory()
@@ -44,7 +45,8 @@ const Header = () => {
                 {user && (
                     <SubMenu key="SubMenu" title={`Hello, ${user.name ?? user.email}`}
                              style={{marginLeft: 'auto'}}>
-                        <Menu.Item key="setting:3" icon={<ProfileOutlined/>}> <Link to="/user">My Profile</Link></Menu.Item>
+                        <Menu.Item key="setting:3" icon={<ProfileOutlined/>}> <Link
+                            to={user.role === 'admin' ? '/admin/dashboard' : '/user'}>My Profile</Link></Menu.Item>
                         <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>
                 )}
