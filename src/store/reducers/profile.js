@@ -11,6 +11,8 @@ export const profile = (state = initialSate, action) => {
                 ...state,
                 user: {...payload}
             }
+        case 'profile/clear':
+            return {}
 
         // 默认
         default:

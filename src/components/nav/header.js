@@ -1,22 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Menu} from 'antd';
 import {HomeOutlined, LogoutOutlined, ProfileOutlined, UserAddOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getAuth, signOut} from "firebase/auth";
-import {toast} from "react-toastify";
 import {logout} from "../../store/actions/login";
 
 
 const {SubMenu} = Menu;
 const Header = () => {
-    const profile = useSelector(state => state.profile.user)
-    const [user, setUser] = useState({})
-    useEffect(() => {
-        setUser(profile)
-    }, [profile])
+    const user = useSelector(state => state.profile.user)
+    const dispatch = useDispatch();
     const [current, setCurrent] = useState('home')
-    const dispatch = useDispatch()
     const history = useHistory()
     const handleClick = (e) => {
         setCurrent(e.key)
@@ -24,8 +19,7 @@ const Header = () => {
     const onLogout = () => {
         const auth = getAuth();
         signOut(auth).then(async () => {
-            dispatch(logout())
-            toast.info("SignOut Successfully")
+            await dispatch(logout())
             history.push('/login')
         }).catch((error) => {
             // An error happened.
@@ -48,7 +42,8 @@ const Header = () => {
                     </Menu.Item>
                 )}
                 {user && (
-                    <SubMenu key="SubMenu" title={`Hello, ${user.name ?? user.email}`} style={{marginLeft: 'auto'}}>
+                    <SubMenu key="SubMenu" title={`Hello, ${user.name ?? user.email}`}
+                             style={{marginLeft: 'auto'}}>
                         <Menu.Item key="setting:3" icon={<ProfileOutlined/>}>My Profile</Menu.Item>
                         <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>

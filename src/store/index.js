@@ -6,7 +6,8 @@ import {getTokenInfo} from "../utils/storage";
 
 
 let store = createStore(rootReducer, {
-    login:getTokenInfo()
+    login:getTokenInfo(),
+    profile:{}
     },
     composeWithDevTools(applyMiddleware(thunk)))
 

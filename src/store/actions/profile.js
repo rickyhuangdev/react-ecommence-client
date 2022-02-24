@@ -6,6 +6,11 @@ export const setUser = user => {
         payload: user
     }
 }
+export const clearUserProfile = () => {
+    return {
+        type: 'profile/clear',
+    }
+}
 
 export const createOrUpdateUser = () => {
     return async dispatch => {
@@ -19,8 +24,10 @@ export const createOrUpdateUser = () => {
     }
 }
 
-export const getUserProfile =  ()=>{
-    return async dispatch =>{
+export const getUserProfile = () => {
+    return async (dispatch, getState) => {
+        const token = getState().login
+        if (token.length === 0) return;
         const res = await request('/user/current-user', 'post')
         dispatch(setUser({
             email: res.email,
