@@ -5,7 +5,7 @@ const TOKEN_KEY = 'persist:root'
  * 从本地缓存中获取 Token 信息
  */
 export const getTokenInfo = () => {
-    return JSON.parse(localStorage.getItem(TOKEN_KEY)) || {}
+    return JSON.parse(JSON.parse(localStorage.getItem(TOKEN_KEY)).login).token
 }
 
 /**
@@ -13,7 +13,7 @@ export const getTokenInfo = () => {
  * @param {Object} tokenInfo 从后端获取到的 Token 信息
  */
 export const setTokenInfo = tokenInfo => {
-    localStorage.setItem(TOKEN_KEY, JSON.stringify(tokenInfo))
+    localStorage.setItem(TOKEN_KEY.login, JSON.stringify(tokenInfo))
 }
 
 /**
@@ -27,5 +27,5 @@ export const removeTokenInfo = () => {
  * 判断本地缓存中是否存在 Token 信息
  */
 export const hasToken = () => {
-    return !!getTokenInfo().token
+    return !!getTokenInfo()
 }

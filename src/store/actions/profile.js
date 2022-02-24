@@ -1,4 +1,3 @@
-import request from "../../utils/request";
 import {createOrUpdateUserApi, getUserProfileApi} from "../../api/user";
 
 export const setUser = user => {
@@ -13,23 +12,22 @@ export const clearUserProfile = () => {
     }
 }
 
-export const createOrUpdateUser = (token) => {
-    return async dispatch => {
+export const createOrUpdateUser = () => {
+    return async (dispatch, getState) => {
         const res = await createOrUpdateUserApi()
         dispatch(setUser({
             email: res.email,
             user_id: res._id,
             name: res.name,
             role: res.role,
-            token:token
+            image: res.picture,
+            token: getState().login.token
         }))
     }
 }
 
 export const getUserProfile = () => {
     return async (dispatch, getState) => {
-        const token = getState().login
-        if (token.length === 0) return;
         const res = await getUserProfileApi()
         dispatch(setUser({
             email: res.email,
@@ -37,7 +35,7 @@ export const getUserProfile = () => {
             name: res.name,
             role: res.role,
             image:res.picture,
-            token
+            token: getState().login.token
         }))
     }
 }

@@ -1,11 +1,6 @@
 import {removeTokenInfo} from "../../utils/storage";
 import {clearUserProfile} from "./profile";
 
-export const login = (email, password, login = false) => {
-    return async dispatch => {
-    }
-}
-
 export const saveToken = tokenInfo => {
     return {
         type: 'login/token', payload: tokenInfo

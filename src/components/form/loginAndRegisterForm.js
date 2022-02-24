@@ -12,8 +12,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from "firebase/auth";
-import {setTokenInfo} from "../../utils/storage";
-import {createOrUpdateUser} from "../../store/actions/profile";
+import {setUser} from "../../store/actions/profile";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -51,8 +50,12 @@ const LoginAndRegisterForm = (prop) => {
                     tokenInfo = userCredential._tokenResponse.refreshToken
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    await setTokenInfo({token: idTokenResult.token})
-                    await dispatch(createOrUpdateUser(idTokenResult.token))
+                    dispatch(setUser({
+                        email: user.email,
+                        name: user.displayName,
+                        image: user.photoURL,
+                        token: idTokenResult.token
+                    }))
                     history.push('/')
                     toast.success('Register Successfully!');
 
@@ -86,21 +89,26 @@ const LoginAndRegisterForm = (prop) => {
                     // Signed in
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
-                    console.log(userCredential)
                     dispatch(saveToken(idTokenResult.token))
-                    await setTokenInfo({token: idTokenResult.token})
-                    await dispatch(createOrUpdateUser(idTokenResult.token))
+                    dispatch(setUser({
+                        email: user.email,
+                        name: user.displayName,
+                        image: user.photoURL,
+                        token: idTokenResult.token
+                    }))
                     toast.success('Login Successfully!');
-                    const {state} = location
-                    if (!state) {
-                        history.replace('/')
-                    } else {
-                        history.replace(state.from)
-                    }
+                    history.replace('/')
+                    // const {state} = location
+                    // if (!state) {
+                    //     history.replace('/')
+                    // } else {
+                    //     history.replace(state.from)
+                    // }
                 })
                 .catch((error) => {
                     const errorCode = error.code;
                     let message = null
+                    console.log(error)
                     switch (errorCode) {
                         case 'auth/wrong-password':
                             message = "Invalid username or password, Please try again"
@@ -129,8 +137,12 @@ const LoginAndRegisterForm = (prop) => {
                 const user = result.user;
                 const idTokenResult = await user.getIdTokenResult()
                 dispatch(saveToken(idTokenResult.token))
-                await setTokenInfo({token: idTokenResult.token})
-                await dispatch(createOrUpdateUser(idTokenResult.token))
+                dispatch(setUser({
+                    email: user.email,
+                    name: user.displayName,
+                    image: user.photoURL,
+                    token: idTokenResult.token
+                }))
                 toast.success("Login Successfully")
                 const {state} = location
                 if (!state) {

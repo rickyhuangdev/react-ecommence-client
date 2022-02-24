@@ -19,7 +19,7 @@ const Header = () => {
     const onLogout = () => {
         const auth = getAuth();
         signOut(auth).then(async () => {
-            await dispatch(logout())
+            dispatch(logout())
             history.push('/login')
         }).catch((error) => {
             // An error happened.

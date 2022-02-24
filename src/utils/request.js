@@ -4,7 +4,6 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {useLocation} from "react-router-dom";
 import {getTokenInfo} from "./storage";
 
 
@@ -19,9 +18,8 @@ instance.interceptors.request.use(config => {
     // 进行请求配置的修改
     // 如果本地又token就在头部携带
     // 1. 获取用户信息对象
-    const token = getTokenInfo().token || ''
+    const token = getTokenInfo()
     // 2. 判断是否有token
-
     if (token) {
         config.headers.Authorization = token
     }
