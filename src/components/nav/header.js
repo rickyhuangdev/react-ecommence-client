@@ -44,7 +44,7 @@ const Header = () => {
                 {user && (
                     <SubMenu key="SubMenu" title={`Hello, ${user.name ?? user.email}`}
                              style={{marginLeft: 'auto'}}>
-                        <Menu.Item key="setting:3" icon={<ProfileOutlined/>}>My Profile</Menu.Item>
+                        <Menu.Item key="setting:3" icon={<ProfileOutlined/>}> <Link to="/user">My Profile</Link></Menu.Item>
                         <Menu.Item key="setting:4" icon={<LogoutOutlined/>} onClick={onLogout}>Logout</Menu.Item>
                     </SubMenu>
                 )}

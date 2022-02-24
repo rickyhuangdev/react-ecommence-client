@@ -1,7 +1,7 @@
 import React from 'react';
 import UserNav from "../../components/nav/UserNav";
 
-const Wishlist = () => {
+const Dashboard = () => {
     return (
         <div className="container py-5">
             <div className="row align-items-start justify-content-between">
@@ -12,7 +12,7 @@ const Wishlist = () => {
                     <div className="container py-5">
                         <div className="row">
                             <div className="col">
-                                <h4>Wishlist</h4>
+                                <h4>Dashboard</h4>
 
                             </div>
                         </div>
@@ -23,4 +23,4 @@ const Wishlist = () => {
     );
 };
 
-export default Wishlist;
+export default Dashboard;

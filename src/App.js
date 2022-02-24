@@ -6,22 +6,20 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "./components/nav/header";
 import AuthRoute from "./components/auth";
-import Dashboard from "./pages/admin/dashboard";
 import {useDispatch} from "react-redux";
 import {hasToken} from "./utils/storage";
 import {getUserProfile} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
-import UserRoutes from "./components/routes/UserRoutes";
-import History from "./pages/user/history";
-import Password from "./pages/user/password";
+import Dashboard from "./pages/user/dashboard";
+import PrivateRoutes from "./routes/privateRoutes";
 
 function App(props) {
     const dispatch = useDispatch()
-    useEffect(()=>{
-        if(hasToken()){
+    useEffect(() => {
+        if (hasToken()) {
             dispatch(getUserProfile())
         }
-    },[dispatch])
+    }, [dispatch])
     return (
 
         <Fragment>
@@ -35,8 +33,12 @@ function App(props) {
                     )
                 }
                 <AuthRoute path="/admin/dashboard" component={Dashboard}></AuthRoute>
-                <UserRoutes exact path="/user/history" component={History} ></UserRoutes>
-                <UserRoutes exact path="/user/password" component={Password} ></UserRoutes>
+                {
+                    PrivateRoutes.map(
+                        ({path, component, ...routes}) =>
+                            <Route key={path} path={path} component={component} {...routes} />
+                    )
+                }
             </Switch>
       </Fragment>
 
