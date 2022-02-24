@@ -38,8 +38,7 @@ instance.interceptors.response.use(res => res.data, error => {
         // 当前路由地址
         // 组件里头：`/user?a=10` $route.path === /user  $route.fullPath === /user?a=10
         // js模块中：router.currentRoute.value.fullPath 就是当前路由地址，router.currentRoute 是ref响应式数据
-        const location = useLocation()
-        const fullPath = encodeURIComponent(location.pathname)
+        const fullPath = encodeURIComponent(window.location.pathname)
     }
 })
 
