@@ -5,7 +5,7 @@ const TOKEN_KEY = 'persist:root'
  * 从本地缓存中获取 Token 信息
  */
 export const getTokenInfo = () => {
-    return JSON.parse(localStorage.getItem(TOKEN_KEY)) || []
+    return JSON.parse(localStorage.getItem(TOKEN_KEY)) || {}
 }
 
 /**

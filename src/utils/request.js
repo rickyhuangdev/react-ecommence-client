@@ -19,7 +19,7 @@ instance.interceptors.request.use(config => {
     // 进行请求配置的修改
     // 如果本地又token就在头部携带
     // 1. 获取用户信息对象
-    const token = getTokenInfo() || ''
+    const token = getTokenInfo().token || ''
     // 2. 判断是否有token
 
     if (token) {
