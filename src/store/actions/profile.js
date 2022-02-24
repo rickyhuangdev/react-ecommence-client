@@ -12,14 +12,15 @@ export const clearUserProfile = () => {
     }
 }
 
-export const createOrUpdateUser = () => {
+export const createOrUpdateUser = (token) => {
     return async dispatch => {
         const res = await request('/user/create-or-update-user', 'post')
         dispatch(setUser({
             email: res.email,
             user_id: res._id,
             name: res.name,
-            role: res.role
+            role: res.role,
+            token:token
         }))
     }
 }
@@ -34,7 +35,8 @@ export const getUserProfile = () => {
             user_id: res._id,
             name: res.name,
             role: res.role,
-            image:res.picture
+            image:res.picture,
+            token
         }))
     }
 }

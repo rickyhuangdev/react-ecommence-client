@@ -14,7 +14,6 @@ import {
 } from "firebase/auth";
 import {setTokenInfo} from "../../utils/storage";
 import {createOrUpdateUser} from "../../store/actions/profile";
-import home from "../../pages/home";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -52,19 +51,11 @@ const LoginAndRegisterForm = (prop) => {
                     tokenInfo = userCredential._tokenResponse.refreshToken
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    await setTokenInfo({token:idTokenResult.token})
-                    await dispatch(createOrUpdateUser())
+                    await setTokenInfo({token: idTokenResult.token})
+                    await dispatch(createOrUpdateUser(idTokenResult.token))
                     history.push('/')
-                    toast.success('Register Successfully!', {
-                        position: "top-right",
-                        autoClose: 5000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    });
-                    console.log(userCredential)
+                    toast.success('Register Successfully!');
+
                     // ...
                 })
 
@@ -95,9 +86,10 @@ const LoginAndRegisterForm = (prop) => {
                     // Signed in
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
+                    console.log(userCredential)
                     dispatch(saveToken(idTokenResult.token))
-                    await setTokenInfo({token:idTokenResult.token})
-                    await dispatch(createOrUpdateUser())
+                    await setTokenInfo({token: idTokenResult.token})
+                    await dispatch(createOrUpdateUser(idTokenResult.token))
                     toast.success('Login Successfully!');
                     const {state} = location
                     if (!state) {
@@ -137,8 +129,8 @@ const LoginAndRegisterForm = (prop) => {
                 const user = result.user;
                 const idTokenResult = await user.getIdTokenResult()
                 dispatch(saveToken(idTokenResult.token))
-                await setTokenInfo({token:idTokenResult.token})
-                await dispatch(createOrUpdateUser())
+                await setTokenInfo({token: idTokenResult.token})
+                await dispatch(createOrUpdateUser(idTokenResult.token))
                 toast.success("Login Successfully")
                 const {state} = location
                 if (!state) {
