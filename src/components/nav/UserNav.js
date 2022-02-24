@@ -11,6 +11,7 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
+import avatar from '../../assets/images/default_user.png'
 
 const UserNav = () => {
     const user = useSelector(state => state.profile.user)
@@ -21,7 +22,7 @@ const UserNav = () => {
                     <li className="list-group-item">
                         <div className="dashboard_author px-2 py-5 text-center">
                             <div className="dash_auth_thumb circle p-1 border d-inline-flex mx-auto mb-2">
-                                <img src={user.image} className="img-fluid circle" width="100" alt={user.name}/>
+                                <img src={user.image??avatar} className="img-fluid circle" width="100" alt={user.name}/>
                             </div>
                             <div className="dash_caption">
                                 <h4 className="fs-md ft-medium mb-0 lh-1">{user.name}</h4>
