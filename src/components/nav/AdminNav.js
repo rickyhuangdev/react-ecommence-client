@@ -28,7 +28,7 @@ const AdminNav = () => {
                     <Link to="/admin/dashboard">Dashboard</Link>
                 </Menu.Item>
                 <SubMenu key="sub2" icon={<AppstoreOutlined/>} title="Category">
-                    <Menu.Item key="5">Category Lists</Menu.Item>
+                    <Menu.Item key="5">  <Link to="/admin/category">Category Lists</Link></Menu.Item>
                     <Menu.Item key="6">Sub Categories</Menu.Item>
                     <SubMenu key="sub3" title="Submenu">
                         <Menu.Item key="7">Option 7</Menu.Item>

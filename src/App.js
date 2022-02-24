@@ -11,8 +11,8 @@ import {hasToken} from "./utils/storage";
 import {createOrUpdateUser} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/privateRoutes";
-import AdminRoutes from "./components/routes/AdminRoutes";
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import AuthRoutes from "./routes/authRoutes";
+
 
 function App(props) {
     const dispatch = useDispatch()
@@ -41,7 +41,13 @@ function App(props) {
                                 <Route key={path} path={path} component={component} {...routes} />
                         )
                     }
-                    <AdminRoutes path='/admin/dashboard' component={AdminDashboard}/>
+                    {
+                        AuthRoutes.map(
+                            ({path, component, ...routes}) =>
+                                <Route key={path} path={path} component={component} {...routes} />
+                        )
+                    }
+
                 </Switch>
             </main>
       </Fragment>
