@@ -12,6 +12,7 @@ import {hasToken} from "./utils/storage";
 import {getUserProfile} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
+import History from "./pages/user/history";
 
 function App(props) {
     const dispatch = useDispatch()
@@ -33,7 +34,7 @@ function App(props) {
                     )
                 }
                 <AuthRoute path="/admin/dashboard" component={Dashboard}></AuthRoute>
-                <UserRoutes exact path="/user/history" ></UserRoutes>
+                <UserRoutes exact path="/user/history" component={History} ></UserRoutes>
             </Switch>
       </Fragment>
 
