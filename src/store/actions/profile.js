@@ -33,7 +33,8 @@ export const getUserProfile = () => {
             email: res.email,
             user_id: res._id,
             name: res.name,
-            role: res.role
+            role: res.role,
+            image:res.picture
         }))
     }
 }

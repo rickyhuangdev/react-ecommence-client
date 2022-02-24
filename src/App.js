@@ -13,6 +13,7 @@ import {getUserProfile} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
 import History from "./pages/user/history";
+import Password from "./pages/user/password";
 
 function App(props) {
     const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function App(props) {
                 }
                 <AuthRoute path="/admin/dashboard" component={Dashboard}></AuthRoute>
                 <UserRoutes exact path="/user/history" component={History} ></UserRoutes>
+                <UserRoutes exact path="/user/password" component={Password} ></UserRoutes>
             </Switch>
       </Fragment>
 
