@@ -6,8 +6,7 @@ import React, {Fragment, useEffect} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "./components/nav/header";
-import {useDispatch} from "react-redux";
-import {hasToken} from "./utils/storage";
+import {useDispatch, useSelector} from "react-redux";
 import {createOrUpdateUser} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/privateRoutes";
@@ -16,11 +15,12 @@ import AuthRoutes from "./routes/authRoutes";
 
 function App(props) {
     const dispatch = useDispatch()
-    // useEffect(() => {
-    //     if (hasToken()) {
-    //         dispatch(createOrUpdateUser())
-    //     }
-    // }, [dispatch])
+    const user = useSelector(state => state.profile.user)
+    useEffect(() => {
+        if (user && user.token) {
+            console.log(user.token)
+        }
+    }, [])
     return (
 
         <Fragment>

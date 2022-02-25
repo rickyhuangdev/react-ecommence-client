@@ -10,7 +10,6 @@ import {logout} from "../../store/actions/login";
 const {SubMenu} = Menu;
 const Header = () => {
     const user = useSelector(state => state.profile.user)
-
     const dispatch = useDispatch();
     const [current, setCurrent] = useState('home')
     const history = useHistory()
