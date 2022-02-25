@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from "react-toastify";
-import {createSubCategoryApi} from "../../../api/subCategory";
+import {createSubCategoryApi, getSubCategoryApi} from "../../../api/subCategory";
 import {getCategoryApi} from "../../../api/category";
 
 const SubCategoryCreate = () => {
@@ -12,7 +12,7 @@ const SubCategoryCreate = () => {
         fetchCategories()
     }, [])
     const fetchCategories = () => {
-        getCategoryApi().then(res => {
+        getSubCategoryApi().then(res => {
             setCategory(res)
         })
     }

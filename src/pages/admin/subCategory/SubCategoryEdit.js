@@ -1,28 +1,39 @@
 import React, {useEffect, useState} from 'react';
 import {toast} from "react-toastify";
-import {readCategoryApi, updateCategoryApi} from "../../../api/category";
+import {getCategoryApi} from "../../../api/category";
 import AdminNav from "../../../components/nav/AdminNav";
 import {useHistory} from "react-router-dom";
+import {readSubCategoryApi, updateSubCategoryApi} from "../../../api/subCategory";
 
 const SubCategoryEdit = ({match}) => {
     const {slug} = match.params
     const [name, setName] = useState('')
     const [state, setState] = useState(1)
+    const [parent_id, setParentId] = useState('')
+    const [category, setCategory] = useState([]);
+    const [parent, setParent] = useState('')
     const history = useHistory()
     useEffect(() => {
-        getCategory()
+        getSubCategory()
+        fetchCategories()
     }, [])
-    const getCategory = () => {
-        readCategoryApi(slug).then(res => {
+    const fetchCategories = () => {
+        getCategoryApi().then(res => {
+            setParent(res)
+        })
+    }
+    const getSubCategory = () => {
+        readSubCategoryApi(slug).then(res => {
             if (res) {
                 setName(res.name)
                 setState(res.state)
+                setParentId(res.parent)
             }
         }).then(error => {
 
         })
     }
-    const editCategoryHandler = async (e) => {
+    const editSubCategoryHandler = async (e) => {
         e.preventDefault()
         if (!name) {
             toast.info("Please enter the category name")
@@ -34,10 +45,10 @@ const SubCategoryEdit = ({match}) => {
         }
 
         try {
-            const res = await updateCategoryApi({name, state, slug})
+            const res = await updateSubCategoryApi({name, state, slug, parent: parent_id})
             if (res) {
                 toast.success(`Update ${name} successfully`)
-                history.replace('/admin/category')
+                history.replace('/admin/subCategory')
             }
 
         } catch (e) {
@@ -54,13 +65,27 @@ const SubCategoryEdit = ({match}) => {
                     <div className="container py-5">
                         <div className="row">
                             <div className="col">
-                                <h4>Create Category</h4>
-                                <form className="mt-4" onSubmit={editCategoryHandler}>
+                                <h4>Edit subCategory</h4>
+                                <form className="mt-4" onSubmit={editSubCategoryHandler}>
                                     <div className="form-group">
                                         <label htmlFor="category_name">Category Name</label>
                                         <input type="text" className="form-control" id="category_name"
                                                onChange={(e) => setName(e.target.value)} value={name}
                                                aria-describedby="category_name" placeholder="Enter Category name"/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="category_name">Parent</label>
+                                        <select className="custom-select" value={parent_id} key={parent_id} required
+                                                onChange={(e) => {
+                                                    setParentId((e.target.value))
+                                                }}>
+                                            {
+                                                parent.length > 0 && parent.map(item => (
+                                                    <option value={item._id} key={item._id}>{item.name}</option>
+                                                ))
+                                            }
+
+                                        </select>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="category_name">Category State</label>

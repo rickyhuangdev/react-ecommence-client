@@ -60,7 +60,7 @@ const CategoryIndex = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Category List</h4>
-                                <div>
+                                <div className="mt-4">
                                     <Table dataSource={category} rowSelection={{
                                         type: selectionType,
                                         ...rowSelection,

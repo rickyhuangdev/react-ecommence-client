@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
 export const getSubCategoryApi = () => {
-    return request('/subCategory', 'get')
+    return request('/subCategories', 'get')
 }
 export const readSubCategoryApi = (slug) => {
     return request(`/subCategory/${slug}`, 'get')

@@ -5,6 +5,7 @@ import {deleteCategoryApi, getCategoryApi} from "../../../api/category";
 import {DeleteOutlined, FormOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
+import {deleteSubCategoryApi, getSubCategoryApi} from "../../../api/subCategory";
 
 const SubCategoryIndex = () => {
     const [selectionType, setSelectionType] = useState('checkbox');
@@ -14,7 +15,7 @@ const SubCategoryIndex = () => {
         fetchCategories()
     }, [])
     const fetchCategories = () => {
-        getCategoryApi().then(res => {
+        getSubCategoryApi().then(res => {
             const arr = res.map(item => {
                 return {
                     key: item._id,
@@ -37,8 +38,8 @@ const SubCategoryIndex = () => {
             name: record.name,
         }),
     };
-    const deleteCategoryHandler = (slug) => {
-        deleteCategoryApi(slug).then(res => {
+    const deleteSubCategoryHandler = (slug) => {
+        deleteSubCategoryApi(slug).then(res => {
             if (res) {
                 toast("Delete successfully")
                 fetchCategories()
@@ -59,8 +60,8 @@ const SubCategoryIndex = () => {
                     <div className="container pt-5">
                         <div className="row">
                             <div className="col">
-                                <h4>Category List</h4>
-                                <div>
+                                <h4>subCategory List</h4>
+                                <div className="mt-4">
                                     <Table dataSource={category} rowSelection={{
                                         type: selectionType,
                                         ...rowSelection,
@@ -88,16 +89,16 @@ const SubCategoryIndex = () => {
                                             key="action"
                                             render={(text, record) => (
                                                 <Space size="middle">
-                                                    <Tag><Link to={`/admin/category/edit/${record.slug}`}>
+                                                    <Tag><Link to={`/admin/subCategory/edit/${record.slug}`}>
                                                         <FormOutlined/></Link></Tag>
                                                     <Popconfirm title="Are you sure？"
                                                                 icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
                                                                 onConfirm={() => {
-                                                                    deleteCategoryHandler(record.slug)
+                                                                    deleteSubCategoryHandler(record.slug)
                                                                 }}>
                                                         <DeleteOutlined/>
                                                     </Popconfirm>
-                                                    {/*<Tag onClick={()=>deleteCategoryHandler(record.slug)}> <DeleteOutlined/></Tag>*/}
+
 
                                                 </Space>
                                             )}
