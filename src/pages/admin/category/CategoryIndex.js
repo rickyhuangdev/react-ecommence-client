@@ -1,103 +1,43 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
-import { Table, Switch, Space } from 'antd';
-const CategoryIndex = () => {
-    const [checkStrictly, setCheckStrictly] = useState(false);
-    const columns = [
-        {
-            title: 'Category Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Slug',
-            dataIndex: 'Slug',
-            key: 'slug',
-            width: '12%',
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            width: '30%',
-            key: 'address',
-        },
-    ];
+import {Space, Table, Tag} from 'antd';
+import {getCategoryApi} from "../../../api/category";
+import {DeleteOutlined, FormOutlined} from "@ant-design/icons";
+import {Link} from "react-router-dom";
 
-    const data = [
-        {
-            key: 1,
-            name: 'John Brown sr.',
-            age: 60,
-            address: 'New York No. 1 Lake Park',
-            children: [
-                {
-                    key: 11,
-                    name: 'John Brown',
-                    age: 42,
-                    address: 'New York No. 2 Lake Park',
-                },
-                {
-                    key: 12,
-                    name: 'John Brown jr.',
-                    age: 30,
-                    address: 'New York No. 3 Lake Park',
-                    children: [
-                        {
-                            key: 121,
-                            name: 'Jimmy Brown',
-                            age: 16,
-                            address: 'New York No. 3 Lake Park',
-                        },
-                    ],
-                },
-                {
-                    key: 13,
-                    name: 'Jim Green sr.',
-                    age: 72,
-                    address: 'London No. 1 Lake Park',
-                    children: [
-                        {
-                            key: 131,
-                            name: 'Jim Green',
-                            age: 42,
-                            address: 'London No. 2 Lake Park',
-                            children: [
-                                {
-                                    key: 1311,
-                                    name: 'Jim Green jr.',
-                                    age: 25,
-                                    address: 'London No. 3 Lake Park',
-                                },
-                                {
-                                    key: 1312,
-                                    name: 'Jimmy Green sr.',
-                                    age: 18,
-                                    address: 'London No. 4 Lake Park',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        },
-        {
-            key: 2,
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sidney No. 1 Lake Park',
-        },
-    ];
+const CategoryIndex = () => {
+    const [selectionType, setSelectionType] = useState('checkbox');
+    const [category, setCategory] = useState([]);
+    const {Column, ColumnGroup} = Table;
+    useEffect(() => {
+        getCategoryApi().then(res => {
+            const arr = res.map(item => {
+                return {
+                    key: item._id,
+                    name: item.name,
+                    slug: item.slug,
+                    state: item.state
+                }
+
+            })
+            setCategory(arr)
+        })
+
+
+    })
     const rowSelection = {
         onChange: (selectedRowKeys, selectedRows) => {
             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
         },
-        onSelect: (record, selected, selectedRows) => {
-            console.log(record, selected, selectedRows);
-        },
-        onSelectAll: (selected, selectedRows, changeRows) => {
-            console.log(selected, selectedRows, changeRows);
-        },
+        getCheckboxProps: (record) => ({
+            disabled: record.name === 'Disabled User',
+            // Column configuration not to be checked
+            name: record.name,
+        }),
     };
+    const deleteCategoryHandler = (slug) => {
+
+    }
     return (
         <div className="container-fluid p-0">
             <div className="row">
@@ -109,14 +49,43 @@ const CategoryIndex = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Category List</h4>
-                                <Space align="center" style={{ marginBottom: 16 }}>
-                                    CheckStrictly: <Switch checked={checkStrictly} onChange={setCheckStrictly} />
-                                </Space>
-                                <Table
-                                    columns={columns}
-                                    rowSelection={{ ...rowSelection, checkStrictly }}
-                                    dataSource={data}
-                                />
+                                <div>
+                                    <Table dataSource={category} rowSelection={{
+                                        type: selectionType,
+                                        ...rowSelection,
+                                    }}>
+                                        <Column title="Category " dataIndex="name" key="name"/>
+                                        <Column title="Slug" dataIndex="slug" key="slug"/>
+                                        <Column
+                                            title="State"
+                                            dataIndex="state"
+                                            key="state"
+                                            render={tags => (
+                                                <>
+                                                    {tags === 1 ? (<Tag color="green" key={tags}>
+                                                        processing
+                                                    </Tag>) : (
+                                                        <Tag color="magenta" key={tags}>
+                                                            pending
+                                                        </Tag>
+                                                    )}
+                                                </>
+                                            )}
+                                        />
+                                        <Column
+                                            title="Action"
+                                            key="action"
+                                            render={(text, record) => (
+                                                <Space size="middle">
+                                                    <Tag><Link to={`/admin/category/${record.slug}`}>
+                                                        <FormOutlined/></Link></Tag>
+                                                    <Tag onClick={deleteCategoryHandler(record.slug)}> <DeleteOutlined/></Tag>
+
+                                                </Space>
+                                            )}
+                                        />
+                                    </Table>,
+                                </div>
                             </div>
                         </div>
                     </div>
