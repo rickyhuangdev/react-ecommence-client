@@ -89,7 +89,7 @@ const CategoryIndex = () => {
                                             key="action"
                                             render={(text, record) => (
                                                 <Space size="middle">
-                                                    <Tag><Link to={`/admin/category/${record.slug}`}>
+                                                    <Tag><Link to={`/admin/category/edit/${record.slug}`}>
                                                         <FormOutlined/></Link></Tag>
                                                     <Popconfirm title="Are you sure？"
                                                                 icon={<QuestionCircleOutlined style={{color: 'red'}}/>}

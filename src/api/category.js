@@ -6,8 +6,8 @@ export const getCategoryApi = () => {
 export const readCategoryApi = (slug) => {
     return request(`/category/${slug}`, 'get')
 }
-export const updateCategoryApi = (slug) => {
-    return request(`/category/${slug}`, 'put')
+export const updateCategoryApi = (data) => {
+    return request(`/category/${data.slug}`, 'put',data)
 }
 export const deleteCategoryApi = (slug) => {
     return request(`/category/${slug}`, 'delete')

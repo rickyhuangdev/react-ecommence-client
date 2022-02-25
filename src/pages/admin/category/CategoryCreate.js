@@ -11,7 +11,7 @@ const CategoryCreate = () => {
             toast.info("Please enter the category name")
             return
         }
-        if (!name < 2) {
+        if (name.length < 2) {
             toast.info("Category name at least 3 characters")
             return
         }

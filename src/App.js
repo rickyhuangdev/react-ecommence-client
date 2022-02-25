@@ -16,11 +16,11 @@ import AuthRoutes from "./routes/authRoutes";
 
 function App(props) {
     const dispatch = useDispatch()
-    useEffect(() => {
-        if (hasToken()) {
-            dispatch(createOrUpdateUser())
-        }
-    }, [dispatch])
+    // useEffect(() => {
+    //     if (hasToken()) {
+    //         dispatch(createOrUpdateUser())
+    //     }
+    // }, [dispatch])
     return (
 
         <Fragment>
