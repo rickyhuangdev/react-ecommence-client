@@ -15,12 +15,12 @@ import AuthRoutes from "./routes/authRoutes";
 
 function App(props) {
     const dispatch = useDispatch()
-    const user = useSelector(state => state.profile.user)
-    useEffect(() => {
-        if (user && user.token) {
-            console.log(user.token)
-        }
-    }, [])
+    // const user = useSelector(state => state.profile.user)
+    // useEffect(() => {
+    //     if (user && user.token) {
+    //         console.log(user.token)
+    //     }
+    // }, [])
     return (
 
         <Fragment>

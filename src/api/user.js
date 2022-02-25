@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
-export const createOrUpdateUserApi = () => {
-    return request('/user/create-or-update-user', 'post')
+export const createOrUpdateUserApi = (token) => {
+    return request('/user/create-or-update-user', 'post', token)
 }
 
 export const getUserProfileApi = () => {

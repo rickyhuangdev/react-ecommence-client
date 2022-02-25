@@ -12,16 +12,17 @@ export const clearUserProfile = () => {
     }
 }
 
-export const createOrUpdateUser = () => {
+export const createOrUpdateUser = (token) => {
+
     return async (dispatch, getState) => {
-        const res = await createOrUpdateUserApi()
+        const res = await createOrUpdateUserApi(token)
         dispatch(setUser({
             email: res.email,
             user_id: res._id,
             name: res.name,
             role: res.role,
             image: res.picture,
-            token: getState().login.token
+            token
         }))
     }
 }

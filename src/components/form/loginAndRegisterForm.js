@@ -12,7 +12,7 @@ import {
     signInWithEmailAndPassword,
     signInWithPopup
 } from "firebase/auth";
-import {setUser} from "../../store/actions/profile";
+import {createOrUpdateUser, setUser} from "../../store/actions/profile";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -50,12 +50,13 @@ const LoginAndRegisterForm = (prop) => {
                     tokenInfo = userCredential._tokenResponse.refreshToken
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    dispatch(setUser({
-                        email: user.email,
-                        name: user.displayName,
-                        image: user.photoURL,
-                        token: idTokenResult.token
-                    }))
+                    // dispatch(setUser({
+                    //     email: user.email,
+                    //     name: user.displayName,
+                    //     image: user.photoURL,
+                    //     token: idTokenResult.token
+                    // }))
+                    dispatch(createOrUpdateUser())
                     history.push('/')
                     toast.success('Register Successfully!');
 
@@ -90,12 +91,7 @@ const LoginAndRegisterForm = (prop) => {
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    dispatch(setUser({
-                        email: user.email,
-                        name: user.displayName,
-                        image: user.photoURL,
-                        token: idTokenResult.token
-                    }))
+                    dispatch(createOrUpdateUser({token: idTokenResult.token}))
                     toast.success('Login Successfully!');
                     history.replace('/')
                     // const {state} = location
