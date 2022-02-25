@@ -42,10 +42,8 @@ const AdminNav = () => {
                     <Menu.Item key="12">Option 12</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub5" icon={<SettingOutlined/>} title="Products">
-                    <Menu.Item key="13">Option 9</Menu.Item>
-                    <Menu.Item key="14">Option 10</Menu.Item>
-                    <Menu.Item key="15">Option 11</Menu.Item>
-                    <Menu.Item key="16">Option 12</Menu.Item>
+                    <Menu.Item key="13"><Link to="/admin/product">Product List</Link></Menu.Item>
+                    <Menu.Item key="14"><Link to="/admin/product/create">Create Product</Link></Menu.Item>
                 </SubMenu>
             </Menu>
         </div>
