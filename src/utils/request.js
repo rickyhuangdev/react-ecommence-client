@@ -4,7 +4,9 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {getTokenInfo} from "./storage";
+import {getTokenInfo, removeTokenInfo} from "./storage";
+import {toast} from "react-toastify";
+import {clearToken} from "../store/actions/login";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -30,6 +32,10 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(res => res.data, error => {
     if (error.response && error.response.status === 401) {
+        const {data} = error.response
+        removeTokenInfo()
+        toast.warn(`${data.err}`)
+        window.location.reload()
         // 1. 清空无效用户信息
         // 2. 跳转到登录页
         // 3. 跳转需要传参（当前路由地址）给登录页码
