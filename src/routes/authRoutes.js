@@ -2,6 +2,9 @@ import AdminDashboard from "../pages/admin/AdminDashboard";
 import CategoryCreate from "../pages/admin/category/CategoryCreate";
 import CategoryIndex from "../pages/admin/category/CategoryIndex";
 import CategoryEdit from "../pages/admin/category/CategoryEdit";
+import subCategoryCreate from "../pages/admin/subCategory/SubCategoryCreate";
+import subCategoryIndex from "../pages/admin/subCategory/SubCategoryIndex";
+import subCategoryEdit from "../pages/admin/subCategory/SubCategoryEdit";
 
 const authRoutes = [
     {
@@ -24,6 +27,27 @@ const authRoutes = [
         component: CategoryEdit,
         exact: true
     },
+    /**
+     * subCategory
+     */
+    {
+        path: '/admin/subCategory/create',
+        component: subCategoryCreate,
+        exact: true
+    },
+    {
+        path: '/admin/subCategory',
+        component: subCategoryIndex,
+        exact: true
+    },
+    {
+        path: '/admin/subCategory/edit/:slug',
+        component: subCategoryEdit,
+        exact: true
+    },
+    /**
+     * end of subCategory
+     */
 
 ]
 export default authRoutes

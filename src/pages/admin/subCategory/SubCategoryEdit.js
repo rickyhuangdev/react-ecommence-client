@@ -4,7 +4,7 @@ import {readCategoryApi, updateCategoryApi} from "../../../api/category";
 import AdminNav from "../../../components/nav/AdminNav";
 import {useHistory} from "react-router-dom";
 
-const subCategoryEdit = ({match}) => {
+const SubCategoryEdit = ({match}) => {
     const {slug} = match.params
     const [name, setName] = useState('')
     const [state, setState] = useState(1)
@@ -92,4 +92,4 @@ const subCategoryEdit = ({match}) => {
     );
 };
 
-export default subCategoryEdit;
+export default SubCategoryEdit;

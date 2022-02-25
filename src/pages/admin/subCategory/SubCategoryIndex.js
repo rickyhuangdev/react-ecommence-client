@@ -6,7 +6,7 @@ import {DeleteOutlined, FormOutlined, QuestionCircleOutlined} from "@ant-design/
 import {Link} from "react-router-dom";
 import {toast} from "react-toastify";
 
-const subCategoryIndex = () => {
+const SubCategoryIndex = () => {
     const [selectionType, setSelectionType] = useState('checkbox');
     const [category, setCategory] = useState([]);
     const {Column, ColumnGroup} = Table;
@@ -113,4 +113,4 @@ const subCategoryIndex = () => {
     );
 };
 
-export default subCategoryIndex;
+export default SubCategoryIndex;

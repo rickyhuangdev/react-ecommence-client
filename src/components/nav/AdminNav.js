@@ -30,9 +30,9 @@ const AdminNav = () => {
                 <SubMenu key="sub2" icon={<AppstoreOutlined/>} title="Category">
                     <Menu.Item key="5">  <Link to="/admin/category">Category Lists</Link></Menu.Item>
                     <Menu.Item key="6"><Link to="/admin/category/create">Create Category</Link></Menu.Item>
-                    <SubMenu key="sub3" title="Submenu">
-                        <Menu.Item key="7"></Menu.Item>
-                        <Menu.Item key="8">Option 8</Menu.Item>
+                    <SubMenu key="sub3" title="Sub Category">
+                        <Menu.Item key="7"> <Link to="/admin/subCategory">SubCategory Lists</Link></Menu.Item>
+                        <Menu.Item key="8"><Link to="/admin/subCategory/create">Create subCategory</Link></Menu.Item>
                     </SubMenu>
                 </SubMenu>
                 <SubMenu key="sub4" icon={<SettingOutlined/>} title="Orders">

@@ -3,7 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {toast} from "react-toastify";
 import {createCategoryApi} from "../../../api/category";
 
-const subCategoryCreate = () => {
+const SubCategoryCreate = () => {
     const [name, setName] = useState('')
     const creatCategoryHandler = async (e) => {
         e.preventDefault()
@@ -56,4 +56,4 @@ const subCategoryCreate = () => {
     );
 };
 
-export default subCategoryCreate;
+export default SubCategoryCreate;
