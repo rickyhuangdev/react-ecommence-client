@@ -1,32 +1,7 @@
-import React, {useState} from 'react';
+import React from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
-import {toast} from "react-toastify";
-import {createProductApi} from "../../../api/Product";
 
 const ProductCreate = () => {
-    const [name, setName] = useState('')
-    const creatProductHandler = async (e) => {
-        e.preventDefault()
-        if (!name) {
-            toast.info("Please enter the Product name")
-            return
-        }
-        if (name.length < 2) {
-            toast.info("Product name at least 3 characters")
-            return
-        }
-        try {
-            const res = await createProductApi({name})
-            if (res) {
-                setName('')
-                toast.success(`Create ${name} successfully`)
-
-            }
-
-        } catch (e) {
-            toast.success(`Create ${name} failed`)
-        }
-    }
     return (
         <div className="container-fluid p-0">
             <div className="row">
@@ -38,15 +13,34 @@ const ProductCreate = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
-                                <form className="mt-4" onSubmit={creatProductHandler}>
-                                    <div className="form-group">
-                                        <label htmlFor="Product_name">Product Name</label>
-                                        <input type="text" className="form-control" id="Product_name"
-                                               onChange={(e) => setName(e.target.value)} value={name}
-                                               aria-describedby="Product_name" placeholder="Enter Product name"/>
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">Submit</button>
-                                </form>
+                                {/*<form className="mt-4" onSubmit={editProductHandler}>*/}
+                                {/*    <div className="form-group">*/}
+                                {/*        <label htmlFor="Product_name">Product Name</label>*/}
+                                {/*        <input type="text" className="form-control" id="Product_name"*/}
+                                {/*               onChange={(e) => setName(e.target.value)} value={name}*/}
+                                {/*               aria-describedby="Product_name" placeholder="Enter Product name"/>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="form-group">*/}
+                                {/*        <label htmlFor="Product_name">Product State</label>*/}
+                                {/*        <br/>*/}
+                                {/*        <div className="form-check form-check-inline">*/}
+                                {/*            <input className="form-check-input" type="radio" name="state"*/}
+                                {/*                   checked={state === 1}*/}
+                                {/*                   onChange={(e) => setState(1)}*/}
+                                {/*                   id="inlineRadio1" value="1"/>*/}
+                                {/*            <label className="form-check-label"*/}
+                                {/*                   htmlFor="inlineRadio1">processing</label>*/}
+                                {/*        </div>*/}
+                                {/*        <div className="form-check form-check-inline">*/}
+                                {/*            <input className="form-check-input" type="radio" name="state"*/}
+                                {/*                   checked={state === 0}*/}
+                                {/*                   onChange={(e) => setState(0)}*/}
+                                {/*                   id="inlineRadio2" value="0"/>*/}
+                                {/*            <label className="form-check-label" htmlFor="inlineRadio2">pending</label>*/}
+                                {/*        </div>*/}
+                                {/*    </div>*/}
+                                {/*    <button type="submit" className="btn btn-primary">Submit</button>*/}
+                                {/*</form>*/}
                             </div>
                         </div>
                     </div>
