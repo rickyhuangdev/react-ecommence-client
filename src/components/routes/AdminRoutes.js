@@ -7,6 +7,7 @@ import {hasToken} from "../../utils/storage";
 const AdminRoutes = ({component: Component, ...rest}) => {
     const user = useSelector(state => state.profile.user)
     const [admin, setAdmin] = useState(false)
+    console.log(user)
     useEffect(() => {
 
         if (user && user.token) {

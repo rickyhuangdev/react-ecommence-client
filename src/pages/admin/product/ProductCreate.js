@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
+import {createProductApi} from "../../../api/product";
+import {toast} from "react-toastify";
 
 const initialState = {
     title: '',
@@ -33,11 +35,27 @@ const ProductCreate = () => {
         brand,
         brands
     } = values
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
+        // .then(res=>{
+        //     console.log(res)
+        // }).catch(e=>{
+        //     console.log(e.response.status)
+        //     if(e.response.status ===400){
+        //         toast.error(e.response.data)
+        //     }
+        // })
+        try{
+          const re = await createProductApi(values)
+            console.log(re)
+        }catch (e){
+            console.log(e)
+        }
+
+
     }
     const handleChange = (e) => {
-        e.preventDefault()
+        setValues({...values,[e.target.name]:e.target.value})
     }
     return (
         <div className="container-fluid p-0">
@@ -50,7 +68,7 @@ const ProductCreate = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
-                                <form className="mt-5" autoComplete="false">
+                                <form className="mt-5" autoComplete="false" onSubmit={handleSubmit}>
                                     <div className="form-group row">
                                         <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Product
                                             Name</label>
@@ -90,7 +108,7 @@ const ProductCreate = () => {
                                         <label htmlFor="exampleFormControlSelect1"
                                                className="col-sm-2 col-form-label">Color</label>
                                         <div className="col-sm-10">
-                                            <select className="form-control" id="exampleFormControlSelect1" name="color"
+                                            <select className="form-control" id="exampleFormControlSelect1" name="color" value={color}
                                                     onChange={handleChange}>
                                                 {colors.map(item =>
                                                     <option key={item} value={item}>{item}</option>
@@ -102,8 +120,9 @@ const ProductCreate = () => {
                                         <label htmlFor="exampleFormControlSelect1"
                                                className="col-sm-2 col-form-label">Shipping</label>
                                         <div className="col-sm-10">
-                                            <select className="form-control" id="exampleFormControlSelect1"
+                                            <select className="form-control" id="exampleFormControlSelect1" value={1} key={1}
                                                     name="shipping" onChange={handleChange}>
+                                                <option>Please the Shipping</option>
                                                 <option value="1">Yes</option>
                                                 <option value="0">No</option>
                                             </select>
@@ -113,7 +132,8 @@ const ProductCreate = () => {
                                         <label htmlFor="exampleFormControlSelect1"
                                                className="col-sm-2 col-form-label">Brand</label>
                                         <div className="col-sm-10">
-                                            <select className="form-control" id="exampleFormControlSelect1">
+                                            <select className="form-control" id="exampleFormControlSelect1" value={brand} onChange={handleChange} name="brand">
+                                                <option>Please the Brands</option>
                                                 {brands.map(item => <option key={item} value={item}>{item}</option>)}
                                             </select>
                                         </div>

@@ -6,7 +6,6 @@
 import axios from "axios";
 import {getTokenInfo, removeTokenInfo} from "./storage";
 import {toast} from "react-toastify";
-import {clearToken} from "../store/actions/login";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -31,19 +30,33 @@ instance.interceptors.request.use(config => {
 })
 
 instance.interceptors.response.use(res => res.data, error => {
-    if (error.response && error.response.status === 401) {
-        const {data} = error.response
-        removeTokenInfo()
-        toast.warn(`${data.err}`)
-        window.location.reload()
-        // 1. 清空无效用户信息
-        // 2. 跳转到登录页
-        // 3. 跳转需要传参（当前路由地址）给登录页码
-        // 当前路由地址
-        // 组件里头：`/user?a=10` $route.path === /user  $route.fullPath === /user?a=10
-        // js模块中：router.currentRoute.value.fullPath 就是当前路由地址，router.currentRoute 是ref响应式数据
-        const fullPath = encodeURIComponent(window.location.pathname)
+    const {status, data} = error.response
+    console.log(status)
+    console.log(data)
+    if (error.response && status === 400 && data.errors.name === 'ValidationError') {
+        console.log(data.errors[0].message)
+
     }
+    if (error.response && error.response.status === 401) {
+        toast.error(data.err)
+        removeTokenInfo()
+        window.location.href = '/login'
+
+    }
+
+    // if (error.response && error.response.status === 401) {
+    //     const {data} = error.response
+    //     removeTokenInfo()
+    //     toast.warn(`${data.err}`)
+    //     window.location.reload()
+    //     // 1. 清空无效用户信息
+    //     // 2. 跳转到登录页
+    //     // 3. 跳转需要传参（当前路由地址）给登录页码
+    //     // 当前路由地址
+    //     // 组件里头：`/user?a=10` $route.path === /user  $route.fullPath === /user?a=10
+    //     // js模块中：router.currentRoute.value.fullPath 就是当前路由地址，router.currentRoute 是ref响应式数据
+    //     const fullPath = encodeURIComponent(window.location.pathname)
+    // }
 })
 
 // 请求工具函数
