@@ -8,8 +8,6 @@ import RedirectRoute from "./RedirectRoute";
 const AdminRoutes = ({component: Component, key, path, ...rest}) => {
     const user = useSelector(state => state.profile.user)
     const [admin, setAdmin] = useState(false)
-    console.log(rest)
-    // console.log(admin)
     useEffect(() => {
         if (user && user.token) {
             getAdminProfileApi().then(res => {

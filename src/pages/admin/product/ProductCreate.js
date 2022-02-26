@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {createProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
 import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
+import {getSubCategoryApi} from "../../../api/subCategory";
+import {getCategoryApi} from "../../../api/category";
 
 const initialState = {
     title: '',
@@ -21,7 +23,17 @@ const initialState = {
 }
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
+    useEffect(() => {
+        fetchCategories()
+    }, [])
+    const fetchCategories = () => {
+        getCategoryApi().then(res => {
 
+           setValues({...values,categories:res})
+
+            console.log(values)
+        })
+    }
     const handleSubmit = async (e) => {
         e.preventDefault()
         // .then(res=>{

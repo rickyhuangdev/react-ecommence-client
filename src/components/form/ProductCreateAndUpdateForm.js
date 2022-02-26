@@ -79,10 +79,20 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values}) => {
             </div>
             <div className="form-group row">
                 <label htmlFor="exampleFormControlSelect1"
+                       className="col-sm-2 col-form-label">Category</label>
+                <div className="col-sm-10">
+                    <select className="form-control" id="exampleFormControlSelect1" value={category} onChange={handleChange} name="category">
+                        <option>Please Select the Category</option>
+                        {categories.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}
+                    </select>
+                </div>
+            </div>
+            <div className="form-group row">
+                <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Brand</label>
                 <div className="col-sm-10">
                     <select className="form-control" id="exampleFormControlSelect1" value={brand} onChange={handleChange} name="brand">
-                        <option>Please the Brands</option>
+                        <option>Please Select the Brands</option>
                         {brands.map(item => <option key={item} value={item}>{item}</option>)}
                     </select>
                 </div>
