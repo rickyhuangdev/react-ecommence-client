@@ -10,37 +10,51 @@ const privateRoutes = [
     {
         path: '/user',
         component: Dashboard,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/wishlist',
         component: Wishlist,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/order',
         component: Order,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/password',
         component: Password,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/profile',
         component: Profile,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/payment',
         component: Payment,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     },
     {
         path: '/user/address',
         component: Address,
-        exact: true
+        exact: true,
+        role: 'user',
+        backUrl:'/login'
     }
 ]
 export default privateRoutes

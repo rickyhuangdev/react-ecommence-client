@@ -38,9 +38,10 @@ instance.interceptors.response.use(res => res.data, error => {
 
     }
     if (error.response && error.response.status === 401) {
-        toast.error(data.err)
-        removeTokenInfo()
-        window.location.href = '/login'
+        // toast.error(data.err)
+        // removeTokenInfo()
+        // window.location.href = '/login'
+        console.log(123)
 
     }
 

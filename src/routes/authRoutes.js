@@ -13,22 +13,30 @@ const authRoutes = [
     {
         path: '/admin/dashboard',
         component: AdminDashboard,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/category/create',
         component: CategoryCreate,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/category',
         component: CategoryIndex,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/category/edit/:slug',
         component: CategoryEdit,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     /**
      * subCategory
@@ -36,17 +44,23 @@ const authRoutes = [
     {
         path: '/admin/subCategory/create',
         component: subCategoryCreate,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/subCategory',
         component: subCategoryIndex,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/subCategory/edit/:slug',
         component: subCategoryEdit,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     /**
      * end of subCategory
@@ -58,17 +72,23 @@ const authRoutes = [
     {
         path: '/admin/product/create',
         component: ProductCreate,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/product',
         component: ProductIndex,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
     {
         path: '/admin/product/edit/:slug',
         component: ProductEdit,
-        exact: true
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
     },
 
 ]

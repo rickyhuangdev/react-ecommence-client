@@ -22,7 +22,7 @@ export const createOrUpdateUser = (token) => {
             name: res.name,
             role: res.role,
             image: res.picture,
-            token
+            token:getState().login.token
         }))
     }
 }

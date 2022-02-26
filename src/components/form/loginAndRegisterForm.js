@@ -92,7 +92,7 @@ const LoginAndRegisterForm = (prop) => {
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
                     dispatch(createOrUpdateUser({token: idTokenResult.token}))
-                    toast.success('Login Successfully!');
+                    // toast.success('Login Successfully!');
                     history.replace('/')
                     // const {state} = location
                     // if (!state) {

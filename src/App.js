@@ -7,20 +7,20 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "./components/nav/header";
 import {useDispatch, useSelector} from "react-redux";
-import {createOrUpdateUser} from "./store/actions/profile";
 import publicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/privateRoutes";
 import AuthRoutes from "./routes/authRoutes";
+import AdminRoutes from "./components/routes/AdminRoutes";
+import UserRoutes from "./components/routes/UserRoutes";
+import {userAuth} from "./utils/heplers";
+import {getTokenInfo} from "./utils/storage";
 
 
 function App(props) {
     const dispatch = useDispatch()
-    // const user = useSelector(state => state.profile.user)
-    // useEffect(() => {
-    //     if (user && user.token) {
-    //         console.log(user.token)
-    //     }
-    // }, [])
+    const user = useSelector(state => state.profile.user)
+    useEffect(() => {
+    }, [user])
     return (
 
         <Fragment>
@@ -38,13 +38,13 @@ function App(props) {
                     {
                         PrivateRoutes.map(
                             ({path, component, ...routes}) =>
-                                <Route key={path} path={path} component={component} {...routes} />
+                                <UserRoutes key={path} path={path} component={component} {...routes} />
                         )
                     }
                     {
                         AuthRoutes.map(
                             ({path, component, ...routes}) =>
-                                <Route key={path} path={path} component={component} {...routes} />
+                                <AdminRoutes key={path} path={path} component={component} {...routes} />
                         )
                     }
 
