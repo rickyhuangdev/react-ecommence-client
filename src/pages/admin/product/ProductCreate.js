@@ -70,6 +70,7 @@ const ProductCreate = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
+
                              <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
                                                          setValues={setValues}
                                                          values={values} handleCategoryChange={handleCategoryChange}

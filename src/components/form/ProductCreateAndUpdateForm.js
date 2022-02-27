@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
+import FileUpload from "./FileUpload";
 
 const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues}) => {
     const { Option } = Select;
@@ -124,6 +125,13 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                         <option>Please Select the Brands</option>
                         {brands.map(item => <option key={item} value={item}>{item}</option>)}
                     </select>
+                </div>
+            </div>
+            <div className="form-group row">
+                <label htmlFor="exampleFormControlSelect1"
+                       className="col-sm-2 col-form-label">Upload Images</label>
+                <div className="col-sm-10">
+               <FileUpload />
                 </div>
             </div>
             <div className="form-group row">
