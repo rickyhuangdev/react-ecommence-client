@@ -4,7 +4,7 @@ import {createProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
 import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
 import {getSubCategoryApi} from "../../../api/subCategory";
-import {getCategoryApi} from "../../../api/category";
+import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 
 const initialState = {
     title: '',
@@ -28,14 +28,13 @@ const ProductCreate = () => {
     }, [])
     const fetchCategories = () => {
         getCategoryApi().then(res => {
-
            setValues({...values,categories:res})
-
-            console.log(values)
         })
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
+        console.log(values)
+        return
         // .then(res=>{
         //     console.log(res)
         // }).catch(e=>{
@@ -55,6 +54,16 @@ const ProductCreate = () => {
     }
     const handleChange = (e) => {
         setValues({...values,[e.target.name]:e.target.value})
+        console.log(e.target.value)
+    }
+    const handleCategoryChange = (e) => {
+        e.preventDefault()
+        const cat_id = e.target.value
+        setValues({...values,category:cat_id})
+        console.log(cat_id)
+     getCategorySubApi(cat_id).then(res=>{
+         console.log(res)
+     })
     }
     return (
         <div className="container-fluid p-0">
@@ -67,7 +76,7 @@ const ProductCreate = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
-                             <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit} values={values} />
+                             <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit} values={values} handleCategoryChange={handleCategoryChange} />
                             </div>
                         </div>
                     </div>

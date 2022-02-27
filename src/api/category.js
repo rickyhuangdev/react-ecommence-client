@@ -15,3 +15,6 @@ export const deleteCategoryApi = (slug) => {
 export const createCategoryApi = data => {
     return request('/category', 'post', data)
 }
+export const getCategorySubApi = (id) => {
+    return request('/category/subs/'+id, 'get')
+}

@@ -15,3 +15,4 @@ export const deleteSubCategoryApi = (slug) => {
 export const createSubCategoryApi = data => {
     return request('/subCategory', 'post', data)
 }
+

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values}) => {
+const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange}) => {
     const {
         title,
         description,
@@ -81,7 +81,7 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values}) => {
                 <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Category</label>
                 <div className="col-sm-10">
-                    <select className="form-control" id="exampleFormControlSelect1" value={category} onChange={handleChange} name="category">
+                    <select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="category">
                         <option>Please Select the Category</option>
                         {categories.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}
                     </select>

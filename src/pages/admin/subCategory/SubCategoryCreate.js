@@ -5,14 +5,14 @@ import {createSubCategoryApi, getSubCategoryApi} from "../../../api/subCategory"
 import {getCategoryApi} from "../../../api/category";
 
 const SubCategoryCreate = () => {
-    const [name, setName] = useState('')
+     const [name, setName] = useState('')
+    const [category, setCategory] = useState([])
     const [parent, setParent] = useState('')
-    const [category, setCategory] = useState([]);
     useEffect(() => {
         fetchCategories()
     }, [])
     const fetchCategories = () => {
-        getSubCategoryApi().then(res => {
+        getCategoryApi().then(res => {
             setCategory(res)
         })
     }
@@ -29,8 +29,9 @@ const SubCategoryCreate = () => {
         try {
             const res = await createSubCategoryApi({name, parent})
             if (res) {
-                setName('')
+
                 toast.success(`Create ${name} successfully`)
+                setName('')
 
             }
 
@@ -53,14 +54,12 @@ const SubCategoryCreate = () => {
                                     <div className="form-group">
                                         <label htmlFor="category_name">subCategory Name</label>
                                         <input type="text" className="form-control" id="category_name"
-                                               onChange={(e) => setName(e.target.value)} value={name}
+                                               onChange={(e)=>setName(e.target.value)} value={name} name="name"
                                                aria-describedby="category_name" placeholder="Enter Category name"/>
                                     </div>
                                     <div className="form-group">
                                         <label htmlFor="category_name">Parent</label>
-                                        <select className="custom-select" required onChange={(e) => {
-                                            setParent((e.target.value))
-                                        }}>
+                                        <select className="custom-select" required onChange={(e)=>setParent(e.target.value)} name="parent">
                                             {
                                                 category.length > 0 && category.map(item => (
                                                     <option value={item._id} key={item._id}>{item.name}</option>
