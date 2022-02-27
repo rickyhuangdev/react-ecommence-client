@@ -23,6 +23,8 @@ const initialState = {
 }
 const ProductCreate = () => {
     const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
     useEffect(() => {
         fetchCategories()
     }, [])
@@ -60,9 +62,8 @@ const ProductCreate = () => {
         e.preventDefault()
         const cat_id = e.target.value
         setValues({...values,category:cat_id})
-        console.log(cat_id)
      getCategorySubApi(cat_id).then(res=>{
-         console.log(res)
+         setSubOptions(res)
      })
     }
     return (
@@ -76,7 +77,11 @@ const ProductCreate = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
-                             <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit} values={values} handleCategoryChange={handleCategoryChange} />
+                             <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
+                                                         values={values} handleCategoryChange={handleCategoryChange}
+                                                         subOptions={subOptions}
+                                                         showSub={showSub}
+                             />
                             </div>
                         </div>
                     </div>
