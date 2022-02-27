@@ -1,7 +1,18 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
+import {getProductsApi} from "../../../api/product";
 
 const ProductIndex = () => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        getProducts()
+    }, [])
+    const getProducts = () => {
+        getProductsApi().then(re => {
+            setProducts(re)
+        })
+    }
     return (
         <div className="container-fluid p-0">
             <div className="row">
@@ -12,35 +23,8 @@ const ProductIndex = () => {
                     <div className="container py-5">
                         <div className="row">
                             <div className="col">
-                                <h4>Create Product</h4>
-                                {/*<form className="mt-4" onSubmit={editProductHandler}>*/}
-                                {/*    <div className="form-group">*/}
-                                {/*        <label htmlFor="Product_name">Product Name</label>*/}
-                                {/*        <input type="text" className="form-control" id="Product_name"*/}
-                                {/*               onChange={(e) => setName(e.target.value)} value={name}*/}
-                                {/*               aria-describedby="Product_name" placeholder="Enter Product name"/>*/}
-                                {/*    </div>*/}
-                                {/*    <div className="form-group">*/}
-                                {/*        <label htmlFor="Product_name">Product State</label>*/}
-                                {/*        <br/>*/}
-                                {/*        <div className="form-check form-check-inline">*/}
-                                {/*            <input className="form-check-input" type="radio" name="state"*/}
-                                {/*                   checked={state === 1}*/}
-                                {/*                   onChange={(e) => setState(1)}*/}
-                                {/*                   id="inlineRadio1" value="1"/>*/}
-                                {/*            <label className="form-check-label"*/}
-                                {/*                   htmlFor="inlineRadio1">processing</label>*/}
-                                {/*        </div>*/}
-                                {/*        <div className="form-check form-check-inline">*/}
-                                {/*            <input className="form-check-input" type="radio" name="state"*/}
-                                {/*                   checked={state === 0}*/}
-                                {/*                   onChange={(e) => setState(0)}*/}
-                                {/*                   id="inlineRadio2" value="0"/>*/}
-                                {/*            <label className="form-check-label" htmlFor="inlineRadio2">pending</label>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*    <button type="submit" className="btn btn-primary">Submit</button>*/}
-                                {/*</form>*/}
+                                <h4>Product List</h4>
+
                             </div>
                         </div>
                     </div>

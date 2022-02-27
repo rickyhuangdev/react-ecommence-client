@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
-export const getProductApi = () => {
-    return request('/products', 'get')
+export const getProductsApi = (count = 30) => {
+    return request(`/products/${count}`, 'get')
 }
 export const readProductApi = (slug) => {
     return request(`/product/${slug}`, 'get')
