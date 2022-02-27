@@ -35,19 +35,11 @@ const ProductCreate = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log(values)
-        return
-        // .then(res=>{
-        //     console.log(res)
-        // }).catch(e=>{
-        //     console.log(e.response.status)
-        //     if(e.response.status ===400){
-        //         toast.error(e.response.data)
-        //     }
-        // })
         try{
           const re = await createProductApi(values)
-            console.log(re)
+            if(re){
+                toast(`Create Product successfully`)
+            }
         }catch (e){
             console.log(e)
         }
@@ -61,10 +53,11 @@ const ProductCreate = () => {
     const handleCategoryChange = (e) => {
         e.preventDefault()
         const cat_id = e.target.value
-        setValues({...values,category:cat_id})
+        setValues({...values,subs:[],category:cat_id})
      getCategorySubApi(cat_id).then(res=>{
          setSubOptions(res)
      })
+        setShowSub(true)
     }
     return (
         <div className="container-fluid p-0">
@@ -78,6 +71,7 @@ const ProductCreate = () => {
                             <div className="col">
                                 <h4>Create Product</h4>
                              <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
+                                                         setValues={setValues}
                                                          values={values} handleCategoryChange={handleCategoryChange}
                                                          subOptions={subOptions}
                                                          showSub={showSub}

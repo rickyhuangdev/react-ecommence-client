@@ -1,6 +1,8 @@
 import React from 'react';
+import { Select } from 'antd';
 
-const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions}) => {
+const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues}) => {
+    const { Option } = Select;
     const {
         title,
         description,
@@ -18,6 +20,7 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
     } = values
     return (
         <form className="mt-5" autoComplete="false" onSubmit={handleSubmit}>
+            {JSON.stringify(subs)}
             <div className="form-group row">
                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Product
                     Name</label>
@@ -72,8 +75,8 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                     <select className="form-control" id="exampleFormControlSelect1" value={1} key={1}
                             name="shipping" onChange={handleChange}>
                         <option>Please the Shipping</option>
-                        <option value="1">Yes</option>
-                        <option value="0">No</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
                     </select>
                 </div>
             </div>
@@ -93,10 +96,18 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                         <label htmlFor="exampleFormControlSelect1"
                                className="col-sm-2 col-form-label">Sub Category</label>
                         <div className="col-sm-10">
-                            {/*<select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="sub">*/}
-                            {/*    <option>Please Select the SubCategory</option>*/}
-                            {/*    {subOptions.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}*/}
-                            {/*</select>*/}
+                            <Select
+                                mode="multiple"
+                                allowClear
+                                style={{ width: '100%' }}
+                                placeholder="Please select"
+                                value={subs}
+                                onChange={(value)=>setValues({...values,subs:value})}
+                            >
+                                {subOptions.map(item=>(
+                                <Option value={item._id} key={item._id}>{item.name}</Option>
+                                ))}
+                            </Select>
                         </div>
                     </div>
                 ):(
