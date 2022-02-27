@@ -127,13 +127,9 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                     </select>
                 </div>
             </div>
-            <div className="form-group row">
-                <label htmlFor="exampleFormControlSelect1"
-                       className="col-sm-2 col-form-label">Upload Images</label>
-                <div className="col-sm-10">
+
                <FileUpload values={values} setValues={setValues} />
-                </div>
-            </div>
+
             <div className="form-group row">
                 <div className="col-sm-10">
                     <button type="submit" className="btn btn-primary">Submit</button>
