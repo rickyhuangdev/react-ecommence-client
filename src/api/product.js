@@ -9,8 +9,8 @@ export const readProductApi = (slug) => {
 export const updateProductApi = (data) => {
     return request(`/product/${data.slug}`, 'put',data)
 }
-export const deleteProductApi = (slug) => {
-    return request(`/product/${slug}`, 'delete')
+export const deleteProductApi = (id) => {
+    return request(`/product/${id}`, 'delete')
 }
 export const createProductApi = data => {
     return request('/product', 'post', data)

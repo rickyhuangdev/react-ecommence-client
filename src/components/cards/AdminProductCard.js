@@ -1,8 +1,11 @@
 import React from 'react';
 import defaultImage from '../../assets/images/default_product.png'
-import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
-const AdminProductCard = ({product}) => {
+import {DeleteOutlined, EditOutlined, QuestionCircleOutlined} from "@ant-design/icons";
+import {Popconfirm} from "antd";
+import {toast} from "react-toastify";
+const AdminProductCard = ({product,removeProduct}) => {
     const {title,description,images} = product
+
     return (
         <>
             <div className="card">
@@ -13,7 +16,11 @@ const AdminProductCard = ({product}) => {
                 </div>
                 <div className="card-footer d-flex">
                     <div className="mr-2">{<EditOutlined style={{fontSize:"18px"}} className="text-info" />}</div>
-                    <div>{<DeleteOutlined  style={{fontSize:"18px"}} className="text-warning"/>}</div>
+                    <div>
+                        <Popconfirm title="Are you sure？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={()=>removeProduct(product._id)}>
+                            {<DeleteOutlined  style={{fontSize:"18px"}} className="text-warning"/>}
+                        </Popconfirm>
+                        </div>
                 </div>
             </div>
         </>

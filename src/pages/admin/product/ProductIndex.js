@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
-import {getProductsApi} from "../../../api/product";
+import {deleteProductApi, getProductsApi} from "../../../api/product";
 import AdminProductCard from "../../../components/cards/AdminProductCard";
+import {toast} from "react-toastify";
 
 const ProductIndex = () => {
     const [products, setProducts] = useState([])
@@ -14,6 +15,16 @@ const ProductIndex = () => {
             setProducts(re)
         })
     }
+    const removeProduct = (id) => {
+
+        deleteProductApi(id).then(re => {
+            if (re) {
+                toast.success(`Delete product successfully`)
+                getProducts()
+            }
+        })
+    }
+
     return (
         <div className="container-fluid p-0">
             <div className="row">
@@ -26,7 +37,7 @@ const ProductIndex = () => {
                         <div className="row pt-3">
                                 {products && products.map((item) => (
                                     <div className="col-md-4 pb-3" key={item._id}>
-                                        <AdminProductCard  product={item} />
+                                        <AdminProductCard product={item} removeProduct={removeProduct}/>
                                     </div>
                                 ))}
 
