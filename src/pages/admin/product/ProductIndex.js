@@ -25,7 +25,7 @@ const ProductIndex = () => {
                         <h4>Product List</h4>
                         <div className="row pt-3">
                                 {products && products.map((item) => (
-                                    <div className="col-md-4" key={item._id}>
+                                    <div className="col-md-4 pb-3" key={item._id}>
                                         <AdminProductCard  product={item} />
                                     </div>
                                 ))}
