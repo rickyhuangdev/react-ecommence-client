@@ -131,7 +131,7 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                 <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Upload Images</label>
                 <div className="col-sm-10">
-               <FileUpload />
+               <FileUpload values={values} setValues={setValues} />
                 </div>
             </div>
             <div className="form-group row">

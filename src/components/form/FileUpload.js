@@ -1,13 +1,22 @@
 import React from 'react';
 import FileResizer from "react-image-file-resizer";
+import {uploadImageApi} from "../../api/upload";
 
-const FileUpload = () => {
-    const fileUploadAndResize = (e)=> {
+const FileUpload = ({values, setValues}) => {
+    const fileUploadAndResize =  (e) => {
         let files = e.target.files
+        let allUploadFiles = values.images
         if (files) {
             for (let i = 0; i < files.length; i++) {
                 FileResizer.imageFileResizer(files[i], 720, 720, 'JPEG', 100, 0, (uri) => {
-                        console.log(uri);
+                       uploadImageApi({image: uri}).then(res=>{
+                            if (res) {
+                                console.log(res)
+                                allUploadFiles.push(res)
+                                setValues({...values, images: allUploadFiles})
+                            }
+                        })
+
                     },
                     "base64")
             }
