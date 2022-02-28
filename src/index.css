@@ -15,3 +15,47 @@ main {
   min-height: 80vh;
 }
 
+.banner__area img{
+  width: 450px;
+  height: 200px;
+  object-fit: cover;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  border-radius: 4px;
+  transition: all .3s ease-out 0s;
+
+}
+.banner__area .banner__img a {
+  display: block;
+  overflow: hidden;
+  text-decoration: none!important;
+
+}
+.banner__area .banner__img a > img:hover{
+  transform: scale(1.1);
+}
+@media only screen and (min-width: 767px) and (max-width: 1200px)  {
+  .banner__area img{
+    width:350px;
+  }
+
+}
+@media only screen and (min-width: 766px) {
+  .banner__area img{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.banner__area .banner__item{
+  position: relative;
+}
+.banner__area .banner__item .banner__content{
+  position: absolute;
+  left: 30px;
+  bottom: 35px;
+  color:#FFFFFF
+}
+.banner__area .banner__item .banner__content h6{
+  font-size: 28px;
+}

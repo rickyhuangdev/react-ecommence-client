@@ -1,11 +1,9 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
+import React from 'react';
+import Banner from "./home/banner";
 
 const Home = () => {
     return (
-        <div>
-            home
-        </div>
+        <Banner/>
     );
 };
 
