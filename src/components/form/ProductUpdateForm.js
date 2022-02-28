@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import FileUpload from "./FileUpload";
 
-const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues}) => {
+const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues}) => {
     const { Option } = Select;
     const {
         title,
@@ -73,7 +73,7 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
                 <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Shipping</label>
                 <div className="col-sm-10">
-                    <select className="form-control" id="exampleFormControlSelect1" value={1} key={1}
+                    <select className="form-control" id="exampleFormControlSelect1" value={shipping ==='Yes'?'Yes':'No'}
                             name="shipping" onChange={handleChange}>
                         <option>Please the Shipping</option>
                         <option value="Yes">Yes</option>
@@ -139,4 +139,4 @@ const ProductCreateAndUpdateForm = ({handleSubmit,handleChange,values,handleCate
     );
 };
 
-export default ProductCreateAndUpdateForm;
+export default ProductUpdateForm;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {createProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
-import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
+import ProductCreateForm from "../../../components/form/ProductCreateForm";
 import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 
 const initialState = {
@@ -70,11 +70,11 @@ const ProductCreate = () => {
                             <div className="col">
                                 <h4>Create Product</h4>
 
-                             <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
-                                                         setValues={setValues}
-                                                         values={values} handleCategoryChange={handleCategoryChange}
-                                                         subOptions={subOptions}
-                                                         showSub={showSub}
+                             <ProductCreateForm handleChange={handleChange} handleSubmit={handleSubmit}
+                                                setValues={setValues}
+                                                values={values} handleCategoryChange={handleCategoryChange}
+                                                subOptions={subOptions}
+                                                showSub={showSub}
                              />
                             </div>
                         </div>

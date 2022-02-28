@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {createProductApi, readProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
-import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
+import ProductCreateForm from "../../../components/form/ProductCreateForm";
 import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 import {useParams} from "react-router-dom";
+import ProductUpdateForm from "../../../components/form/ProductUpdateForm";
 
 const initialState = {
     title: '',
@@ -23,7 +24,6 @@ const initialState = {
 }
 const ProductEdit = (props) => {
     let { slug } = useParams()
-    console.log(slug)
     const [values, setValues] = useState(initialState)
     const [subOptions, setSubOptions] = useState([])
     const [showSub, setShowSub] = useState(false)
@@ -33,12 +33,13 @@ const ProductEdit = (props) => {
     }, [])
     const fetchCategories = () => {
         getCategoryApi().then(res => {
+            console.log(res)
             setValues({...values,categories:res})
         })
     }
     const fetchProduct = () => {
         readProductApi(slug).then(res => {
-            console.log(res)
+            setValues({...values,...res})
         })
     }
     const handleSubmit = async (e) => {
@@ -77,14 +78,13 @@ const ProductEdit = (props) => {
                     <div className="container py-5">
                         <div className="row">
                             <div className="col">
-                                <h4>Create Product</h4>
-                                {JSON.stringify(props)}
-
-                                <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
-                                                            setValues={setValues}
-                                                            values={values} handleCategoryChange={handleCategoryChange}
-                                                            subOptions={subOptions}
-                                                            showSub={showSub}
+                                <h4>Edit Product</h4>
+                                {JSON.stringify(values)}
+                                <ProductUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
+                                                   setValues={setValues}
+                                                   values={values} handleCategoryChange={handleCategoryChange}
+                                                   subOptions={subOptions}
+                                                   showSub={showSub}
                                 />
                             </div>
                         </div>

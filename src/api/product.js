@@ -4,7 +4,6 @@ export const getProductsApi = (count = 30) => {
     return request(`/products/${count}`, 'get')
 }
 export const readProductApi = (id) => {
-    console.log(id)
     return request(`/product/${id}`, 'get')
 }
 export const updateProductApi = (data) => {
