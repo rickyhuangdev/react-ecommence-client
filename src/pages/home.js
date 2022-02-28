@@ -4,13 +4,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import ProductSlider from "./home/productSlider";
 import ProductList from "./home/productList";
+import TwoColBanner from "./home/TwoColBanner";
 const Home = () => {
     return (
         <>
             <ProductSlider />
             <Banner/>
             <ProductList />
-            <Banner/>
+            <TwoColBanner/>
         </>
     );
 };

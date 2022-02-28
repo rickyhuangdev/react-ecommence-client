@@ -5,7 +5,7 @@ import banner_3 from "../../assets/images/banner-3.jpeg";
 
 const Banner = () => {
     return (
-        <div className="container-fluid py-5">
+        <div className="container-fluid pb-5">
             <section className="banner__area p-2">
                 <div className="row">
                     <div className="col-xl-4 col-lg-4 col-md-6 p-3">

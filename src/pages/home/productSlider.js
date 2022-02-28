@@ -5,9 +5,12 @@ import ProductCard from "../../components/cards/ProductCard";
 const ProductSlider = ({products}) => {
     const settings = {
         infinite: true,
+        dots: false,
         speed: 500,
-        slidesToShow: 4,
-        slidesToScroll: 1,
+        autoplay: true,
+        slidesToShow: 5,
+        slidesToScroll: 2,
+        lazyLoad: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -15,7 +18,8 @@ const ProductSlider = ({products}) => {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     infinite: true,
-                    dots: true
+                    dots: false,
+
                 }
             },
             {

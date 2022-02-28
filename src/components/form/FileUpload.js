@@ -12,7 +12,6 @@ const FileUpload = ({values, setValues}) => {
                 FileResizer.imageFileResizer(files[i], 720, 720, 'JPEG', 100, 0, (uri) => {
                         uploadImageApi({image: uri}).then(res => {
                             if (res) {
-                                console.log(res)
                                 allUploadFiles.push(res)
                                 setValues({...values, images: allUploadFiles})
                             }
