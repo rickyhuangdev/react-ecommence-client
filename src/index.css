@@ -16,7 +16,7 @@ main {
 }
 
 .banner__area img{
-  width: 450px;
+  width: 100%;
   height: 200px;
   object-fit: cover;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -58,4 +58,17 @@ main {
 }
 .banner__area .banner__item .banner__content h6{
   font-size: 28px;
+}
+
+.features__icon svg {
+  font-size: 40px;
+  color: #fcbe00;
+}
+.features__item{
+  border-right-color: coral;
+  border-right-style: dotted;
+
+}
+.mr-20 {
+  margin-right: 20px;
 }

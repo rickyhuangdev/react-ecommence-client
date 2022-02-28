@@ -10,11 +10,10 @@ const ProductList = () => {
     const getProducts = () => {
         getProductsApi().then(re => {
             setProducts(re)
-            console.log(re)
         })
     }
     return (
-        <div className="container-fluid">
+        <div className="container-fluid pb-2">
                 <ProductSlider products={products} className="mb-4"/>
         </div>
     );

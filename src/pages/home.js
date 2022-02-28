@@ -5,10 +5,12 @@ import "slick-carousel/slick/slick-theme.css";
 import ProductSlider from "./home/productSlider";
 import ProductList from "./home/productList";
 import TwoColBanner from "./home/TwoColBanner";
+import FeatureArea from "./home/FeatureArea";
 const Home = () => {
     return (
         <>
             <ProductSlider />
+            <FeatureArea />
             <Banner/>
             <ProductList />
             <TwoColBanner/>

@@ -6,7 +6,7 @@ const TwoColBanner = () => {
         <section className="banner__area banner__area-d pb-5">
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-xl-6 col-lg-6 col-md-12">
+                    <div className="col-xl-6 col-lg-6 col-md-12 pb-2">
                         <div className="banner__item p-relative w-img mb-30">
                             <div className="banner__img"><a href="product-details.html"><img
                                 src={banner_4} alt="" /></a></div>
@@ -15,7 +15,7 @@ const TwoColBanner = () => {
                                 Quality Products</p></div>
                         </div>
                     </div>
-                    <div className="col-xl-6 col-lg-6 col-md-12">
+                    <div className="col-xl-6 col-lg-6 col-md-12 pb-2">
                         <div className="banner__item p-relative mb-30 w-img">
                             <div className="banner__img"><a href="product-details.html"><img
                                 src={banner_5} alt="" /></a></div>
