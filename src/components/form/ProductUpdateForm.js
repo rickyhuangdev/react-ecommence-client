@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import FileUpload from "./FileUpload";
 
-const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues,categories}) => {
+const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues,categories,arrayOfSubIds,setArrayOfSubIds}) => {
     const { Option } = Select;
     const {
         title,
@@ -100,8 +100,8 @@ const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChang
                                 allowClear
                                 style={{ width: '100%' }}
                                 placeholder="Please select"
-                                value={subs}
-                                onChange={(value)=>setValues({...values,subs:value})}
+                                value={arrayOfSubIds}
+                                onChange={(value)=>setArrayOfSubIds(value)}
                             >
                                 {subOptions.map(item=>(
                                 <Option value={item._id} key={item._id}>{item.name}</Option>

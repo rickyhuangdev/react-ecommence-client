@@ -25,6 +25,7 @@ const ProductEdit = (props) => {
     const [values, setValues] = useState(initialState)
     const [subOptions, setSubOptions] = useState([])
     const [categories, setCategories] = useState([])
+    const [arrayOfSubIds, setArrayOfSubIds] = useState([])
     const [showSub, setShowSub] = useState(false)
     useEffect(() => {
         fetchProduct()
@@ -39,7 +40,14 @@ const ProductEdit = (props) => {
     const fetchProduct = () => {
         readProductApi(slug).then(res => {
             setValues({...values, ...res})
-            console.log(values)
+            getCategorySubApi(res.category._id).then(res=>{
+                setSubOptions(res)
+            })
+            let arr =[]
+            res.subs.map((s)=>{
+                arr.push(s._id)
+            })
+            setArrayOfSubIds(arr)
         })
     }
     const handleSubmit = async (e) => {
@@ -86,6 +94,8 @@ const ProductEdit = (props) => {
                                                    subOptions={subOptions}
                                                    showSub={showSub}
                                                    categories={categories}
+                                                   arrayOfSubIds={arrayOfSubIds}
+                                                   setArrayOfSubIds={setArrayOfSubIds}
                                 />
                             </div>
                         </div>
