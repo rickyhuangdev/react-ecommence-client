@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
-import {createProductApi, readProductApi} from "../../../api/product";
+import {readProductApi, updateProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
 import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 import {useParams} from "react-router-dom";
@@ -54,10 +54,14 @@ const ProductEdit = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            const re = await createProductApi(values)
-            if(re){
-                toast(`Create Product successfully`)
-            }
+            values.subs = arrayOfSubIds
+            values.category = selectedCategory ? selectedCategory : values.category
+            await updateProductApi(values).then(re => {
+                if (re) {
+                    setValues(initialState)
+                    toast(`Update Product successfully`)
+                }
+            })
         }catch (e){
             console.log(e)
         }
@@ -91,7 +95,6 @@ const ProductEdit = (props) => {
                         <div className="row">
                             <div className="col">
                                 <h4>Edit Product</h4>
-                                {JSON.stringify(values)}
                                 <ProductUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
                                                    setValues={setValues}
                                                    values={values} handleCategoryChange={handleCategoryChange}

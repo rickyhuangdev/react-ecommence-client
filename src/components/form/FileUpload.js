@@ -25,7 +25,6 @@ const FileUpload = ({values, setValues}) => {
     }
     const handleImageRemove = (image_id) => {
         deleteImageApi({public_id: image_id}).then(res => {
-            console.log(res)
             if (res) {
                 const {images} = values
                 let filterImageArr = images.filter(item => {

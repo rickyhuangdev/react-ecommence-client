@@ -37,6 +37,7 @@ const ProductCreate = () => {
         try{
           const re = await createProductApi(values)
             if(re){
+                setValues(initialState)
                 toast(`Create Product successfully`)
             }
         }catch (e){
