@@ -27,6 +27,7 @@ const ProductEdit = (props) => {
     const [categories, setCategories] = useState([])
     const [arrayOfSubIds, setArrayOfSubIds] = useState([])
     const [showSub, setShowSub] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState('')
     useEffect(() => {
         fetchProduct()
         fetchCategories()
@@ -65,16 +66,19 @@ const ProductEdit = (props) => {
     }
     const handleChange = (e) => {
         setValues({...values,[e.target.name]:e.target.value})
-        console.log(e.target.value)
     }
     const handleCategoryChange = (e) => {
         e.preventDefault()
         const cat_id = e.target.value
         setValues({...values,subs:[],category:cat_id})
+        setSelectedCategory(cat_id)
         getCategorySubApi(cat_id).then(res=>{
             setSubOptions(res)
         })
-        setShowSub(true)
+        if(values.category === cat_id){
+            fetchProduct()
+        }
+       setArrayOfSubIds([])
     }
     return (
         <div className="container-fluid p-0">
@@ -96,6 +100,7 @@ const ProductEdit = (props) => {
                                                    categories={categories}
                                                    arrayOfSubIds={arrayOfSubIds}
                                                    setArrayOfSubIds={setArrayOfSubIds}
+                                                   selectedCategory={selectedCategory}
                                 />
                             </div>
                         </div>

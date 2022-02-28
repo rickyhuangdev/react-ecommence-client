@@ -2,7 +2,7 @@ import React from 'react';
 import { Select } from 'antd';
 import FileUpload from "./FileUpload";
 
-const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues,categories,arrayOfSubIds,setArrayOfSubIds}) => {
+const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues,categories,arrayOfSubIds,setArrayOfSubIds,selectedCategory}) => {
     const { Option } = Select;
     const {
         title,
@@ -83,7 +83,7 @@ const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChang
                 <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Category</label>
                 <div className="col-sm-10">
-                    <select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="category" value={category._id}>
+                    <select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="category" value={selectedCategory?selectedCategory:category._id}>
                         <option>Please Select the Category</option>
                         {categories.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}
                     </select>
