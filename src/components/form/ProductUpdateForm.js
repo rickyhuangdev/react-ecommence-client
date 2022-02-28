@@ -2,14 +2,13 @@ import React from 'react';
 import { Select } from 'antd';
 import FileUpload from "./FileUpload";
 
-const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues}) => {
+const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChange,showSub,subOptions,setValues,categories}) => {
     const { Option } = Select;
     const {
         title,
         description,
         price,
         category,
-        categories,
         subs,
         shipping,
         quantity,
@@ -21,7 +20,6 @@ const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChang
     } = values
     return (
         <form className="mt-5" autoComplete="false" onSubmit={handleSubmit}>
-            {JSON.stringify(subs)}
             <div className="form-group row">
                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Product
                     Name</label>
@@ -85,7 +83,7 @@ const ProductUpdateForm = ({handleSubmit,handleChange,values,handleCategoryChang
                 <label htmlFor="exampleFormControlSelect1"
                        className="col-sm-2 col-form-label">Category</label>
                 <div className="col-sm-10">
-                    <select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="category">
+                    <select className="form-control" id="exampleFormControlSelect1"  onChange={handleCategoryChange} name="category" value={category._id}>
                         <option>Please Select the Category</option>
                         {categories.map(item => <option key={item._id} value={item._id}>{item.name}</option>)}
                     </select>

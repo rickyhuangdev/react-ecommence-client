@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
 import {createProductApi, readProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
-import ProductCreateForm from "../../../components/form/ProductCreateForm";
 import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 import {useParams} from "react-router-dom";
 import ProductUpdateForm from "../../../components/form/ProductUpdateForm";
@@ -11,7 +10,6 @@ const initialState = {
     title: '',
     description: '',
     price: '',
-    categories: [],
     category: '',
     subs: [],
     shipping: '',
@@ -23,28 +21,30 @@ const initialState = {
     brand: ''
 }
 const ProductEdit = (props) => {
-    let { slug } = useParams()
+    let {slug} = useParams()
     const [values, setValues] = useState(initialState)
     const [subOptions, setSubOptions] = useState([])
+    const [categories, setCategories] = useState([])
     const [showSub, setShowSub] = useState(false)
     useEffect(() => {
-        fetchCategories()
         fetchProduct()
+        fetchCategories()
+
     }, [])
-    const fetchCategories = () => {
-        getCategoryApi().then(res => {
-            console.log(res)
-            setValues({...values,categories:res})
+    const fetchCategories = () =>
+        getCategoryApi().then((res) => {
+            setCategories(res)
         })
-    }
+
     const fetchProduct = () => {
         readProductApi(slug).then(res => {
-            setValues({...values,...res})
+            setValues({...values, ...res})
+            console.log(values)
         })
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        try{
+        try {
             const re = await createProductApi(values)
             if(re){
                 toast(`Create Product successfully`)
@@ -85,6 +85,7 @@ const ProductEdit = (props) => {
                                                    values={values} handleCategoryChange={handleCategoryChange}
                                                    subOptions={subOptions}
                                                    showSub={showSub}
+                                                   categories={categories}
                                 />
                             </div>
                         </div>
