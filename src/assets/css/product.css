@@ -46,5 +46,13 @@
         font-size: 18px!important;
         text-align: left!important;
     }
+    .ant-tabs-tab-btn{
+        font-size: 15px!important;
+    }
 }
 
+.ant-tabs-tab-btn{
+    font-size: 20px;
+    color:#222222;
+    font-weight: 500;
+}
