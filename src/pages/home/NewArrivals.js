@@ -13,7 +13,7 @@ const NewArrivals = () => {
         })
     }
     return (
-        <div className="container-fluid pb-2">
+        <div className="container-fluid pb-5">
                 <ProductSlider products={products} title="New Arrivals" className="mb-4"/>
         </div>
     );
