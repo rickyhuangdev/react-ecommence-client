@@ -1,7 +1,72 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AdminNav from "../../../components/nav/AdminNav";
+import {createProductApi, readProductApi} from "../../../api/product";
+import {toast} from "react-toastify";
+import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
+import {getCategoryApi, getCategorySubApi} from "../../../api/category";
+import {useParams} from "react-router-dom";
 
-const ProductEdit = () => {
+const initialState = {
+    title: '',
+    description: '',
+    price: '',
+    categories: [],
+    category: '',
+    subs: [],
+    shipping: '',
+    quantity: '',
+    images: [],
+    colors: ["Black", "Brown", "Silver", "White", "Blue"],
+    brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "ASUS"],
+    color: '',
+    brand: ''
+}
+const ProductEdit = (props) => {
+    let { slug } = useParams()
+    console.log(slug)
+    const [values, setValues] = useState(initialState)
+    const [subOptions, setSubOptions] = useState([])
+    const [showSub, setShowSub] = useState(false)
+    useEffect(() => {
+        fetchCategories()
+        fetchProduct()
+    }, [])
+    const fetchCategories = () => {
+        getCategoryApi().then(res => {
+            setValues({...values,categories:res})
+        })
+    }
+    const fetchProduct = () => {
+        readProductApi(slug).then(res => {
+            console.log(res)
+        })
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            const re = await createProductApi(values)
+            if(re){
+                toast(`Create Product successfully`)
+            }
+        }catch (e){
+            console.log(e)
+        }
+
+
+    }
+    const handleChange = (e) => {
+        setValues({...values,[e.target.name]:e.target.value})
+        console.log(e.target.value)
+    }
+    const handleCategoryChange = (e) => {
+        e.preventDefault()
+        const cat_id = e.target.value
+        setValues({...values,subs:[],category:cat_id})
+        getCategorySubApi(cat_id).then(res=>{
+            setSubOptions(res)
+        })
+        setShowSub(true)
+    }
     return (
         <div className="container-fluid p-0">
             <div className="row">
@@ -13,34 +78,14 @@ const ProductEdit = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>Create Product</h4>
-                                {/*<form className="mt-4" onSubmit={editProductHandler}>*/}
-                                {/*    <div className="form-group">*/}
-                                {/*        <label htmlFor="Product_name">Product Name</label>*/}
-                                {/*        <input type="text" className="form-control" id="Product_name"*/}
-                                {/*               onChange={(e) => setName(e.target.value)} value={name}*/}
-                                {/*               aria-describedby="Product_name" placeholder="Enter Product name"/>*/}
-                                {/*    </div>*/}
-                                {/*    <div className="form-group">*/}
-                                {/*        <label htmlFor="Product_name">Product State</label>*/}
-                                {/*        <br/>*/}
-                                {/*        <div className="form-check form-check-inline">*/}
-                                {/*            <input className="form-check-input" type="radio" name="state"*/}
-                                {/*                   checked={state === 1}*/}
-                                {/*                   onChange={(e) => setState(1)}*/}
-                                {/*                   id="inlineRadio1" value="1"/>*/}
-                                {/*            <label className="form-check-label"*/}
-                                {/*                   htmlFor="inlineRadio1">processing</label>*/}
-                                {/*        </div>*/}
-                                {/*        <div className="form-check form-check-inline">*/}
-                                {/*            <input className="form-check-input" type="radio" name="state"*/}
-                                {/*                   checked={state === 0}*/}
-                                {/*                   onChange={(e) => setState(0)}*/}
-                                {/*                   id="inlineRadio2" value="0"/>*/}
-                                {/*            <label className="form-check-label" htmlFor="inlineRadio2">pending</label>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*    <button type="submit" className="btn btn-primary">Submit</button>*/}
-                                {/*</form>*/}
+                                {JSON.stringify(props)}
+
+                                <ProductCreateAndUpdateForm handleChange={handleChange} handleSubmit={handleSubmit}
+                                                            setValues={setValues}
+                                                            values={values} handleCategoryChange={handleCategoryChange}
+                                                            subOptions={subOptions}
+                                                            showSub={showSub}
+                                />
                             </div>
                         </div>
                     </div>

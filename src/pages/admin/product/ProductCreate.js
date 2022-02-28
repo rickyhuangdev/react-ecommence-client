@@ -3,7 +3,6 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {createProductApi} from "../../../api/product";
 import {toast} from "react-toastify";
 import ProductCreateAndUpdateForm from "../../../components/form/ProductCreateAndUpdateForm";
-import {getSubCategoryApi} from "../../../api/subCategory";
 import {getCategoryApi, getCategorySubApi} from "../../../api/category";
 
 const initialState = {

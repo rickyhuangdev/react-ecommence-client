@@ -3,6 +3,7 @@ import defaultImage from '../../assets/images/default_product.png'
 import {DeleteOutlined, EditOutlined, QuestionCircleOutlined} from "@ant-design/icons";
 import {Popconfirm} from "antd";
 import {toast} from "react-toastify";
+import {Link} from "react-router-dom";
 const AdminProductCard = ({product,removeProduct}) => {
     const {title,description,images} = product
 
@@ -15,7 +16,11 @@ const AdminProductCard = ({product,removeProduct}) => {
                     <p className="card-text">{description && description.substring(0,10)}...</p>
                 </div>
                 <div className="card-footer d-flex">
-                    <div className="mr-2">{<EditOutlined style={{fontSize:"18px"}} className="text-info" />}</div>
+                    <div className="mr-2">
+                        <Link to={`/admin/product/edit/${product.slug}`} >
+                            <EditOutlined style={{fontSize:"18px"}} className="text-info" />
+                        </Link>
+                    </div>
                     <div>
                         <Popconfirm title="Are you sure？" icon={<QuestionCircleOutlined style={{ color: 'red' }} />} onConfirm={()=>removeProduct(product._id)}>
                             {<DeleteOutlined  style={{fontSize:"18px"}} className="text-warning"/>}
