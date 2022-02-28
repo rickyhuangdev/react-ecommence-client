@@ -197,6 +197,9 @@ main {
 .product_info span {
   font-size: 14px;
 }
+.product__details-nav .nav-tabs {
+  border-bottom: 0;
+}
 .mt-15 {
   margin-top: 15px;
 }
@@ -209,3 +212,4 @@ main {
 .mb-20 {
   margin-bottom: 20px;
 }
+
