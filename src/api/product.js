@@ -15,3 +15,7 @@ export const deleteProductApi = (id) => {
 export const createProductApi = data => {
     return request('/product', 'post', data)
 }
+
+export const fetchProductsApi = (sort,order,limit) => {
+    return request(`/products`, 'post',{sort,order,limit})
+}

@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from "react-slick";
 import ProductList from "./productList";
 import ProductCard from "../../components/cards/ProductCard";
-const ProductSlider = ({products}) => {
+const ProductSlider = ({products,title}) => {
     const settings = {
         infinite: true,
         dots: false,
@@ -41,7 +41,7 @@ const ProductSlider = ({products}) => {
     };
     return (
         <div className="slider-area">
-            <h4 className="mb-4 font-weight-bold" style={{fontWeight:"700"}}>Top Deals Of The Day</h4>
+            <h4 className="mb-4 font-weight-bold" style={{fontWeight:"700"}}>{title}</h4>
             <Slider {...settings}>
                 {products && products.map(product=>(
                     <div key={product._id} className="px-1">
