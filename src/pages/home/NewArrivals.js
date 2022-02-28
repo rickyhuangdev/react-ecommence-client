@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {fetchProductsApi} from "../../api/product";
 import ProductSlider from "./productSlider";
 
-const ProductList = () => {
+const NewArrivals = () => {
     useEffect(() => {
         getProducts()
     }, [])
@@ -19,4 +19,4 @@ const ProductList = () => {
     );
 };
 
-export default ProductList;
+export default NewArrivals;

@@ -1,6 +1,6 @@
 import React from 'react';
 import Slider from "react-slick";
-import ProductList from "./productList";
+import NewArrivals from "./NewArrivals";
 import ProductCard from "../../components/cards/ProductCard";
 const ProductSlider = ({products,title}) => {
     const settings = {
