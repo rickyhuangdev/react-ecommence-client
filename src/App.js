@@ -14,6 +14,7 @@ import AdminRoutes from "./components/routes/AdminRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
 import {userAuth} from "./utils/heplers";
 import {getTokenInfo} from "./utils/storage";
+import Footer from "./components/nav/footer";
 
 
 function App(props) {
@@ -50,6 +51,7 @@ function App(props) {
 
                 </Switch>
             </main>
+            <Footer />
       </Fragment>
 
   );
