@@ -4,6 +4,8 @@ import {InputNumber, Space} from 'antd';
 import {readProductApi} from "../../api/product";
 import Slider from "react-slick";
 import '../../assets/css/product.css'
+import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
+import InnerImageZoom from 'react-inner-image-zoom';
 const ProductDetail = ({match}) => {
     const {slug} = match.params
     const [product, setProduct] = useState({});
@@ -52,8 +54,10 @@ const ProductDetail = ({match}) => {
                             <div className="product__details-thumb">
                                 <Slider {...settings}>
                                     {imageSlider && imageSlider.map(item => (
-                                        <div key={item.public_id} className="d-flex justify-content-center align-items-start">
-                                            <img src={item.url} alt={item.public_id} style={{height:"480px"}} className="product-slider-image" />
+                                        <div key={item.public_id} className="d-flex justify-content-center align-items-start p-0 m-0">
+                                            <InnerImageZoom src={item.url} zoomSrc={item.url}>
+                                            <img src={item.url} alt={item.public_id} style={{height:"500px"}} className="product-slider-image" />
+                                            </InnerImageZoom>
                                         </div>
                                     ))}
 
