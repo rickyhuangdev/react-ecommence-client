@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {BsBookmarks, BsHeart, BsShare, BsStar} from "react-icons/bs";
+import {BsBookmarks, BsHeart, BsShare} from "react-icons/bs";
 import {InputNumber, Space, Tabs} from 'antd';
 import {readProductApi} from "../../api/product";
 import Slider from "react-slick";
 import '../../assets/css/product.css'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import InnerImageZoom from 'react-inner-image-zoom';
+import StarRatings from 'react-star-ratings';
 
 const ProductDetail = ({match}) => {
     const {slug} = match.params
     const [product, setProduct] = useState({});
+    const [rating, setRating] = useState('');
     const [imageSlider, setImageSlider] = useState([]);
     const {TabPane} = Tabs;
     useEffect(() => {
@@ -47,7 +49,11 @@ const ProductDetail = ({match}) => {
         initialSlide: 2
     };
     const callback = (key) => {
-
+        console.log(key)
+    }
+    const changeRating = (newRating, name) => {
+        setRating(newRating)
+        console.log(rating)
     }
 
     return (
@@ -80,14 +86,18 @@ const ProductDetail = ({match}) => {
                                     fontWeight: "700"
                                 }}>{product.title}</h6>
                                 <div className="pd-rating mb-10">
-                                    <ul className="rating d-flex" style={{listStyle: 'none'}}>
-                                        <li><a href="#"><BsStar/></a></li>
-                                        <li><a href="#"><BsStar/></a></li>
-                                        <li><a href="#"><BsStar/></a></li>
-                                        <li><a href="#"><BsStar/></a></li>
-                                        <li><a href="#"><BsStar/></a></li>
-                                    </ul>
-                                    <span>(01 review)</span><span><a href="#">Add your review</a></span></div>
+                                    <StarRatings
+                                        rating={2}
+                                        starRatedColor="rgb(252, 190, 0)"
+                                        starHoverColor="rgb(252, 190, 0)"
+                                        changeRating={(newRating,name)=>console.log(newRating,name)}
+                                        numberOfStars={5}
+                                        name={product._id}
+                                        starSpacing='1px'
+                                        starDimension="20px"
+                                        isSelectable={false}
+                                    />
+                                    <span className="mx-2 d-block">(01 review)</span><span><a href="#">Add your review</a></span></div>
                                 <div className="price mb-10"><span>$ {product.price}</span></div>
                                 <div className="features-des mb-20 mt-10">
                                     <ul>
