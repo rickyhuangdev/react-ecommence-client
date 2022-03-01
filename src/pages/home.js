@@ -7,9 +7,11 @@ import NewArrivals from "./home/NewArrivals";
 import TwoColBanner from "./home/TwoColBanner";
 import FeatureArea from "./home/FeatureArea";
 import BestSellers from "./home/BestSellers";
+import SliderArea from "./home/SliderArea";
 const Home = () => {
     return (
         <>
+            <SliderArea />
             <ProductSlider />
             <FeatureArea />
             <Banner/>

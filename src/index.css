@@ -63,11 +63,11 @@ main {
 .banner__area .banner__item{
   position: relative;
 }
-.banner__area .banner__item .banner__content{
+.banner__area .banner__item .banner__content {
   position: absolute;
-  left: 30px;
-  bottom: 35px;
-  color: #FFFFFF
+  left: -7px;
+  bottom: -69px;
+  color: #FFFFFF;
 }
 
 .banner__area .banner__item .banner__content h6 {
@@ -285,4 +285,13 @@ main {
 }
 .mt-20{
   margin-top: 20px;
+}
+.pt-60 {
+  padding-top: 60px;
+}
+.pr-20 {
+  padding-right: 20px;
+}
+.mb-30 {
+  margin-bottom: 30px;
 }
