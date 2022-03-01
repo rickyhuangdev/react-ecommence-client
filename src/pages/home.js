@@ -8,12 +8,15 @@ import TwoColBanner from "./home/TwoColBanner";
 import FeatureArea from "./home/FeatureArea";
 import BestSellers from "./home/BestSellers";
 import SliderArea from "./home/SliderArea";
+import CategorySection from "./home/CategorySection";
+
 const Home = () => {
     return (
         <>
             <SliderArea />
             <ProductSlider />
             <FeatureArea />
+            <CategorySection />
             <Banner/>
             <NewArrivals />
             <TwoColBanner/>
