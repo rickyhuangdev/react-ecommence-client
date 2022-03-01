@@ -40,7 +40,8 @@ const FileUpload = ({values, setValues}) => {
                        className="col-sm-2 col-form-label">Upload Images</label>
                 <div className="col-sm-10">
                     <div className="form-group">
-                        <label htmlFor="imageupload" className="btn btn-secondary">Upload Images <input type="file"
+                        <label htmlFor="imageupload" className="btn btn-secondary">Upload Images
+                            <input type="file"
                                                                                                         className="form-control-file"
                                                                                                         id="imageupload"
                                                                                                         accept="image/*"
@@ -55,7 +56,7 @@ const FileUpload = ({values, setValues}) => {
         <div className="col-sm-10">
             <div className="form-group">
                 <div className="row">
-                    {values.images &&(
+                    {values.images && values.images.length >0 &&(
                         values.images.map((image)=> (
                             <div className="col-3" key={image.public_id}>
                                 <Badge count="x" key={image.public_id} onClick={() => {

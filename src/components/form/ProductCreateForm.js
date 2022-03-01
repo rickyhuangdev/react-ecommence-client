@@ -21,7 +21,6 @@ const ProductCreateForm = ({handleSubmit,handleChange,values,handleCategoryChang
     } = values
     return (
         <form className="mt-5" autoComplete="false" onSubmit={handleSubmit}>
-            {JSON.stringify(subs)}
             <div className="form-group row">
                 <label htmlFor="inputEmail3" className="col-sm-2 col-form-label">Product
                     Name</label>
