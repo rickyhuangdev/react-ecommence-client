@@ -6,9 +6,9 @@ import Slider from "react-slick";
 import '../../assets/css/product.css'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import InnerImageZoom from 'react-inner-image-zoom';
-import StarRatings from 'react-star-ratings';
 import RatingModal from "../../components/modal/RatingModal";
 import {useSelector} from "react-redux";
+import {showAverage} from "../../utils/rating";
 
 const ProductDetail = ({match}) => {
     const {slug} = match.params
@@ -94,16 +94,7 @@ const ProductDetail = ({match}) => {
                                     fontWeight: "700"
                                 }}>{product.title}</h6>
                                 <div className="pd-rating mb-10">
-                                    <StarRatings
-                                        rating={0}
-                                        starRatedColor="rgb(252, 190, 0)"
-                                        starHoverColor="rgb(252, 190, 0)"
-                                        numberOfStars={5}
-                                        name={product._id}
-                                        starSpacing='1px'
-                                        starDimension="20px"
-                                        isSelectable={false}
-                                    />
+                                    {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (<h6 className="mb-0">No rating yet</h6>)}
                                     <span className="mx-2 d-block">(01 review)</span><span><a href="#">Add your review</a></span></div>
                                 <div className="price mb-10"><span>$ {product.price}</span></div>
                                 <div className="features-des mb-20 mt-10">
