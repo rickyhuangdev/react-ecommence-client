@@ -10,8 +10,9 @@ export const showAverage = (p) => {
         let totalReduced = total.reduce((p, n) => p + n, 0)
         let highest = length * 5
         let result = (totalReduced * 5) / highest
-        return (
-            <div>
+
+         return (
+            <div className="d-flex w-100" style={{height:'30px'}}>
                 <StarRatings rating={result}
                              starRatedColor="rgb(252, 190, 0)"
                              starHoverColor="rgb(252, 190, 0)"
