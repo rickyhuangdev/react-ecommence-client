@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BsBookmarks, BsHeart, BsShare} from "react-icons/bs";
 import {InputNumber, Space, Tabs} from 'antd';
-import {readProductApi} from "../../api/product";
+import {getRelativeProductApi, readProductApi} from "../../api/product";
 import Slider from "react-slick";
 import '../../assets/css/product.css'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
@@ -9,11 +9,13 @@ import InnerImageZoom from 'react-inner-image-zoom';
 import RatingModal from "../../components/modal/RatingModal";
 import {useSelector} from "react-redux";
 import {showAverage} from "../../utils/rating";
+import ProductSlider from "../home/productSlider";
 
 const ProductDetail = ({match}) => {
     const {slug} = match.params
     const [product, setProduct] = useState({});
     const [imageSlider, setImageSlider] = useState([]);
+    const [relativeProduct, setRelativeProduct] = useState([]);
     const [existingRatingObject, setExistingRatingObject] = useState(0);
     const {TabPane} = Tabs;
     const profile = useSelector(state => state.profile)
@@ -33,13 +35,14 @@ const ProductDetail = ({match}) => {
             if (res) {
                 setProduct(res)
                 setImageSlider(res.images)
+                getRelativeProductApi(res._id).then(res => {
+                    setRelativeProduct(res)
+                    console.log(relativeProduct)
+                })
             }
         })
     }
     const onChange = () => {
-    }
-    const thumbImageStyle ={
-
     }
     const settings = {
         customPaging: function (i) {
@@ -182,6 +185,14 @@ const ProductDetail = ({match}) => {
                     </div>
                 </div>
             </div>
+            {relativeProduct && relativeProduct.length > 5 && (
+                <div className="product-relative mt-40 mb-60">
+                    <div className="container-fluid mx-sm-5 p-3 mx-1">
+                    <ProductSlider title="Related Products " products={relativeProduct}/>
+                    </div>
+                </div>
+            )}
+
         </>
     );
 };

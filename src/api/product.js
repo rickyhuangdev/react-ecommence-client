@@ -19,6 +19,9 @@ export const createProductApi = data => {
 export const fetchProductsApi = (sort,order,limit) => {
     return request(`/products`, 'post',{sort,order,limit})
 }
-export const createProductRatingApi = (id,star) => {
-    return request(`/product/star/${id}`, 'put',{star})
+export const createProductRatingApi = (id, star) => {
+    return request(`/product/star/${id}`, 'put', {star})
+}
+export const getRelativeProductApi = (id) => {
+    return request(`/product/related/${id}`, 'get')
 }
