@@ -25,39 +25,30 @@
     transition: all .3s ease-out 0s;
     padding-left: 35px;
 }
-.single-widget-category label::before {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    content: "";
-    width: 20px;
-    height: 20px;
-    border: 1px solid #d8d8d8;
-    border-radius: 50%;
-}
-.single-widget-category label::after {
-    position: absolute;
-    left: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: "Font awesome 5 pro";
-    font-size: 12px;
-    content: "\f00c";
-    opacity: 0;
-    visibility: hidden;
-    -webkit-transition: all .3s ease-out 0s;
-    -moz-transition: all .3s ease-out 0s;
-    -ms-transition: all .3s ease-out 0s;
-    -o-transition: all .3s ease-out 0s;
-    transition: all .3s ease-out 0s;
-    font-weight: 200;
-}
+
 .single-widget-category label span {
     color: #bab9b9;
 }
+
 .ant-slider-track {
     background-color: #2196F3;
     border-radius: 2px;
     transition: background-color 0.3s;
+}
+
+.ant-checkbox-group {
+    display: flex;
+    flex-direction: column;
+
+
+}
+
+.ant-checkbox-group > * {
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.ant-checkbox-group > label > span:last-child {
+    margin-left: 10px;
+    font-size: 15px;
 }

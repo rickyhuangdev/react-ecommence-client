@@ -32,7 +32,7 @@ const publicRoutes = [
         exact: true
     },
     {
-        path: '/category/:slug',
+        path: '/category/:slug?',
         component: CategoryIndex,
         exact: true
     }
