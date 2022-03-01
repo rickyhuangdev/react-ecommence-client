@@ -301,3 +301,9 @@ main {
 a:hover{
   text-decoration: none!important;
 }
+.pl-60 {
+  padding-left: 60px;
+}
+.ml-20 {
+  margin-left: 20px;
+}
