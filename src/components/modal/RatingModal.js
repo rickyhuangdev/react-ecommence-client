@@ -3,15 +3,25 @@ import {Modal} from 'antd';
 import {BsStar} from "react-icons/bs";
 
 import {useSelector} from "react-redux";
+import {useHistory} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const RatingModal = ({title,children}) => {
     const user = useSelector(state => state.profile.user)
     const [modalVisible, setModalVisible] = useState(false)
+    const history = useHistory()
+    const handleModal = ()=>{
+        if(user && user.token){
+            setModalVisible(true)
+        }else{
+            history.replace('/login')
+        }
+    }
     return (
         <>
             <button className="btn btn-light shadow-none d-flex align-items-center"
-                    onClick={() => setModalVisible(true)}>
-                <BsStar className="mr-2 text-warning"/>{user ? 'leave a Rating' : 'login to leave rating'}
+                    onClick={handleModal}>
+                <BsStar className="mr-2 text-warning"/>{user && user.token ? 'leave a Rating' : 'login to leave rating'}
             </button>
             <Modal
                 title={`Leaving a rating for [ ${title} ]`}
