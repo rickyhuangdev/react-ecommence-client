@@ -1,7 +1,7 @@
 import 'antd/dist/antd.css'
 import './index.css'
 import 'daemonite-material/css/material.min.css'
-import {Route, Switch} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import React, {Fragment, useEffect} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,26 +12,21 @@ import PrivateRoutes from "./routes/privateRoutes";
 import AuthRoutes from "./routes/authRoutes";
 import AdminRoutes from "./components/routes/AdminRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
-import {userAuth} from "./utils/heplers";
-import {getTokenInfo} from "./utils/storage";
 import Footer from "./components/nav/footer";
 
 
 function App(props) {
-    const dispatch = useDispatch()
-    const user = useSelector(state => state.profile.user)
-    useEffect(() => {
-    }, [user])
     return (
+        <BrowserRouter>
+            <Fragment>
+                <Header/>
+                <ToastContainer/>
+                <main>
 
-        <Fragment>
-            <Header/>
-            <ToastContainer/>
-            <main>
-                <Switch>
-                    {
-                        publicRoutes.map(
-                            ({path, component, ...routes}) =>
+                    <Switch>
+                        {
+                            publicRoutes.map(
+                                ({path, component, ...routes}) =>
                                 <Route key={path} path={path} component={component} {...routes} />
                         )
                     }
@@ -49,10 +44,12 @@ function App(props) {
                         )
                     }
 
-                </Switch>
-            </main>
-            <Footer />
-      </Fragment>
+                    </Switch>
+
+                </main>
+                <Footer/>
+            </Fragment>
+        </BrowserRouter>
 
   );
 }

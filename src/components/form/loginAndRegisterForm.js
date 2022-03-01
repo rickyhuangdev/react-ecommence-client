@@ -13,6 +13,7 @@ import {
     signInWithPopup
 } from "firebase/auth";
 import {createOrUpdateUser, setUser} from "../../store/actions/profile";
+import {createOrUpdateUserApi} from "../../api/user";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -50,12 +51,6 @@ const LoginAndRegisterForm = (prop) => {
                     tokenInfo = userCredential._tokenResponse.refreshToken
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    // dispatch(setUser({
-                    //     email: user.email,
-                    //     name: user.displayName,
-                    //     image: user.photoURL,
-                    //     token: idTokenResult.token
-                    // }))
                     dispatch(createOrUpdateUser())
                     history.push('/')
                     toast.success('Register Successfully!');
@@ -91,15 +86,15 @@ const LoginAndRegisterForm = (prop) => {
                     const user = userCredential.user;
                     const idTokenResult = await user.getIdTokenResult()
                     dispatch(saveToken(idTokenResult.token))
-                    dispatch(createOrUpdateUser({token: idTokenResult.token}))
-                    // toast.success('Login Successfully!');
-                    history.replace('/')
-                    // const {state} = location
-                    // if (!state) {
-                    //     history.replace('/')
-                    // } else {
-                    //     history.replace(state.from)
-                    // }
+                    createOrUpdateUserApi({token:idTokenResult.token}).then(res => {
+                        dispatch(setUser({
+                            name: res.name,
+                            email: res.email,
+                            token: idTokenResult.token,
+                            _id: res._id,
+                        }))
+                        prop.loginRediect(res)
+                    })
                 })
                 .catch((error) => {
                     const errorCode = error.code;

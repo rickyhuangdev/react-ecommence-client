@@ -6,15 +6,17 @@ const NewArrivals = () => {
     useEffect(() => {
         getProducts()
     }, [])
+
     const [products, setProducts] = useState([])
     const getProducts = () => {
-        fetchProductsApi('createdAt','desc',6).then(re => {
-            setProducts(re)
+
+        fetchProductsApi('createdAt', 'desc', 6).then(res => {
+            setProducts(res)
         })
     }
     return (
         <div className="container-fluid pb-5">
-                <ProductSlider products={products} title="New Arrivals" className="mb-4"/>
+            <ProductSlider products={products} title="New Arrivals" className="mb-4"/>
         </div>
     );
 };

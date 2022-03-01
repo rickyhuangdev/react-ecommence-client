@@ -4,8 +4,7 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {getTokenInfo, removeTokenInfo} from "./storage";
-import {toast} from "react-toastify";
+import {getTokenInfo} from "./storage";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -30,11 +29,10 @@ instance.interceptors.request.use(config => {
 })
 
 instance.interceptors.response.use(res => res.data, error => {
-    const {status, data} = error.response
-    console.log(status)
-    console.log(data)
-    if (error.response && status === 400 && data.errors.name === 'ValidationError') {
-        console.log(data.errors[0].message)
+
+
+    if (error.response && error.response.status === 400 && error.response.data.errors.name === 'ValidationError') {
+        console.log(error.response.data.errors[0].message)
 
     }
     if (error.response && error.response.status === 401) {

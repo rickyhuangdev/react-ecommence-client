@@ -12,19 +12,8 @@ export const clearUserProfile = () => {
     }
 }
 
-export const createOrUpdateUser = (token) => {
+export const createOrUpdateUser = (user) => {
 
-    return async (dispatch, getState) => {
-        const res = await createOrUpdateUserApi(token)
-        dispatch(setUser({
-            email: res.email,
-            user_id: res._id,
-            name: res.name,
-            role: res.role,
-            image: res.picture,
-            token:getState().login.token
-        }))
-    }
 }
 
 export const getUserProfile = () => {
@@ -34,7 +23,6 @@ export const getUserProfile = () => {
             email: res.email,
             user_id: res._id,
             name: res.name,
-            role: res.role,
             image:res.picture,
             token: getState().login.token
         }))

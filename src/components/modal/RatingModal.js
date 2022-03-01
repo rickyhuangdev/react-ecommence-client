@@ -3,18 +3,22 @@ import {Modal} from 'antd';
 import {BsStar} from "react-icons/bs";
 
 import {useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
-import {toast} from "react-toastify";
+import {useHistory,useParams} from "react-router-dom";
 
 const RatingModal = ({title,children}) => {
     const user = useSelector(state => state.profile.user)
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory()
+    const params = useParams()
+
     const handleModal = ()=>{
         if(user && user.token){
             setModalVisible(true)
         }else{
-            history.replace('/login')
+            history.replace({
+                pathname:'/login',
+                state:{from: `/product/${params.slug}`}
+            })
         }
     }
     return (
