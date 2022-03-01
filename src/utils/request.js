@@ -4,7 +4,8 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {getTokenInfo} from "./storage";
+import {getTokenInfo, removeTokenInfo} from "./storage";
+import {toast} from "react-toastify";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -35,11 +36,13 @@ instance.interceptors.response.use(res => res.data, error => {
         console.log(error.response.data.errors[0].message)
 
     }
-    if (error.response && error.response.status === 401) {
-        // toast.error(data.err)
-        // removeTokenInfo()
-        // window.location.href = '/login'
-        console.log(123)
+
+    if (error.response && error.response.status === 401 && error.response.data.err.code === 'auth/id-token-expired') {
+        toast.warning("Your login has expired")
+        removeTokenInfo()
+        setTimeout(() => {
+            window.location.href = '/login'
+        }, 4000)
 
     }
 

@@ -8,16 +8,26 @@ import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import StarRatings from 'react-star-ratings';
 import RatingModal from "../../components/modal/RatingModal";
+import {useSelector} from "react-redux";
 
 const ProductDetail = ({match}) => {
     const {slug} = match.params
     const [product, setProduct] = useState({});
-    const [rating, setRating] = useState('');
     const [imageSlider, setImageSlider] = useState([]);
+    const [existingRatingObject, setExistingRatingObject] = useState(0);
     const {TabPane} = Tabs;
+    const profile = useSelector(state => state.profile)
     useEffect(() => {
         getProductDetail()
-    }, [])
+    }, [slug])
+    useEffect(()=>{
+        if(product.ratings && profile){
+            let existingRatingObject = product.ratings.find(
+                (ele) => ele.postedBy === profile.user._id
+            );
+            existingRatingObject && setExistingRatingObject(existingRatingObject.star)
+        }
+    })
     const getProductDetail = () => {
         readProductApi(slug).then(res => {
             if (res) {
@@ -52,10 +62,7 @@ const ProductDetail = ({match}) => {
     const callback = (key) => {
         console.log(key)
     }
-    const changeRating = (newRating, name) => {
-        setRating(newRating)
-        console.log(rating)
-    }
+
 
     return (
         <>
@@ -88,10 +95,9 @@ const ProductDetail = ({match}) => {
                                 }}>{product.title}</h6>
                                 <div className="pd-rating mb-10">
                                     <StarRatings
-                                        rating={2}
+                                        rating={0}
                                         starRatedColor="rgb(252, 190, 0)"
                                         starHoverColor="rgb(252, 190, 0)"
-                                        changeRating={(newRating,name)=>console.log(newRating,name)}
                                         numberOfStars={5}
                                         name={product._id}
                                         starSpacing='1px'
@@ -135,19 +141,8 @@ const ProductDetail = ({match}) => {
                                             </button>
                                         </div>
                                         <div className="dm-item pb-2">
-                                            <RatingModal title={product.title}>
-
-                                                <StarRatings
-                                                    rating={2}
-                                                    starRatedColor="rgb(252, 190, 0)"
-                                                    starHoverColor="rgb(252, 190, 0)"
-                                                    changeRating={(newRating, name) => console.log(newRating, name)}
-                                                    numberOfStars={5}
-                                                    name={product._id}
-                                                    starSpacing='1px'
-                                                    starDimension="20px"
-                                                    isSelectable={false}
-                                                />
+                                            <RatingModal title={product.title} existingRatingObject={existingRatingObject}
+                                                         product_id={product._id}>
                                             </RatingModal>
                                         </div>
                                     </div>
