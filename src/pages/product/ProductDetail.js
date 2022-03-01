@@ -100,7 +100,7 @@ const ProductDetail = ({match}) => {
                                     {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (<h6 className="mb-0">No rating yet</h6>)}
                                     <span className="mx-2 d-block">(01 review)</span><span><a href="#">Add your review</a></span></div>
                                 <div className="price mb-10"><span>$ {product.price}</span></div>
-                                <div className="features-des mb-20 mt-10">
+                                <div className="features-des mb-20 mt-15">
                                     <ul>
                                         <li><span className="text-dark font-weight-bold">{product.description}</span></li>
                                     </ul>
@@ -121,7 +121,7 @@ const ProductDetail = ({match}) => {
                                         Cart
                                     </button>
                                 </div>
-                                <div className="details-meta">
+                                <div className="details-meta my-4">
                                     <div className="d-meta-left d-flex flex-column flex-sm-row">
                                         <div className="dm-item mr-20 pb-2">
                                             <button className="btn btn-secondary shadow-none d-flex align-items-center">
