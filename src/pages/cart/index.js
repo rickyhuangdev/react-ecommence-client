@@ -1,6 +1,15 @@
 import React from 'react';
 import '../../assets/css/cart.css'
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {BsPlus, BsTrash} from "react-icons/bs";
+import {AiOutlineMinus} from "react-icons/ai";
+import NumberBox from "../../components/input/NumberBox";
+
 const CartIndex = () => {
+    const cart = useSelector(state => state.cart)
+    const getQuantity = (number) => {
+    }
     return (
         <section className="cart_section section_space">
             <div className="container">
@@ -18,29 +27,33 @@ const CartIndex = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <div className="cart_product"><img src="assets/images/compare/compare_img_1.jpg"
-                                                                   alt="image_not_found"/><h3><a
-                                    href="shop_details.html">Your Product Title Here</a></h3></div>
-                            </td>
-                            <td className="text-center"><span className="price_text">$10.50</span></td>
-                            <td className="text-center">
-                                <form action="#">
-                                    <div className="quantity_input">
-                                        <button type="button" className="input_number_decrement"><i
-                                            className="fal fa-minus"></i></button>
-                                        <input className="input_number" type="text" value="1"/>
-                                            <button type="button" className="input_number_increment"><i
-                                                className="fal fa-plus"></i></button></div>
-                                </form>
-                            </td>
-                            <td className="text-center"><span className="price_text">$10.50</span></td>
-                            <td className="text-center">
-                                <button type="button" className="remove_btn"><i className="fal fa-trash-alt"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        {cart && cart.length > 0 && cart.map(item => (
+                            <tr key={item.product._id}>
+                                <td>
+                                    <div className="cart_product">
+                                        <img src={item.product.images[0].url} alt={item.product.title}/>
+                                        <h3>
+                                            <Link to={`/product/${item.product.slug}`}
+                                                  className="text-dark">{item.product.title}</Link>
+                                        </h3>
+                                    </div>
+                                </td>
+                                <td className="text-center"><span
+                                    className="price_text">${item.product.price.toFixed(2)}</span></td>
+                                <td className="text-center">
+                                    <form action="#">
+                                       <NumberBox min={1} max={5} getQuantity={getQuantity} />
+                                    </form>
+                                </td>
+                                <td className="text-center"><span className="price_text">$10.50</span></td>
+                                <td className="text-center">
+                                    <button type="button" className="remove_btn">
+                                        <BsTrash/>
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+
                         </tbody>
                     </table>
                 </div>

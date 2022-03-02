@@ -317,3 +317,7 @@ a:hover{
 .pt-10 {
   padding-top: 10px;
 }
+
+button:focus,input:focus {
+  outline: 0!important;
+}

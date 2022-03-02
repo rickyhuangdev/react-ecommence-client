@@ -1,0 +1,31 @@
+/**
+number box
+ */
+.quantity_input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.quantity_input button, .quantity_input input {
+    border-radius: 3px;
+    border: 1px solid #e3e6e9;
+}
+.quantity_input input {
+    width: 70px;
+    height: 30px;
+    margin: 0;
+    padding: 0 10px;
+    font-weight: 500;
+    text-align: center;
+    color: #051d43;
+    transition: .6s cubic-bezier(0.25,1,0.5,1);
+    border-left: 0px!important;
+    border-right: 0px!important;
+    border-radius:0px!important;
+}
+.quantity_input button {
+    width: 30px;
+    height: 30px;
+    color: #b8c6d0;
+    line-height: 32px;
+}
