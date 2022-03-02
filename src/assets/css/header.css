@@ -401,6 +401,20 @@ h6 {
         font-size: 12px;
     }
 }
-
-
-
+.header__bottom .box-items-inner {
+    display: flex;
+    justify-content: space-between;
+}
+.header__bottom .box-item a {
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+}
+.header__bottom .box-item a svg {
+    font-size: 30px;
+    line-height: 40px;
+    margin-inline-end: 15px;
+}

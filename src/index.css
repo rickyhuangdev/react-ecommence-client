@@ -311,4 +311,9 @@ a:hover{
   margin-right: 20px;
 }
 
-
+.pb-10 {
+  padding-bottom: 10px;
+}
+.pt-10 {
+  padding-top: 10px;
+}

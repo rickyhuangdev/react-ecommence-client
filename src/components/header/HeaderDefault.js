@@ -1,24 +1,41 @@
 import React, {useState} from 'react';
 import '../../assets/css/header.css'
 import {Dropdown, Menu} from 'antd';
-import {BsBag, BsHeart, BsJustify, BsPerson, BsSearch, BsTrash} from "react-icons/bs";
+import {
+    BsBag,
+    BsCamera,
+    BsHeart,
+    BsJustify,
+    BsLaptop,
+    BsPerson,
+    BsPhone,
+    BsSearch,
+    BsTrash,
+    BsWifi2
+} from "react-icons/bs";
+import {IoBedOutline, IoShirtOutline} from "react-icons/io5";
+import {AiOutlineAudio} from "react-icons/ai";
 
 const HeaderDefault = () => {
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
-    const changeLang = ({ key }) => {
+    const [searchText, setSearchText] = useState('')
+    const changeLang = ({key}) => {
         setLocalLang(key)
     }
-    const changeCurrency = ({ key }) => {
+    const changeCurrency = ({key}) => {
         setCurrency(key)
     }
+    const handleSearch = () => {
+    }
+
     const LangMenu = (
         <Menu onClick={changeLang}>
             <Menu.Item key="English">
-                    English
+                English
             </Menu.Item>
             <Menu.Item key="Chinese">
-                    Chinese
+                Chinese
             </Menu.Item>
             <Menu.Item key="Japanese">
                     Japanese
@@ -103,7 +120,8 @@ const HeaderDefault = () => {
                                     <form action="#">
                                         <div className="header__search-box"><input
                                             className="search-input search-input-2" type="text"
-                                            placeholder="I'm shopping for..."/>
+                                            placeholder="I'm shopping for..." value={searchText}
+                                            onChange={handleSearch}/>
                                             <button className="button button-2 button-3" type="button"><BsSearch/>
                                             </button>
                                         </div>
@@ -176,6 +194,26 @@ const HeaderDefault = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="header__bottom d-none d-lg-block">
+                <div className="container">
+                        <div className="box-items-inner pt-10 pb-10">
+                            <div className="box-item"><a href="shop.html"><BsLaptop/>Laptop <br/>&amp; Computer </a>
+                            </div>
+                            <div className="box-item"><a href="shop.html"><BsPhone/>Tablets <br/>&amp; Mobile Phones
+                            </a></div>
+                            <div className="box-item"><a href="shop.html"><BsWifi2/>Digitals <br/>&amp; Electronics </a>
+                            </div>
+                            <div className="box-item"><a href="shop.html"><BsCamera/>Camera <br/>&amp; Accesories </a>
+                            </div>
+                            <div className="box-item"><a href="shop.html"><IoBedOutline/>Decor <br/>&amp; Furniture </a>
+                            </div>
+                            <div className="box-item"><a href="shop.html"><IoShirtOutline/>Fashion <br/>&amp; Clotheing
+                            </a></div>
+                            <div className="box-item d-lg-none d-xl-block"><a
+                                href="shop.html"><AiOutlineAudio/>Audio <br/>&amp; Headphones </a></div>
+                        </div>
+                    </div>
             </div>
         </header>
     );
