@@ -1,19 +1,20 @@
 import React from 'react';
 import '../../assets/css/cart.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import {BsTrash} from "react-icons/bs";
-import {InputNumber} from 'antd';
+import {addToCart} from "../../store/actions/cart";
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart)
-    console.log(cart)
-    const onChangeQty = () => {
+    const dispatch = useDispatch()
+    const onChangeQty = (value) => {
+        console.log(value)
     }
     const getTotal = () => {
-        return cart.reduce((current,next)=>{
+        return cart.reduce((current, next) => {
             return current + next.count * next.product.price
-        },0)
+        }, 0)
     }
     return (
         <section className="cart_section section_space">
@@ -47,10 +48,16 @@ const CartIndex = () => {
                                     className="price_text">${item.product.price.toFixed(2)}</span></td>
                                 <td className="text-center">
                                     <form action="#">
-                                        <InputNumber min={1} max={10} defaultValue={3} onChange={onChangeQty}/>
+                                        {/*<InputNumber min={1} max={item.product.quantity} defaultValue={item.count} size="middle" onChange={()=>onChangeQty(e)}/>*/}
+                                        <select className="form-control form-control-sm" value={item.count} key={item.count} onChange={(e) => dispatch(addToCart({...item,count:parseInt(e.target.value)}))}>
+                                            {[...Array(item.product.quantity).keys()].map(item => (
+                                                <option key={item + 1} value={item + 1}>{item + 1}</option>
+                                            ))}
+
+                                        </select>
                                     </form>
                                 </td>
-                                <td className="text-center"><span className="price_text">$10.50</span></td>
+                                <td className="text-center"><span className="price_text">${(item.product.price * parseInt(item.count)).toFixed(2)}</span></td>
                                 <td className="text-center">
                                     <button type="button" className="remove_btn">
                                         <BsTrash/>

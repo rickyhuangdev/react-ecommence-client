@@ -62,7 +62,7 @@ const HeaderDefault = () => {
     return (
         <header className="header d-blue-bg text-white font-weight-bold">
             <div className="header-top">
-                <div className="container p-2">
+                <div className="container-fluid p-2">
                     <div className="header-inner">
                         <div className="row align-items-center">
                             <div className="col-xl-6 col-lg-7">
@@ -104,7 +104,7 @@ const HeaderDefault = () => {
                 </div>
             </div>
             <div className="header-mid">
-                <div className="container">
+                <div className="container-fluid">
                     <div className="heade-mid-inner">
                         <div className="row align-items-center">
                             <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4">
@@ -212,7 +212,7 @@ const HeaderDefault = () => {
                 </div>
             </div>
             <div className="header__bottom d-none d-lg-block">
-                <div className="container">
+                <div className="container-fluid">
                         <div className="box-items-inner pt-10 pb-10">
                             <div className="box-item"><a href="shop.html"><BsLaptop/>Laptop <br/>&amp; Computer </a>
                             </div>

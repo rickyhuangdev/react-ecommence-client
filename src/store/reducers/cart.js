@@ -6,8 +6,8 @@ export const cart = (state = [], action) => {
         case 'ADD_TO_CART':
             const sameIndex = state.findIndex(goods => goods.product._id === payload.product._id)
             if (sameIndex > -1) {
-                const count = state[sameIndex].count
-                payload.count += count
+                // const count = state[sameIndex].count
+                // payload.count += count
                 state.splice(sameIndex, 1)
             }
             return [...state, payload];
