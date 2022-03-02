@@ -9,6 +9,7 @@ import {toast} from "react-toastify";
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart)
+    const user = useSelector(state => state.profile.user)
     const dispatch = useDispatch()
     const confirmToRemoveFromCart = (product_id) => {
         dispatch(removeItemFromCart(product_id))
@@ -19,6 +20,9 @@ const CartIndex = () => {
             return current + next.count * next.product.price
         }, 0)
     }
+    const saveOrderToDB = () => {
+
+    }
     return (
         <section className="cart_section section_space">
             <div className="container">
@@ -26,7 +30,7 @@ const CartIndex = () => {
                     costs updated.</p></div>
                 {cart && cart.length > 0 && (
                     <div className="cart_table table-responsive">
-                        <table className="table">
+                        <table className="table shadow-1 border-bottom-0">
                             <thead>
                             <tr>
                                 <th>Product</th>
@@ -95,22 +99,16 @@ const CartIndex = () => {
                         <div className="row">
                             <div className="col col-lg-6">
                                 <form action="#">
-                                    <div className="coupon_form form_item mb-0"><input type="text" name="coupon"
-                                                                                       placeholder="Coupon Code..."/>
-                                        <button type="submit" className="btn btn_dark">Apply Coupon</button>
-                                        <div className="info_icon"><i className="fas fa-info-circle"
-                                                                      data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                      title="" data-bs-original-title="Your Info Here"
-                                                                      aria-label="Your Info Here"></i></div>
+                                    <div className="coupon_form form_item mb-0">
+                                        <input type="text" name="coupon" placeholder="Coupon Code..."/>
+                                        <button type="button" className="btn d-blue-bg shadow-1 text-white">Apply
+                                            Coupon
+                                        </button>
+                                        <div className="info_icon"></div>
                                     </div>
                                 </form>
                             </div>
-                            <div className="col col-lg-6">
-                                <ul className="btns_group ul_li_right">
-                                    <li><a className="btn border_black" href="#!">Update Cart</a></li>
-                                    <li><a className="btn btn_dark" href="#!">Prceed To Checkout</a></li>
-                                </ul>
-                            </div>
+
                         </div>
                     </div>
                 )}
@@ -119,12 +117,35 @@ const CartIndex = () => {
                         <div className="col col-lg-6">
                             <div className="cart_total_table"><h3 className="wrap_title">Cart Totals</h3>
                                 <ul className="ul_li_block">
-                                    <li><span>Cart Subtotal</span><span>$52.50</span></li>
+                                    <li><span>Cart Subtotal</span><span>${getTotal()}</span></li>
                                     <li><span>Shipping and Handling</span><span>Free Shipping</span></li>
                                     <li><span>Order Total</span><span className="total_price">${getTotal()}</span></li>
                                 </ul>
                             </div>
                         </div>
+                        {user && user.token ? (
+                            <div className="col col-lg-6 d-flex justify-content-end align-items-end">
+                                <ul className="btns_group ul_li_right mb-0">
+                                    <li>
+                                        <button className="btn btn_dark  shadow-3 text-white" onClick={saveOrderToDB}
+                                                disabled={!cart.length}>Process To Checkout
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        ) : (
+                            <div className="col col-lg-6 d-flex justify-content-end align-items-end">
+                                <ul className="btns_group ul_li_right mb-0">
+                                    <li>
+                                        <Link to={{
+                                            pathname: '/login',
+                                            state: {from: "cart"}
+                                        }} className="btn btn_dark shadow-3 text-white">Login To Checkout</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
+
                     </div>
                 ):(
                     <div className="alert alert-info" role="alert">
