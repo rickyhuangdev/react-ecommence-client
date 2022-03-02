@@ -11,6 +11,8 @@ export const cart = (state = [], action) => {
                 state.splice(sameIndex, 1)
             }
             return [...state, payload];
+        case 'REMOVE_ITEM_FROM_CART':
+            return state.filter((item) => item.product._id !== payload)
         // 默认
         default:
             return state
