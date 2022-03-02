@@ -1,12 +1,4 @@
-let initialState = []
-// if (typeof window !== 'undefined') {
-//     if (getCartInfo()) {
-//         initialState = getCartInfo()
-//
-//     } else {
-//         initialState = []
-//     }
-// }
+
 export const cart = (state = [], action) => {
     const {type, payload} = action
     switch (type) {

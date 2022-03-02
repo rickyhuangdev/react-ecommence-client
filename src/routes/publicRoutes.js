@@ -4,6 +4,7 @@ import ForgetPassword from '../pages/auth/forgetPassword'
 import Home from "../pages/home";
 import ProductDetail from "../pages/product/ProductDetail";
 import CategoryIndex from "../pages/category";
+import CartIndex from "../pages/cart";
 
 const publicRoutes = [
     {
@@ -34,6 +35,11 @@ const publicRoutes = [
     {
         path: '/category/:slug?',
         component: CategoryIndex,
+        exact: true
+    },
+    {
+        path: '/cart',
+        component: CartIndex,
         exact: true
     }
 ]
