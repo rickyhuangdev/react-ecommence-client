@@ -7,9 +7,11 @@ import '../../assets/css/product.css'
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 import InnerImageZoom from 'react-inner-image-zoom';
 import RatingModal from "../../components/modal/RatingModal";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {showAverage} from "../../utils/rating";
 import ProductSlider from "../home/productSlider";
+import {addToCart} from "../../store/actions/cart";
+import {toast} from "react-toastify";
 
 const ProductDetail = ({match}) => {
     const {slug} = match.params
@@ -37,12 +39,17 @@ const ProductDetail = ({match}) => {
                 setImageSlider(res.images)
                 getRelativeProductApi(res._id).then(res => {
                     setRelativeProduct(res)
-                    console.log(relativeProduct)
                 })
             }
         })
     }
     const onChange = () => {
+    }
+    const dispatch = useDispatch()
+    const addToCartHandler = () => {
+        dispatch(addToCart({product, count: 1}))
+        toast.success("Add to cart successfully",{toastId:product._id})
+
     }
     const settings = {
         customPaging: function (i) {
@@ -117,7 +124,7 @@ const ProductDetail = ({match}) => {
                                             </Space>
                                         </div>
                                     </div>
-                                    <button className="btn btn-warning my-1 text-white shadow-none" type="button">Add to
+                                    <button className="btn btn-warning my-1 text-white shadow-none" type="button" onClick={addToCartHandler}>Add to
                                         Cart
                                     </button>
                                 </div>

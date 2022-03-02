@@ -15,8 +15,11 @@ import {
 } from "react-icons/bs";
 import {IoBedOutline, IoShirtOutline} from "react-icons/io5";
 import {AiOutlineAudio} from "react-icons/ai";
+import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const HeaderDefault = () => {
+    const cart = useSelector(state=>state.cart)
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
     const [searchText, setSearchText] = useState('')
@@ -107,8 +110,9 @@ const HeaderDefault = () => {
                             <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4">
                                 <div className="header__info header__info-2">
                                     <div className="logo logo-3">
-                                        <a href="index.html" className="logo-image">
-                                            <img src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/logo/logo1.svg" alt="logo" /></a>
+                                      <Link to='/' className="logo-image">
+                                            <img src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/logo/logo1.svg" alt="logo" />
+                                      </Link>
                                     </div>
                                     <div className="side-menu mr-20">
                                         <button type="button" className="side-menu-btn offcanvas-toggle-btn"><BsJustify /></button>
@@ -136,55 +140,67 @@ const HeaderDefault = () => {
                             </div>
                             <div className="col-xl-4 col-lg-5 col-md-8 col-sm-8">
                                 <div className="header-action">
-                                    <div className="block-userlink"><a className="icon-link icon-link-2"
-                                                                       href="my-account.html"><BsPerson/>
-                                        <span className="text"><span
-                                            className="sub">Login </span>My Account </span></a></div>
-                                    <div className="block-wishlist action"><a className="icon-link icon-link-2"
-                                                                              href="wishlist.html"><BsHeart className="flaticon-heart" /><span
-                                        className="count count-2">0</span><span
-                                        className="text"><span className="sub">Favorite</span>My Wishlist </span></a>
+                                    <div className="block-userlink">
+                                        <Link to="/user" className="icon-link icon-link-2">
+                                        <BsPerson/>
+                                        <span className="text">
+                                            <span className="sub">Login </span>My Account </span>
+                                        </Link>
+                                 </div>
+
+                                    <div className="block-wishlist action">
+                                        <Link  to="/wishlist" className="icon-link icon-link-2">
+                                            <BsHeart className="flaticon-heart" />
+                                            <span className="count count-2">0</span><span
+                                        className="text"><span className="sub">Favorite</span>My Wishlist </span></Link>
                                     </div>
-                                    <div className="block-cart action"><a className="icon-link icon-link-2"
-                                                                          href="cart.html">
+                                    <div className="block-cart action"><Link to='/cart' className="icon-link icon-link-2">
+
                                         <BsBag/><span
-                                        className="count count-2">1</span><span className="text"><span className="sub">Your Cart:</span>$00.00 </span></a>
+                                        className="count count-2">{cart.length}</span><span className="text"><span className="sub">Your Cart:</span>$00.00 </span></Link>
                                         <div className="cart">
                                             <div className="cart__mini shadow-1">
                                                 <ul>
                                                     <li>
                                                         <div className="cart__title">
                                                             <h4 className="text-warning">Your Cart</h4>
-                                                            <span className="text-dark">(1 Item in Cart)</span>
+                                                            <span className="text-dark font-weight-bold">({cart.length} {cart.length>1?'Items':'Item'} in Cart)</span>
                                                         </div>
                                                     </li>
-                                                    <li>
-                                                        <div
-                                                            className="cart__item d-flex justify-content-between align-items-center">
-                                                            <div className="cart__inner d-flex">
-                                                                <div className="cart__thumb"><a
-                                                                    href="product-details.html"><img
-                                                                    src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/cart/20.jpg" alt="" /></a></div>
-                                                                <div className="cart__details"><h6><a
-                                                                    href="product-details.html" className="text-dark">Samsung
-                                                                    C49J89:£875,Debenhams Plus </a></h6>
-                                                                    <div className="cart__price"><span>$255.00</span>
+                                                    {cart && cart.length > 0 && cart.map(item=>(
+                                                        <li key={item.product._id}>
+                                                            <div
+                                                                className="cart__item d-flex justify-content-between align-items-center">
+                                                                <div className="cart__inner d-flex">
+                                                                    <div className="cart__thumb">
+                                                                        <Link to={`/product/${item.product.slug}`}>
+                                                                        <img src={item.product.images[0].url} alt="" />
+                                                                        </Link>
+                                                                    </div>
+                                                                    <div className="cart__details">
+                                                                        <h6>
+                                                                            <Link to={`/product/${item.product.slug}`} className="text-dark">{item.product.title}</Link>
+                                                                        </h6>
+                                                                        <div className="cart__price"><span>${item.product.price.toFixed(2)}</span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div className="cart__del"><span className="text-danger">
+                                                                <div className="cart__del"><span className="text-danger">
                                                                 <BsTrash />
                                                             </span></div>
-                                                        </div>
-                                                    </li>
+                                                            </div>
+                                                        </li>
+                                                    ))}
                                                     <li>
                                                         <div
                                                             className="cart__sub d-flex justify-content-between align-items-center">
                                                             <h6 className="text-dark">Subtotal</h6><span
                                                             className="cart__sub-total">$255.00</span></div>
                                                     </li>
-                                                    <li><a href="cart.html" className="btn btn-warning mb-10 text-white w-100 shadow-1 mb-2">View cart</a><a
-                                                        href="checkout.html" className="btn btn-info w-100 shadow-0">Checkout</a></li>
+                                                    <li>
+                                                        <Link to='/cart' className="btn btn-warning mb-10 text-white w-100 shadow-1 mb-2">View cart</Link>
+                                                        <Link to='/checkout' className="btn btn-info w-100 shadow-0">Checkout</Link>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
