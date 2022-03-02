@@ -3,6 +3,7 @@ import {ShoppingCartOutlined} from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import {showAverage} from "../../utils/rating";
 import _ from 'lodash'
+import {toast} from "react-toastify";
 const ProductCard = ({product}) => {
     const addToCartHandler = () => {
       let cart =[];
@@ -14,6 +15,7 @@ const ProductCard = ({product}) => {
           cart.push({...product,count:1})
           let unique = _.uniqWith(cart,_.isEqual)
           localStorage.setItem('cart',JSON.stringify(unique))
+          toast.success("Add to cart successfully",{toastId:product._id})
       }
     }
     return (

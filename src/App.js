@@ -21,7 +21,7 @@ function App(props) {
         <BrowserRouter>
             <Fragment>
                 <HeaderDefault/>
-                <ToastContainer/>
+                <ToastContainer autoClose={3000}/>
                 <main>
 
                     <Switch>
