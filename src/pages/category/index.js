@@ -7,6 +7,7 @@ import sl_banner_sm from '../../assets/images/sl-banner-sm.png'
 import {getCategoryApi, readCategoryApi} from "../../api/category";
 import {BsEye, BsHddStack, BsHeart} from "react-icons/bs";
 import {getProductsApi} from "../../api/product";
+import {Link} from "react-router-dom";
 
 const CategoryIndex = ({match}) => {
     const {slug} = match.params
@@ -199,9 +200,9 @@ const CategoryIndex = ({match}) => {
                                                         <div className="col-md-4">
                                                             <div className="features-thum">
                                                                 <div className="features-product-image w-img">
-                                                                    <a href="product-details.html"><img
+                                                                    <Link to={`/product/${product.slug}`}><img
                                                                         src={product.images[0].url}
-                                                                        alt=""/></a>
+                                                                        alt={product.title}/></Link>
                                                                 </div>
                                                                 <div className="product__offer">
                                                                 <span
@@ -220,7 +221,7 @@ const CategoryIndex = ({match}) => {
                                                         </div>
                                                         <div className="col-md-8">
                                                             <div className="product__content product__content-d">
-                                                                <h6><a href="product-details.html">{product.title}</a>
+                                                                <h6> <Link to={`/product/${product.slug}`}>{product.title}</Link>
                                                                 </h6>
                                                                 <div className="rating mb-5">
                                                                     <Rate allowHalf defaultValue={2.5} value={2.5}
