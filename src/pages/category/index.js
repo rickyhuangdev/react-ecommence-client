@@ -4,8 +4,9 @@ import '../../assets/css/category_right.css'
 import {Checkbox, Rate, Slider} from 'antd';
 import sl_banner from '../../assets/images/sl-banner.jpeg'
 import sl_banner_sm from '../../assets/images/sl-banner-sm.png'
+import {getCategoryApi, readCategoryApi} from "../../api/category";
 import {BsEye, BsHddStack, BsHeart} from "react-icons/bs";
-import {getCategoryApi} from "../../api/category";
+import {getProductsApi} from "../../api/product";
 
 const CategoryIndex = ({match}) => {
     const {slug} = match.params
@@ -13,8 +14,14 @@ const CategoryIndex = ({match}) => {
     const [products, setProducts] = useState([])
     const [loading, setLoading] = useState(false)
     useEffect(() => {
-        getCategoryApi().then(re => {
+        getCategoryRelatedProduct()
+    }, [])
+
+    const getCategoryRelatedProduct = async () => {
+        console.log(slug)
+        await getCategoryApi().then(re => {
             if (re) {
+                console.log(re)
                 let categoryOptions = []
                 re.map(item => {
                     categoryOptions.push({label: item.name, value: item._id})
@@ -23,13 +30,21 @@ const CategoryIndex = ({match}) => {
             }
 
         })
-    }, [])
+        if (slug) {
+            await readCategoryApi(slug).then(res => {
+                if (res) {
+                    setProducts(res.products)
+                    console.log(products)
+                }
+            })
+        } else {
+            await getProductsApi().then(res => {
+                setProducts(res)
+            })
+        }
 
-    // if(slug){
-    //     console.log(123)
-    // }else{
-    //     console.log(333)
-    // }
+    }
+
     const onChange = (e) => {
         console.log(e)
     }
@@ -174,64 +189,70 @@ const CategoryIndex = ({match}) => {
                         </div>
                         <div className="tab-content">
                             <div className="tp-wrapper-2">
-                                <div className="single-item-pd">
-                                    <div className="row align-items-center">
-                                        <div className="col-xl-9">
-                                            <div
-                                                className="single-features-item single-features-item-df b-radius mb-20">
-                                                <div className="row g-0 align-items-center">
-                                                    <div className="col-md-4">
-                                                        <div className="features-thum">
-                                                            <div className="features-product-image w-img">
-                                                                <a href="product-details.html"><img
-                                                                    src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/product/sm-1.jpg"
-                                                                    alt=""/></a>
-                                                            </div>
-                                                            <div className="product__offer">
+                                {products && products.length > 0 && products.map(product => (
+                                    <div className="single-item-pd" key={product._id}>
+                                        <div className="row align-items-center">
+                                            <div className="col-xl-9">
+                                                <div
+                                                    className="single-features-item single-features-item-df b-radius mb-20">
+                                                    <div className="row g-0 align-items-center">
+                                                        <div className="col-md-4">
+                                                            <div className="features-thum">
+                                                                <div className="features-product-image w-img">
+                                                                    <a href="product-details.html"><img
+                                                                        src={product.images[0].url}
+                                                                        alt=""/></a>
+                                                                </div>
+                                                                <div className="product__offer">
                                                                 <span
                                                                     className="discount bg-success font-weight-bold">-15%</span>
-                                                            </div>
-                                                            <div className="product-action">
-                                                                <a href="#" className="icon-box icon-box-1"
-                                                                   data-bs-toggle="modal"
-                                                                   data-bs-target="#productModalId"><BsEye/></a>
-                                                                <a href="#"
-                                                                   className="icon-box icon-box-1"><BsHeart/></a>
-                                                                <a href="#"
-                                                                   className="icon-box icon-box-1"><BsHddStack/></a>
+                                                                </div>
+                                                                <div className="product-action">
+                                                                    <a href="#" className="icon-box icon-box-1"
+                                                                       data-bs-toggle="modal"
+                                                                       data-bs-target="#productModalId"><BsEye/></a>
+                                                                    <a href="#"
+                                                                       className="icon-box icon-box-1"><BsHeart/></a>
+                                                                    <a href="#"
+                                                                       className="icon-box icon-box-1"><BsHddStack/></a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <div className="product__content product__content-d">
-                                                            <h6><a href="product-details.html">Classic Leather Backpack Daypack 2022</a></h6>
-                                                            <div className="rating mb-5">
-                                                                <Rate allowHalf defaultValue={2.5} value={2.5} disabled style={{fontSize:'15px'}}/>
+                                                        <div className="col-md-8">
+                                                            <div className="product__content product__content-d">
+                                                                <h6><a href="product-details.html">{product.title}</a>
+                                                                </h6>
+                                                                <div className="rating mb-5">
+                                                                    <Rate allowHalf defaultValue={2.5} value={2.5}
+                                                                          disabled style={{fontSize: '15px'}}/>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="col-xl-3">
-                                            <div className="product-stock mb-15">
-                                                <h5>Availability:<span>940 in stock</span></h5>
-                                                <h6>$220.00 - <del>$240.00</del></h6>
-                                            </div>
-                                            <div className="stock-btn ">
-                                                <button type="button"
-                                                        className="btn btn-warning shadow-1 cart-btn d-flex mb-10 align-items-center justify-content-center w-100 text-white">Add
-                                                    to Cart
-                                                </button>
-                                                <button type="button"
-                                                        className="btn btn-dark shadow-1 wc-checkout d-flex align-items-center justify-content-center w-100"
-                                                        data-bs-toggle="modal" data-bs-target="#productModalId">Quick
-                                                    View
-                                                </button>
+                                            <div className="col-xl-3">
+                                                <div className="product-stock mb-15">
+                                                    <h5>Availability:<span>{product.quantity} in stock</span></h5>
+                                                    <h6>${product.price} - <del>$240.00</del></h6>
+                                                </div>
+                                                <div className="stock-btn ">
+                                                    <button type="button"
+                                                            className="btn btn-warning shadow-1 cart-btn d-flex mb-10 align-items-center justify-content-center w-100 text-white">Add
+                                                        to Cart
+                                                    </button>
+                                                    <button type="button"
+                                                            className="btn btn-dark shadow-1 wc-checkout d-flex align-items-center justify-content-center w-100"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#productModalId">Quick
+                                                        View
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                ))}
+
                             </div>
                         </div>
                     </div>

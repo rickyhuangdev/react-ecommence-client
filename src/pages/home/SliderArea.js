@@ -15,6 +15,8 @@ const SliderArea = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
+        dots:true,
+        autoplay: true,
     };
     return (
         <div className="slider-area light-bg-s pt-60 mb-60">

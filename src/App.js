@@ -5,7 +5,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import React, {Fragment, useEffect} from 'react';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Header from "./components/nav/header";
+import Header from "./components/header/header";
 import {useDispatch, useSelector} from "react-redux";
 import publicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/privateRoutes";
@@ -13,13 +13,14 @@ import AuthRoutes from "./routes/authRoutes";
 import AdminRoutes from "./components/routes/AdminRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
 import Footer from "./components/nav/footer";
+import HeaderDefault from "./components/header/HeaderDefault";
 
 
 function App(props) {
     return (
         <BrowserRouter>
             <Fragment>
-                <Header/>
+                <HeaderDefault/>
                 <ToastContainer/>
                 <main>
 
