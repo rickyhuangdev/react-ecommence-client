@@ -16,13 +16,16 @@ import {
 import {IoBedOutline, IoShirtOutline} from "react-icons/io5";
 import {AiOutlineAudio} from "react-icons/ai";
 import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {removeItemFromCart} from "../../store/actions/cart";
 
 const HeaderDefault = () => {
     const cart = useSelector(state=>state.cart)
+    const user = useSelector(state => state.profile.user)
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
     const [searchText, setSearchText] = useState('')
+    const dispatch = useDispatch()
     const changeLang = ({key}) => {
         setLocalLang(key)
     }
@@ -58,11 +61,15 @@ const HeaderDefault = () => {
             </Menu.Item>
         </Menu>
     );
-
+    const getTotal = () => {
+        return cart.reduce((current, next) => {
+            return current + next.count * next.product.price
+        }, 0)
+    }
     return (
         <header className="header d-blue-bg text-white font-weight-bold">
             <div className="header-top">
-                <div className="container-fluid p-2">
+                <div className="container p-2">
                     <div className="header-inner">
                         <div className="row align-items-center">
                             <div className="col-xl-6 col-lg-7">
@@ -157,14 +164,14 @@ const HeaderDefault = () => {
                                     <div className="block-cart action"><Link to='/cart' className="icon-link icon-link-2">
 
                                         <BsBag/><span
-                                        className="count count-2">{cart.length}</span><span className="text"><span className="sub">Your Cart:</span>$00.00 </span></Link>
+                                        className="count count-2">{cart.length??0}</span><span className="text"><span className="sub">Your Cart:</span>${cart.length?getTotal():'0.00'} </span></Link>
                                         <div className="cart">
                                             <div className="cart__mini shadow-1">
                                                 <ul>
                                                     <li>
                                                         <div className="cart__title">
                                                             <h4 className="text-warning">Your Cart</h4>
-                                                            <span className="text-dark font-weight-bold">({cart.length} {cart.length>1?'Items':'Item'} in Cart)</span>
+                                                            <span className="text-dark font-weight-bold">({cart.length??0} {cart.length>1?'Items':'Item'} in Cart)</span>
                                                         </div>
                                                     </li>
                                                     {cart && cart.length > 0 && cart.map(item=>(
@@ -186,21 +193,29 @@ const HeaderDefault = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div className="cart__del"><span className="text-danger">
-                                                                <BsTrash />
+                                                                <BsTrash onClick={()=>{dispatch(removeItemFromCart(item.product._id))}} />
                                                             </span></div>
                                                             </div>
                                                         </li>
                                                     ))}
+                                                    {cart && cart.length > 0 &&(
                                                     <li>
                                                         <div
                                                             className="cart__sub d-flex justify-content-between align-items-center">
                                                             <h6 className="text-dark">Subtotal</h6><span
-                                                            className="cart__sub-total">$255.00</span></div>
+                                                            className="cart__sub-total">${getTotal()}</span></div>
                                                     </li>
+                                                    )}
+                                                    {cart && cart.length > 0 ?(
                                                     <li>
                                                         <Link to='/cart' className="btn btn-warning mb-10 text-white w-100 shadow-1 mb-2">View cart</Link>
                                                         <Link to='/checkout' className="btn btn-info w-100 shadow-0">Checkout</Link>
                                                     </li>
+                                                    ):(
+                                                        <li className="d-flex align-items-center">
+                                                            <span className="text-dark d-block w-100 text-center font-weight-bold mt-20">Your cart is empty.</span>
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         </div>
