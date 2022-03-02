@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import '../../assets/css/header.css'
 import {Dropdown, Menu} from 'antd';
+import {BsJustify, BsSearch} from "react-icons/bs";
 
 const HeaderDefault = () => {
     const [localLang, setLocalLang] = useState('English')
@@ -76,6 +77,40 @@ const HeaderDefault = () => {
                                             <li><a href="faq.html">FAQs</a></li>
                                         </ul>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="header-mid">
+                <div className="container">
+                    <div className="heade-mid-inner">
+                        <div className="row align-items-center">
+                            <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+                                <div className="header__info header__info-2">
+                                    <div className="logo logo-3">
+                                        <a href="index.html" className="logo-image">
+                                            <img src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/logo/logo1.svg" alt="logo" /></a>
+                                    </div>
+                                    <div className="side-menu mr-20">
+                                        <button type="button" className="side-menu-btn offcanvas-toggle-btn"><BsJustify /></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-xl-5 col-lg-4 d-none d-lg-block">
+                                <div className="header__search">
+                                    <form action="#">
+                                        <div className="header__search-box"><input
+                                            className="search-input search-input-2" type="text"
+                                            placeholder="I'm shopping for..." />
+                                            <button className="button button-2 button-3" type="button"><BsSearch /></button></div>
+                                        <div className="header__search-cat">
+                                            <Dropdown overlay={LangMenu} placement="bottomLeft" overlayClassName="category-select">
+                                                <span className="text-dark">{localLang}</span>
+                                            </Dropdown>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>

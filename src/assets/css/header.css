@@ -90,3 +90,118 @@
         text-align: right !important;
     }
 }
+
+/**
+    header middle
+ */
+.heade-mid-inner {
+    padding: 30px 0;
+    border-bottom: 1px solid;
+    border-color: rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 2;
+}
+
+.header__info-2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-3 .logo-image img {
+    width: 180px;
+}
+
+.logo .logo-image img {
+    display: block;
+    max-width: 210px;
+    padding: 5px 0;
+}
+
+.side-menu-btn {
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.side-menu-btn svg {
+    font-weight: 900;
+    /*font-size: 30px;*/
+}
+
+.header__search {
+    margin-left: -30px;
+    width: 630px;
+}
+.header__search form {
+    position: relative;
+}
+.header__search-box {
+    width: 100%;
+    position: relative;
+}
+.header__search-box .search-input {
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    outline: 0;
+    padding: 0 15px;
+    padding-left: 170px;
+    padding-right: 60px;
+}
+.header__search-box::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: 160px;
+    height: 45%;
+    width: 1px;
+    background: #E0E0E0;;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+.header__search-box .button-3 {
+    top: 0;
+    right: 0;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 2px 2px 2px 2px;
+    background-color: #16bcdc;
+    color: #fff;
+    display: flex;
+    align-items: center;
+}
+.header__search-cat {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+.header__search-box .button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    height: 50px;
+    font-weight: 700;
+    color: #FFF;
+    display: block;
+    line-height: 50px;
+    padding: 0 15px;
+    font-size: 20px;
+    background: #fcbe00;
+    border-radius: 0 4px 4px 0;
+    text-transform: capitalize;
+
+}
+.category-select{
+    width: 12%;
+    position: absolute;
+    top:-130px;
+}
