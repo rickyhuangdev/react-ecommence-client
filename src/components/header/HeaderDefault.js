@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import '../../assets/css/header.css'
 import {Dropdown, Menu} from 'antd';
-import {BsJustify, BsSearch} from "react-icons/bs";
+import {BsBag, BsHeart, BsJustify, BsPerson, BsSearch, BsTrash} from "react-icons/bs";
 
 const HeaderDefault = () => {
     const [localLang, setLocalLang] = useState('English')
@@ -103,14 +103,74 @@ const HeaderDefault = () => {
                                     <form action="#">
                                         <div className="header__search-box"><input
                                             className="search-input search-input-2" type="text"
-                                            placeholder="I'm shopping for..." />
-                                            <button className="button button-2 button-3" type="button"><BsSearch /></button></div>
+                                            placeholder="I'm shopping for..."/>
+                                            <button className="button button-2 button-3" type="button"><BsSearch/>
+                                            </button>
+                                        </div>
                                         <div className="header__search-cat">
-                                            <Dropdown overlay={LangMenu} placement="bottomLeft" overlayClassName="category-select">
+                                            <Dropdown overlay={LangMenu} placement="bottomLeft"
+                                                      overlayClassName="category-select">
                                                 <span className="text-dark">{localLang}</span>
                                             </Dropdown>
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                            <div className="col-xl-4 col-lg-5 col-md-8 col-sm-8">
+                                <div className="header-action">
+                                    <div className="block-userlink"><a className="icon-link icon-link-2"
+                                                                       href="my-account.html"><BsPerson/>
+                                        <span className="text"><span
+                                            className="sub">Login </span>My Account </span></a></div>
+                                    <div className="block-wishlist action"><a className="icon-link icon-link-2"
+                                                                              href="wishlist.html"><BsHeart className="flaticon-heart" /><span
+                                        className="count count-2">0</span><span
+                                        className="text"><span className="sub">Favorite</span>My Wishlist </span></a>
+                                    </div>
+                                    <div className="block-cart action"><a className="icon-link icon-link-2"
+                                                                          href="cart.html">
+                                        <BsBag/><span
+                                        className="count count-2">1</span><span className="text"><span className="sub">Your Cart:</span>$00.00 </span></a>
+                                        <div className="cart">
+                                            <div className="cart__mini shadow-1">
+                                                <ul>
+                                                    <li>
+                                                        <div className="cart__title">
+                                                            <h4 className="text-warning">Your Cart</h4>
+                                                            <span className="text-dark">(1 Item in Cart)</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div
+                                                            className="cart__item d-flex justify-content-between align-items-center">
+                                                            <div className="cart__inner d-flex">
+                                                                <div className="cart__thumb"><a
+                                                                    href="product-details.html"><img
+                                                                    src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/cart/20.jpg" alt="" /></a></div>
+                                                                <div className="cart__details"><h6><a
+                                                                    href="product-details.html" className="text-dark">Samsung
+                                                                    C49J89:£875,Debenhams Plus </a></h6>
+                                                                    <div className="cart__price"><span>$255.00</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="cart__del"><span className="text-danger">
+                                                                <BsTrash />
+                                                            </span></div>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div
+                                                            className="cart__sub d-flex justify-content-between align-items-center">
+                                                            <h6 className="text-dark">Subtotal</h6><span
+                                                            className="cart__sub-total">$255.00</span></div>
+                                                    </li>
+                                                    <li><a href="cart.html" className="btn btn-warning mb-10 text-white w-100 shadow-1 mb-2">View cart</a><a
+                                                        href="checkout.html" className="btn btn-info w-100 shadow-0">Checkout</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
