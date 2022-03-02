@@ -2,13 +2,18 @@ import React from 'react';
 import '../../assets/css/cart.css'
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
-import {BsPlus, BsTrash} from "react-icons/bs";
-import {AiOutlineMinus} from "react-icons/ai";
-import NumberBox from "../../components/input/NumberBox";
+import {BsTrash} from "react-icons/bs";
+import {InputNumber} from 'antd';
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart)
-    const getQuantity = (number) => {
+    console.log(cart)
+    const onChangeQty = () => {
+    }
+    const getTotal = () => {
+        return cart.reduce((current,next)=>{
+            return current + next.count * next.product.price
+        },0)
     }
     return (
         <section className="cart_section section_space">
@@ -42,7 +47,7 @@ const CartIndex = () => {
                                     className="price_text">${item.product.price.toFixed(2)}</span></td>
                                 <td className="text-center">
                                     <form action="#">
-                                       <NumberBox min={1} max={5} getQuantity={getQuantity} />
+                                        <InputNumber min={1} max={10} defaultValue={3} onChange={onChangeQty}/>
                                     </form>
                                 </td>
                                 <td className="text-center"><span className="price_text">$10.50</span></td>
@@ -78,52 +83,13 @@ const CartIndex = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col col-lg-6">
-                        <div className="calculate_shipping"><h3 className="wrap_title">Calculate Shipping <span
-                            className="icon"><i className="far fa-arrow-up"></i></span></h3>
-                            <form action="#">
-                                <div className="select_option clearfix"><select style={{display:'none'}}>
-                                    <option data-display="Select Your Currency">Select Your Option</option>
-                                    <option value="1" selected="">United Kingdom(UK)</option>
-                                    <option value="2">United Kingdom(UK)</option>
-                                    <option value="3">United Kingdom(UK)</option>
-                                    <option value="4">United Kingdom(UK)</option>
-                                    <option value="5">United Kingdom(UK)</option>
-                                </select>
-                                    <div className="nice-select" tabIndex="0"><span className="current">United Kingdom(UK)</span>
-                                        <ul className="list">
-                                            <li data-value="Select Your Option" data-display="Select Your Currency"
-                                                className="option">Select Your Option
-                                            </li>
-                                            <li data-value="1" className="option selected">United Kingdom(UK)</li>
-                                            <li data-value="2" className="option">United Kingdom(UK)</li>
-                                            <li data-value="3" className="option">United Kingdom(UK)</li>
-                                            <li data-value="4" className="option">United Kingdom(UK)</li>
-                                            <li data-value="5" className="option">United Kingdom(UK)</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="row">
-                                    <div className="col col-md-6">
-                                        <div className="form_item"><input type="text" name="location"
-                                                                          placeholder="State / Country"/></div>
-                                    </div>
-                                    <div className="col col-md-6">
-                                        <div className="form_item"><input type="text" name="postalcode"
-                                                                          placeholder="Postcode / ZIP"/></div>
-                                    </div>
-                                </div>
-                                <button type="submit" className="btn btn_primary rounded-pill">Update Total</button>
-                            </form>
-                        </div>
-                    </div>
+                <div className="row justify-content-end">
                     <div className="col col-lg-6">
                         <div className="cart_total_table"><h3 className="wrap_title">Cart Totals</h3>
                             <ul className="ul_li_block">
                                 <li><span>Cart Subtotal</span><span>$52.50</span></li>
                                 <li><span>Shipping and Handling</span><span>Free Shipping</span></li>
-                                <li><span>Order Total</span><span className="total_price">$52.50</span></li>
+                                <li><span>Order Total</span><span className="total_price">${getTotal()}</span></li>
                             </ul>
                         </div>
                     </div>
