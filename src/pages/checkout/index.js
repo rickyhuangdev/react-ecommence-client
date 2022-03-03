@@ -14,6 +14,7 @@ const CheckOutIndex = () => {
     const getCarts = () => {
         getCartInfoApi().then(re => {
             setProducts(re.products)
+            console.log(re)
             setTotal(re.cartTotal)
         })
 
@@ -134,21 +135,19 @@ const CheckOutIndex = () => {
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr className="cart_item">
-                                        <td className="product-name">Vestibulum suscipit <strong
-                                            className="product-quantity">× 1</strong></td>
-                                        <td className="product-total"><span className="amount">$165.00</span></td>
-                                    </tr>
-                                    <tr className="cart_item">
-                                        <td className="product-name">Vestibulum dictum magna <strong
-                                            className="product-quantity">× 1</strong></td>
-                                        <td className="product-total"><span className="amount">$50.00</span></td>
-                                    </tr>
+                                    {products && products.length>0 && products.map((item)=>(
+                                        <tr className="cart_item" key={item.product._id}>
+                                            <td className="product-name"> {item.product.title} <strong
+                                                className="product-quantity">× {item.count}</strong></td>
+                                            <td className="product-total"><span className="amount">${item.product.price * item.count}</span></td>
+                                        </tr>
+                                    ))}
+
                                     </tbody>
                                     <tfoot>
                                     <tr className="cart-subtotal">
                                         <th>Cart Subtotal</th>
-                                        <td><span className="amount">$215.00</span></td>
+                                        <td><span className="amount">${total}</span></td>
                                     </tr>
                                     <tr className="shipping">
                                         <th>Shipping</th>
@@ -163,10 +162,16 @@ const CheckOutIndex = () => {
                                     </tr>
                                     <tr className="order-total">
                                         <th>Order Total</th>
-                                        <td><strong><span className="amount">$215.00</span></strong></td>
+                                        <td><strong><span className="amount">${total}</span></strong></td>
                                     </tr>
                                     </tfoot>
                                 </table>
+                                <div className="w-100 d-flex mt-5 justify-content-end">
+                                    <button className="order-btn btn btn-warning btn-sm">Clear Cart</button>
+                                </div>
+                                <div className="w-100 mt-4">
+                                    <button className="btn btn-primary w-100 btn-flat-info">Place Order</button>
+                                </div>
                             </div>
                         </div>
                     </div>
