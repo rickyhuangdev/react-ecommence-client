@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import '../../assets/css/checkout.css'
 import {getCartInfoApi, removeCartInfoApi} from "../../api/cart";
 import {removeAllItemFromCart} from "../../store/actions/cart";
 import {toast} from "react-toastify";
+import countryList from 'react-select-country-list'
+import Select from 'react-select'
 
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
@@ -13,13 +15,31 @@ const CheckOutIndex = () => {
     const history = useHistory()
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
+    const [country, setCountry] = useState('')
+    const [saveAddress, setSaveAddress] = useState(false)
+    const [address, setAddress] = useState({
+        country: '',
+        email: '',
+        phone: '',
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        postCode: '',
+        address: ''
+    })
+    const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
         if (user && user.token && cart.length > 0) {
             getCarts()
-        }else{
+        } else {
         }
+        console.log(address)
+    }, [address, cart])
+    const changeHandler = value => {
+        setCountry(value)
+        setAddress({...address, country: value["label"]})
+    }
 
-    }, [])
     const getCarts = () => {
         getCartInfoApi().then(re => {
             if (re) {
@@ -39,6 +59,20 @@ const CheckOutIndex = () => {
                 history.replace('/')
             }
         })
+    }
+    const handleChange = (e) => {
+        setAddress({...address, [e.target.name]: e.target.value})
+        checkSaveAddress()
+
+    }
+    const checkSaveAddress = () => {
+        if (!address.phone || !address.email || !address.address || !address.lastName || !address.firstName || !address.phone) {
+            setSaveAddress(false)
+            return false
+        } else {
+            setSaveAddress(true)
+            return true
+        }
     }
     return (
         <section className="checkout-section section_space">
@@ -74,70 +108,54 @@ const CheckOutIndex = () => {
                                 <div className="col-md-12">
                                     <div className="country-select">
                                         <label>Country <span
-                                        className="required">*</span></label>
-                                        <select className="form-control">
-                                        <option value="volvo">bangladesh</option>
-                                        <option value="saab">Algeria</option>
-                                        <option value="mercedes">Afghanistan</option>
-                                        <option value="audi">Ghana</option>
-                                        <option value="audi2">Albania</option>
-                                        <option value="audi3">Bahrain</option>
-                                        <option value="audi4">Colombia</option>
-                                        <option value="audi5">Dominican Republic</option>
-                                    </select>
+                                            className="required">*</span></label>
+                                        <Select options={options} value={country} onChange={changeHandler}/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="checkout-form-list">
-                                        <label>First name  <span className="required">*</span></label>
-                                    <input type="text" className="form-control" placeholder="First name"/>
+                                        <label>First name <span className="required">*</span></label>
+                                        <input type="text" className="form-control" placeholder="First name"
+                                               value={address.firstName} onChange={handleChange} name="firstName"/>
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <label>Last name  <span className="required">*</span></label>
-                                    <input type="text" className="form-control" placeholder="Last name"/>
+                                    <label>Last name <span className="required">*</span></label>
+                                    <input type="text" className="form-control" placeholder="Last name" name="lastName"
+                                           value={address.lastName} onChange={handleChange}/>
                                 </div>
                                 <div className="col-md-12">
                                     <div className="checkout-form-list">
-                                    <label>Company Name</label>
-                                    <input type="text" className="form-control" placeholder="Company Name"/>
+                                        <label>Company Name</label>
+                                        <input type="text" className="form-control" placeholder="Company Name"
+                                               value={address.companyName} onChange={handleChange} name="companyName"/>
                                     </div>
                                 </div>
                                 <div className="col-md-12">
                                     <div className="checkout-form-list">
-                                    <label>Address  <span className="required">*</span></label>
-                                    <input type="text" className="form-control" placeholder="Street address"/>
+                                        <label>Address <span className="required">*</span></label>
+                                        <input type="text" className="form-control" placeholder="Street address"
+                                               onChange={handleChange} value={address.address} name="address"/>
                                     </div>
                                 </div>
-                                <div className="col-md-12">
-                                    <div className="checkout-form-list">
-                                        <input type="text" className="form-control" placeholder="Apartment, suite, unit etc. (optional)" />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="checkout-form-list"><label>Town / City
-                                        <span className="required">*</span></label>
-                                        <input type="text" placeholder="Town / City"  className="form-control" /></div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="checkout-form-list"><label>State / County
-                                        <span className="required">*</span></label>
-                                        <input type="text" className="form-control" placeholder=""/></div>
-                                </div>
+
                                 <div className="col-md-6">
                                     <div className="checkout-form-list"><label>Postcode / Zip
                                         <span className="required">*</span></label>
-                                        <input type="text" className="form-control" placeholder="Postcode / Zip"/></div>
+                                        <input type="text" className="form-control" placeholder="Postcode / Zip"
+                                               value={address.postCode} onChange={handleChange} name="postCode"/></div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="checkout-form-list">
                                         <label>Email Address <span className="required">*</span></label>
-                                        <input type="email" className="form-control" placeholder=""/></div>
+                                        <input type="email" className="form-control" placeholder=""
+                                               onChange={handleChange} value={address.email} name="email"/></div>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <div className="checkout-form-list">
                                         <label>Phone <span className="required">*</span></label>
-                                        <input type="text" className="form-control" placeholder="Postcode / Zip"/>
+                                        <input type="text" className="form-control" placeholder="phone"
+                                               onChange={handleChange} value={address.phone} name="phone"/>
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +211,9 @@ const CheckOutIndex = () => {
                                     </button>
                                 </div>
                                 <div className="w-100 mt-4">
-                                    <button className="btn btn-primary w-100 btn-flat-info">Place Order</button>
+                                    <button className="btn btn-primary w-100 btn-flat-info"
+                                            disabled={!saveAddress}>Place Order
+                                    </button>
                                 </div>
                             </div>
                         </div>

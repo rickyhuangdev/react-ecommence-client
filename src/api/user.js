@@ -10,3 +10,7 @@ export const getUserProfileApi = () => {
 export const getAdminProfileApi = () => {
     return request('/user/current-admin', 'post')
 }
+
+export const saveUserAddressApi = (data) => {
+    return request('/user/address', 'post',{address:data})
+}
