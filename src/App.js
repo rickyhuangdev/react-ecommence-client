@@ -1,6 +1,7 @@
 import 'antd/dist/antd.css'
 import './index.css'
-import 'daemonite-material/css/material.min.css'
+import '../src/assets/css/bootstrap.min.css'
+// import 'daemonite-material/css/material.min.css'
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import React, {Fragment, useEffect} from 'react';
 import {ToastContainer} from 'react-toastify';

@@ -1,16 +1,18 @@
 import React from 'react';
 import '../../assets/css/cart.css'
 import {useDispatch, useSelector} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {BsTrash} from "react-icons/bs";
 import {addToCart, removeItemFromCart} from "../../store/actions/cart";
 import {Popconfirm} from "antd";
 import {toast} from "react-toastify";
+import {saveCartToDBApi} from "../../api/cart";
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart)
     const user = useSelector(state => state.profile.user)
     const dispatch = useDispatch()
+    const history = useHistory()
     const confirmToRemoveFromCart = (product_id) => {
         dispatch(removeItemFromCart(product_id))
         toast.info("Remove Item Successfully!")
@@ -20,8 +22,11 @@ const CartIndex = () => {
             return current + next.count * next.product.price
         }, 0)
     }
-    const saveOrderToDB = () => {
-
+    const saveOrderToDB = async () => {
+       const re = await saveCartToDBApi()
+        if(re){
+            history.replace('/checkout')
+        }
     }
     return (
         <section className="cart_section section_space">

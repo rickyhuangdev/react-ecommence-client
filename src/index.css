@@ -7,8 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a,a:hover{
-  text-decoration: none;
+a{
+  text-decoration: none!important;
 }
 ul, li {
   padding: 0;
