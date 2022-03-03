@@ -13,6 +13,8 @@ export const cart = (state = [], action) => {
             return [...state, payload];
         case 'REMOVE_ITEM_FROM_CART':
             return state.filter((item) => item.product._id !== payload)
+        case 'REMOVE_ALL_ITEM_FROM_CART':
+            return []
         // 默认
         default:
             return state

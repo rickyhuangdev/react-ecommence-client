@@ -10,3 +10,8 @@ export const removeItemFromCart = cartItemId => {
         payload: cartItemId
     }
 }
+export const removeAllItemFromCart = () => {
+    return {
+        type: 'REMOVE_ALL_ITEM_FROM_CART',
+    }
+}

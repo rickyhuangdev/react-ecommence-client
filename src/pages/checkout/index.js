@@ -1,23 +1,44 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import '../../assets/css/checkout.css'
-import {getCartInfoApi} from "../../api/cart";
+import {getCartInfoApi, removeCartInfoApi} from "../../api/cart";
+import {removeAllItemFromCart} from "../../store/actions/cart";
+import {toast} from "react-toastify";
 
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
+    const cart = useSelector(state => state.cart)
+    const dispatch = useDispatch()
+    const history = useHistory()
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     useEffect(() => {
-        getCarts()
-    },[])
+        if (user && user.token && cart.length > 0) {
+            getCarts()
+        }else{
+        }
+
+    }, [])
     const getCarts = () => {
         getCartInfoApi().then(re => {
-            setProducts(re.products)
-            console.log(re)
-            setTotal(re.cartTotal)
+            if (re) {
+                setProducts(re.products)
+                setTotal(re.cartTotal)
+            }
         })
 
+    }
+    const removeCart = () => {
+        removeCartInfoApi().then(re => {
+            if (re.success === true) {
+                dispatch(removeAllItemFromCart())
+                setProducts([])
+                setTotal(0)
+                toast.info("Cart is empty, Please continue shopping...")
+                history.replace('/')
+            }
+        })
     }
     return (
         <section className="checkout-section section_space">
@@ -167,7 +188,9 @@ const CheckOutIndex = () => {
                                     </tfoot>
                                 </table>
                                 <div className="w-100 d-flex mt-5 justify-content-end">
-                                    <button className="order-btn btn btn-warning btn-sm">Clear Cart</button>
+                                    <button className="order-btn btn btn-warning btn-sm" onClick={removeCart}>Clear
+                                        Cart
+                                    </button>
                                 </div>
                                 <div className="w-100 mt-4">
                                     <button className="btn btn-primary w-100 btn-flat-info">Place Order</button>
