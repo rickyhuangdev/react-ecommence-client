@@ -3,16 +3,23 @@ import AdminNav from "../../../components/nav/AdminNav";
 import {Button, DatePicker, Form, Input, InputNumber, Radio} from 'antd';
 import moment from 'moment'
 import {createCouponApi} from "../../../api/coupon";
+import {toast} from "react-toastify";
 
 const CouponCreate = () => {
+    let formRef = React.createRef();
     const [form] = Form.useForm();
     const onFinish = async (values) => {
         values.expiry = moment(values.expiry).format()
         const result = await createCouponApi(values)
         if (result) {
-            console.log(result)
+            toast("create coupon successfully")
+            onReset()
+
         }
 
+    };
+    const onReset = () => {
+        formRef.current.resetFields();
     };
 
     return (
@@ -30,6 +37,7 @@ const CouponCreate = () => {
                                     layout="vertical"
                                     form={form}
                                     onFinish={onFinish}
+                                    ref={formRef}
                                 >
 
                                     <Form.Item label="Coupon Name" name="name"
