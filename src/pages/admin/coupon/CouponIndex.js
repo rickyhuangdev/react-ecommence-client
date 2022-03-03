@@ -62,7 +62,7 @@ const CouponIndex = () => {
             key: '_id',
             render: (text, record) => (
                 <Space size="middle">
-                    <Link to={`/admin/coupon/${record._id}`}><EditOutlined/></Link>
+                    <Link to={`/admin/coupon/edit/${record._id}`}><EditOutlined/></Link>
                     <Popconfirm
                         title="Are you sure to delete this ?"
                         placement="rightBottom"

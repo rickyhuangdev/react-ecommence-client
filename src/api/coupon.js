@@ -7,7 +7,7 @@ export const readCouponApi = (id) => {
     return request(`/coupon/${id}`, 'get')
 }
 export const updateCouponApi = (data) => {
-    return request(`/category/${data.id}`, 'put',data)
+    return request(`/coupon/${data.id}`, 'put',data)
 }
 export const deleteCouponApi = (id) => {
     return request(`/coupon/${id}`, 'delete')
