@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import ProductDetail from "../pages/product/ProductDetail";
 import CategoryIndex from "../pages/category";
 import CartIndex from "../pages/cart";
+import CheckOutIndex from "../pages/checkout";
 
 const publicRoutes = [
     {
@@ -40,6 +41,11 @@ const publicRoutes = [
     {
         path: '/cart',
         component: CartIndex,
+        exact: true
+    },
+    {
+        path: '/checkout',
+        component: CheckOutIndex,
         exact: true
     }
 ]

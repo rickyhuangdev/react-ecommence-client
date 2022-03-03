@@ -1,0 +1,29 @@
+.section_space {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+.checkbox-form h3 {
+    border-bottom: 1px solid #e4e4e4;
+    font-size: 26px;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+.country-select {
+    margin-bottom: 30px;
+    position: relative;
+}
+.checkout-form-list {
+    margin-bottom: 30px;
+}
+.checkout-form-list label {
+    color: #6f7172;
+}
+.country-select label, .checkout-form-list label {
+    color: #6f7172;
+    display: block;
+    margin: 0 0 5px;
+}
+.country-select label span.required, .checkout-form-list label span.required,.required {
+    color: red;
+}
