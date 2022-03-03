@@ -23,9 +23,9 @@ const CartIndex = () => {
         }, 0)
     }
     const saveOrderToDB = async () => {
-       const re = await saveCartToDBApi()
-        if(re){
-            history.replace('/checkout')
+       const re = await saveCartToDBApi(cart)
+        if(re.success === true){
+            history.push('/checkout')
         }
     }
     return (

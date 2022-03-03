@@ -1,9 +1,23 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import '../../assets/css/checkout.css'
+import {getCartInfoApi} from "../../api/cart";
+
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
+    const [products, setProducts] = useState([])
+    const [total, setTotal] = useState(0)
+    useEffect(() => {
+        getCarts()
+    },[])
+    const getCarts = () => {
+        getCartInfoApi().then(re => {
+            setProducts(re.products)
+            setTotal(re.cartTotal)
+        })
+
+    }
     return (
         <section className="checkout-section section_space">
             <div className="container">
@@ -30,7 +44,7 @@ const CheckOutIndex = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row mt-5">
                     <div className="col-lg-6">
                         <div className="checkbox-form">
                             <h3>Billing Details</h3>
@@ -107,6 +121,8 @@ const CheckOutIndex = () => {
                             </div>
 
                         </div>
+                    </div>
+                    <div className="col-lg-6">
                     </div>
                 </div>
             </div>
