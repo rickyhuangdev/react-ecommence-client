@@ -7,7 +7,7 @@ import {removeAllItemFromCart} from "../../store/actions/cart";
 import {toast} from "react-toastify";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
-
+import { Collapse } from 'antd';
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
     const cart = useSelector(state => state.cart)
@@ -16,7 +16,11 @@ const CheckOutIndex = () => {
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     const [country, setCountry] = useState('')
+    const [coupon, setCoupon] = useState('')
+    const [couponError, setCouponError] = useState(false)
+    const [couponErrorText, setCouponErrorText] = useState('')
     const [saveAddress, setSaveAddress] = useState(false)
+    const { Panel } = Collapse;
     const [address, setAddress] = useState({
         country: '',
         email: '',
@@ -74,6 +78,12 @@ const CheckOutIndex = () => {
             return true
         }
     }
+    function callback(key) {
+        console.log(key);
+    }
+    const applyDiscountCoupon = () => {
+        console.log(coupon)
+    }
     return (
         <section className="checkout-section section_space">
             <div className="container">
@@ -81,18 +91,32 @@ const CheckOutIndex = () => {
                     <div className="col col-xs-12">
                         <div className="woocommerce">
                             <div className="woocommerce-info">
-                                {/*{!user && !user.token &&(*/}
+                                {!user && !user.token &&(
                                 <div className="alert alert-warning" role="alert">
                                     Returning customer? <Link to="/login">Click here to login</Link>
                                 </div>
-                                {/*)}*/}
+                                )}
 
                             </div>
                             <div className="woocommerce-info mt-20">
                                 {/*{!user && !user.token &&(*/}
-                                <div className="alert alert-warning" role="alert">
-                                    Have a coupon? <Link to="/login">Click here to enter your code</Link>
-                                </div>
+                                <Collapse onChange={callback}>
+                                    <Panel header="Have a coupon? Click here to enter your code" key="1" className="shadow-3">
+                                        <div className="row">
+                                            <div className="col-6">
+                                                    <label htmlFor="staticEmail">Coupon Code</label>
+                                                    <div className="col-sm-10">
+                                                        <input type="text" className="form-control" value={coupon} onChange={(e)=>setCoupon(e.target.value)}/>
+                                                        {setCouponError && (
+                                                            <small className="form-text text-muted mt-2 d-block">Invalid Coupon.</small>
+                                                        )}
+                                                    </div>
+                                                <button className="btn btn-primary btn-sm mt-3" onClick={applyDiscountCoupon}>Apply</button>
+                                            </div>
+                                        </div>
+                                    </Panel>
+
+                                </Collapse>
                                 {/*)}*/}
 
                             </div>
