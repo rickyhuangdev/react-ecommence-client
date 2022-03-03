@@ -4,6 +4,12 @@ export const addToCart = carts => {
         payload: carts
     }
 }
+export const UPDATE_CART = carts => {
+    return {
+        type: 'UPDATE_CART',
+        payload: carts
+    }
+}
 export const removeItemFromCart = cartItemId => {
     return {
         type: 'REMOVE_ITEM_FROM_CART',

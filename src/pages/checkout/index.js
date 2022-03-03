@@ -32,8 +32,8 @@ const CheckOutIndex = () => {
         if (user && user.token && cart.length > 0) {
             getCarts()
         } else {
+            history.push('/')
         }
-        console.log(address)
     }, [address, cart])
     const changeHandler = value => {
         setCountry(value)

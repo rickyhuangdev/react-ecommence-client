@@ -8,6 +8,9 @@ import subCategoryEdit from "../pages/admin/subCategory/SubCategoryEdit";
 import ProductEdit from "../pages/admin/product/ProductEdit";
 import ProductIndex from "../pages/admin/product/ProductIndex";
 import ProductCreate from "../pages/admin/product/ProductCreate";
+import CouponIndex from "../pages/admin/coupon/CouponIndex";
+import CouponCreate from "../pages/admin/coupon/CouponCreate";
+import CouponEdit from "../pages/admin/coupon/CouponEdit";
 
 const authRoutes = [
     {
@@ -86,6 +89,30 @@ const authRoutes = [
     {
         path: '/admin/product/edit/:slug',
         component: ProductEdit,
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
+    },
+    /**
+     * coupon
+     */
+    {
+        path: '/admin/coupon',
+        component: CouponIndex,
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
+    },
+    {
+        path: '/admin/coupon/create',
+        component: CouponCreate,
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
+    },
+    {
+        path: '/admin/coupon/edit/:id',
+        component: CouponEdit,
         exact: true,
         role: 'admin',
         backUrl:'/user'
