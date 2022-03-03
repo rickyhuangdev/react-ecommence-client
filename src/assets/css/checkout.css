@@ -27,3 +27,69 @@
 .country-select label span.required, .checkout-form-list label span.required,.required {
     color: red;
 }
+.your-order {
+    padding: 30px 40px 45px;
+    border: 2px solid #e4e4e4;
+}
+.your-order h3 {
+    border-bottom: 1px solid #e4e4e4;
+    font-size: 30px;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+.table-responsive {
+    overflow-x: auto;
+}
+.your-order-table table {
+    background: 0;
+    border: 0;
+    width: 100%;
+}
+table {
+    caption-side: bottom;
+    border-collapse: collapse;
+}
+.your-order-table table th, .your-order-table table td {
+    border-bottom: 1px solid #e4e4e4;
+    border-right: medium none;
+    color: #6f7172;
+    font-size: 14px;
+    padding: 15px 0;
+    text-align: left;
+}
+.your-order-table table th {
+    border-top: medium none;
+    color: #6f7172;
+    font-weight: normal;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: 250px;
+    font-size: 18px;
+}
+.your-order-table table .shipping th {
+    vertical-align: center;
+}
+.your-order-table table .shipping ul li input {
+    position: relative;
+    top: 2px;
+}
+.your-order-table table .shipping ul li label {
+    color: #6f7172;
+}
+.your-order-table table .order-total th {
+    border-bottom: 0;
+    font-size: 14px;
+}
+.your-order-table table .order-total td {
+    border-bottom: medium none;
+}
+.your-order-table table tr.order-total td span {
+    color: #222;
+    font-size: 18px;
+    font-weight: 700;
+}
+ol, ul{
+    padding: 0!important;
+}
