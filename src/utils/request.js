@@ -38,11 +38,12 @@ instance.interceptors.response.use(res => res.data, error => {
     }
 
     if (error.response && error.response.status === 401 && error.response.data.err.code === 'auth/id-token-expired') {
-        toast.warning("Your login has expired")
-        removeTokenInfo()
-        setTimeout(() => {
-            window.location.href = '/login'
-        }, 4000)
+        // toast.warning("Your login has expired")
+        // removeTokenInfo()
+        // setTimeout(() => {
+        //     window.location.href = '/login'
+        // }, 4000)
+        return error
 
     }
 

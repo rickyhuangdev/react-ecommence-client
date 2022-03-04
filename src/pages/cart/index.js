@@ -9,7 +9,7 @@ import {toast} from "react-toastify";
 import {saveCartToDBApi} from "../../api/cart";
 
 const CartIndex = () => {
-    const cart = useSelector(state => state.cart)
+    const cart = useSelector(state => state.cart.cartItems)
     const user = useSelector(state => state.profile.user)
     const token = useSelector(state => state.login)
     const dispatch = useDispatch()

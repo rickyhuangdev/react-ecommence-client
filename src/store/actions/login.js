@@ -1,5 +1,6 @@
 import {removeTokenInfo} from "../../utils/storage";
 import {clearUserProfile} from "./profile";
+import {userLoginApi} from "../../api/user";
 
 export const saveToken = tokenInfo => {
     return {
@@ -19,9 +20,24 @@ export const logout = () => {
         await removeTokenInfo()
         // 删除 Redux 中的 Token 信息
         await dispatch(clearToken())
-        await  dispatch(clearUserProfile())
+        await dispatch(clearUserProfile())
 
     }
 }
+
+export const login = (email, password) => {
+    return async dispatch => {
+        userLoginApi({email, password}).then(data => {
+            if (data) {
+                dispatch({
+                    type: 'USER_LOGIN_SUCCESS',
+                    payload: data
+                })
+            }
+        })
+
+    }
+}
+
 
 

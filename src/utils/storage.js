@@ -35,7 +35,8 @@ export const setCartInfo = cartInfo => {
  * 删除本地缓存中的 Token 信息
  */
 export const removeTokenInfo = () => {
-    localStorage.removeItem(TOKEN_KEY)
+    localStorage.removeItem(TOKEN_KEY.login)
+    localStorage.removeItem(TOKEN_KEY.profile)
 }
 
 /**

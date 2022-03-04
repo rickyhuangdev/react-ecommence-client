@@ -1,16 +1,19 @@
 
-export const cart = (state = [], action) => {
+export const cart = (state = {cartItems: []}, action) => {
     const {type, payload} = action
     switch (type) {
         // 设置基本信息
         case 'ADD_TO_CART':
-            const sameIndex = state.findIndex(goods => goods.product._id === payload.product._id)
-            if (sameIndex > -1) {
-                // const count = state[sameIndex].count
-                // payload.count += count
-                state.splice(sameIndex, 1)
+            const existItem = state.cartItems.find(goods => goods.product._id === payload.product._id)
+            if (existItem) {
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map(goods => goods.product._id === existItem.product._id ? payload : goods)
+                }
+            } else {
+                return {...state, cartItems: [...state.cartItems, payload]};
             }
-            return [...state, payload];
+
         case 'UPDATE_CART':
             const cartIndex = state.findIndex(goods => goods.product._id === payload.product._id)
             console.log(cartIndex)
@@ -21,7 +24,7 @@ export const cart = (state = [], action) => {
             }
             return [...state, payload];
         case 'REMOVE_ITEM_FROM_CART':
-            return state.filter((item) => item.product._id !== payload)
+            return {...state,cartItems:[...state.cartItems.filter((item) => item.product._id !== payload)]}
         case 'REMOVE_ALL_ITEM_FROM_CART':
             return []
         // 默认

@@ -1,15 +1,11 @@
-const initialSate = {
-    user: {}
-}
 
-export const profile = (state = initialSate, action) => {
+export const profile = (state = {}, action) => {
     const {type, payload} = action
     switch (type) {
         // 设置基本信息
         case 'profile/user':
             return {
-                ...state,
-                user: {...payload}
+                userInfo: payload
             }
         case 'profile/clear':
             return {}

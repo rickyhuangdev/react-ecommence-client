@@ -20,7 +20,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../../store/actions/cart";
 
 const HeaderDefault = () => {
-    const cart = useSelector(state=>state.cart)
+    const cart = useSelector(state=>state.cart.cartItems)
     const user = useSelector(state => state.profile.user)
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')

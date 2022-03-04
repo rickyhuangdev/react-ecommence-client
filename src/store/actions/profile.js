@@ -21,10 +21,8 @@ export const getUserProfile = () => {
         const res = await getUserProfileApi()
         dispatch(setUser({
             email: res.email,
-            user_id: res._id,
             name: res.name,
             image:res.picture,
-            token: getState().login.token
         }))
     }
 }

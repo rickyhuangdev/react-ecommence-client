@@ -15,10 +15,28 @@ import AdminRoutes from "./components/routes/AdminRoutes";
 import UserRoutes from "./components/routes/UserRoutes";
 import Footer from "./components/nav/footer";
 import HeaderDefault from "./components/header/HeaderDefault";
+import {getUserProfile, setUser} from "./store/actions/profile";
+import {getUserProfileApi} from "./api/user";
 
 
 function App(props) {
+    const dispatch = useDispatch()
+    // useEffect(()=>{
+    //     getUserProfileApi().then(res=>{
+    //         if(res){
+    //             dispatch(setUser({
+    //                 email: res.email,
+    //                 name: res.name,
+    //                 image:res.picture,
+    //             }))
+    //         }
+    //     }).catch(err=>{
+    //         console.log(err.response)
+    //     })
+    //
+    // })
     return (
+
         <BrowserRouter>
             <Fragment>
                 <HeaderDefault/>

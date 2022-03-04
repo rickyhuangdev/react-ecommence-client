@@ -10,6 +10,7 @@ import Select from 'react-select'
 import {Collapse} from 'antd';
 import {applyCouponApi} from "../../api/coupon";
 import {applyCoupon} from "../../store/actions/coupon";
+import {saveOrderToDBApi} from "../../api/order";
 
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
@@ -105,6 +106,14 @@ const CheckOutIndex = () => {
                 dispatch(applyCoupon(false))
             }
         })
+    }
+    const saveOrder = (e) => {
+      e.preventDefault()
+       saveOrderToDBApi({address}).then(re=>{
+           if(re.success === true){
+               history.push('/payment')
+           }
+       })
     }
     return (
         <section className="checkout-section section_space">
@@ -270,7 +279,7 @@ const CheckOutIndex = () => {
                                     </button>
                                 </div>
                                 <div className="w-100 mt-4">
-                                    <button className="btn btn-primary w-100 btn-flat-info" onClick={()=>{history.push('/payment')}}
+                                    <button className="btn btn-primary w-100 btn-flat-info" onClick={saveOrder}
                                             disabled={!saveAddress}>Place Order
                                     </button>
                                 </div>
