@@ -7,8 +7,9 @@ import {removeAllItemFromCart} from "../../store/actions/cart";
 import {toast} from "react-toastify";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
-import { Collapse } from 'antd';
+import {Collapse} from 'antd';
 import {applyCouponApi} from "../../api/coupon";
+
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
     const cart = useSelector(state => state.cart)
@@ -19,10 +20,10 @@ const CheckOutIndex = () => {
     const [country, setCountry] = useState('')
     const [coupon, setCoupon] = useState('')
     const [couponError, setCouponError] = useState(false)
-    const [couponErrorText, setCouponErrorText] = useState('')
+    const [couponResponseText, setCouponResponseText] = useState('')
     const [saveAddress, setSaveAddress] = useState(false)
-    const [totalAfterDiscount, setTotalAfterDiscount] = useState('')
-    const { Panel } = Collapse;
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
+    const {Panel} = Collapse;
     const [address, setAddress] = useState({
         country: '',
         email: '',
@@ -61,6 +62,10 @@ const CheckOutIndex = () => {
                 dispatch(removeAllItemFromCart())
                 setProducts([])
                 setTotal(0)
+                setTotalAfterDiscount(0)
+                setCoupon("")
+                setCouponError(false)
+                setCouponResponseText("")
                 toast.info("Cart is empty, Please continue shopping...")
                 history.replace('/')
             }
@@ -81,15 +86,17 @@ const CheckOutIndex = () => {
         }
     }
     function callback(key) {
-        console.log(key);
     }
     const applyDiscountCoupon = () => {
         applyCouponApi({coupon}).then(re=>{
             if(re.success === true){
                 setTotalAfterDiscount(re.data)
                 setCouponError(false)
+                setCouponResponseText(re.message)
+                toast.success(re.message)
+                setCoupon("")
             }else{
-                setCouponErrorText(re.message)
+                setCouponResponseText(re.message)
                 setCouponError(true)
             }
         })
@@ -118,7 +125,7 @@ const CheckOutIndex = () => {
                                                     <div className="col-sm-10">
                                                         <input type="text" className="form-control" value={coupon} onChange={(e)=>setCoupon(e.target.value)}/>
                                                         {couponError && (
-                                                            <small className="form-text mt-2 d-block text-danger">{couponErrorText}.</small>
+                                                            <small className="form-text mt-2 d-block text-danger">{couponResponseText}.</small>
                                                         )}
                                                     </div>
                                                 <button className="btn btn-primary btn-sm mt-3" onClick={applyDiscountCoupon}>Apply</button>
@@ -237,6 +244,19 @@ const CheckOutIndex = () => {
                                         <th>Order Total</th>
                                         <td><strong><span className="amount">${total}</span></strong></td>
                                     </tr>
+                                    {totalAfterDiscount > 0 && (
+                                        <tr className="order-total">
+                                            <td colSpan="2">
+                                                <div className="alert alert-dismissible alert-success  d-flex justify-content-between">
+                                                  <div>Discount Applied:</div>
+                                                    <div className="w-50">
+                                                        <strong>Total Payable: ${totalAfterDiscount}</strong>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+
                                     </tfoot>
                                 </table>
                                 <div className="w-100 d-flex mt-5 justify-content-end">
