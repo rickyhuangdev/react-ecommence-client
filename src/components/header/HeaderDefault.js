@@ -18,10 +18,12 @@ import {AiOutlineAudio} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../../store/actions/cart";
+import {logout} from "../../store/actions/login";
 
 const HeaderDefault = () => {
-    const cart = useSelector(state=>state.cart.cartItems)
-    const user = useSelector(state => state.profile.user)
+    const cart = useSelector(state => state.cart.cartItems)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo} = loginInfo
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
     const [searchText, setSearchText] = useState('')
@@ -34,7 +36,9 @@ const HeaderDefault = () => {
     }
     const handleSearch = () => {
     }
-
+const logoutHandler = () => {
+  dispatch(logout())
+}
     const LangMenu = (
         <Menu onClick={changeLang}>
             <Menu.Item key="English">
@@ -90,8 +94,6 @@ const HeaderDefault = () => {
                                         <span className="current">{currency}</span>
                                     </Dropdown>
                                     </div>
-                                    <div className="support d-none d-sm-flex align-items-center ml-4"><p>Need Help? <a
-                                        href="tel:+001123456789">+001 123 456 789</a></p></div>
                                 </div>
                             </div>
                             <div className="col-xl-6 col-lg-5 d-none d-lg-block">
@@ -102,6 +104,10 @@ const HeaderDefault = () => {
                                             <li><a href="contact.html">Order Tracking</a></li>
                                             <li><a href="contact.html">Contact Us</a></li>
                                             <li><a href="faq.html">FAQs</a></li>
+                                            {userInfo && (
+                                                <li className="pointer" onClick={logoutHandler}><span>logout</span></li>
+                                                )}
+
                                         </ul>
                                     </div>
                                 </div>
@@ -148,12 +154,24 @@ const HeaderDefault = () => {
                             <div className="col-xl-4 col-lg-5 col-md-8 col-sm-8">
                                 <div className="header-action">
                                     <div className="block-userlink">
-                                        <Link to="/user" className="icon-link icon-link-2">
-                                        <BsPerson/>
-                                        <span className="text">
+
+
+                                        {userInfo ? (
+                                            <Link to="/user" className="icon-link icon-link-2">
+                                                <BsPerson/>
+                                                <span className="text">
+                                            <span className="sub">Hello, <strong>{userInfo.name}</strong></span>My Account </span>
+                                            </Link>
+                                        ) : (
+                                            <Link to="/login" className="icon-link icon-link-2">
+                                                <BsPerson/>
+                                                <span className="text">
                                             <span className="sub">Login </span>My Account </span>
-                                        </Link>
-                                 </div>
+
+                                            </Link>
+                                        )}
+
+                                    </div>
 
                                     <div className="block-wishlist action">
                                         <Link  to="/wishlist" className="icon-link icon-link-2">

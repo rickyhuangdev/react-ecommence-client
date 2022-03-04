@@ -29,7 +29,9 @@ code {
 main {
   height: auto;
 }
-
+.pointer{
+  cursor: pointer !important;
+}
 .banner__area img {
   width: 100%;
   height: 200px;

@@ -11,6 +11,8 @@ export const login = (state = {}, action) => {
             return {loading: true}
         case 'USER_LOGIN_FAIL':
             return {loading: false, error: payload}
+        case 'USER_LOGOUT':
+            return {}
         default:
             return state
 
