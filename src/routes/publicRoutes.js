@@ -6,6 +6,7 @@ import ProductDetail from "../pages/product/ProductDetail";
 import CategoryIndex from "../pages/category";
 import CartIndex from "../pages/cart";
 import CheckOutIndex from "../pages/checkout";
+import PaymentIndex from "../pages/payment/PaymentIndex";
 
 const publicRoutes = [
     {
@@ -47,6 +48,13 @@ const publicRoutes = [
         path: '/checkout',
         component: CheckOutIndex,
         exact: true
+    },
+    {
+        path: '/payment',
+        component: PaymentIndex,
+        exact: true,
+        role: 'user',
+        backUrl: '/'
     }
 ]
 export default publicRoutes

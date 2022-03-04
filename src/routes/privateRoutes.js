@@ -47,14 +47,15 @@ const privateRoutes = [
         component: Payment,
         exact: true,
         role: 'user',
-        backUrl:'/login'
+        backUrl: '/login'
     },
     {
         path: '/user/address',
         component: Address,
         exact: true,
         role: 'user',
-        backUrl:'/login'
-    }
+        backUrl: '/login'
+    },
+
 ]
 export default privateRoutes
