@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import {
     PaymentElement,
     useStripe,
-    useElements
+    useElements, CardElement
 } from "@stripe/react-stripe-js";
 
-const CheckoutForm = () => {
+const CheckoutForm = ({history}) => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState(null);
     const elements = useElements();

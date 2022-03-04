@@ -4,7 +4,7 @@ import payment from '../../assets/images/payment.png'
 const Footer = () => {
     return (
         <footer className="mt-5">
-            <div className="bg-dark-1">
+            <div className="bg-dark">
                 <div className="footer__top pt-80 pb-15">
                     <div className="container-fluid">
                         <div className="row">

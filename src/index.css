@@ -5,6 +5,8 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100% !important;
+  height: 100vh !important;
 }
 
 a{
@@ -25,7 +27,7 @@ code {
 }
 
 main {
-  min-height: 80vh;
+  height: auto;
 }
 
 .banner__area img {
