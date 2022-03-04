@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
 import { Collapse } from 'antd';
+import {applyCouponApi} from "../../api/coupon";
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
     const cart = useSelector(state => state.cart)
@@ -20,6 +21,7 @@ const CheckOutIndex = () => {
     const [couponError, setCouponError] = useState(false)
     const [couponErrorText, setCouponErrorText] = useState('')
     const [saveAddress, setSaveAddress] = useState(false)
+    const [totalAfterDiscount, setTotalAfterDiscount] = useState('')
     const { Panel } = Collapse;
     const [address, setAddress] = useState({
         country: '',
@@ -82,7 +84,15 @@ const CheckOutIndex = () => {
         console.log(key);
     }
     const applyDiscountCoupon = () => {
-        console.log(coupon)
+        applyCouponApi({coupon}).then(re=>{
+            if(re.success === true){
+                setTotalAfterDiscount(re.data)
+                setCouponError(false)
+            }else{
+                setCouponErrorText(re.message)
+                setCouponError(true)
+            }
+        })
     }
     return (
         <section className="checkout-section section_space">
@@ -107,8 +117,8 @@ const CheckOutIndex = () => {
                                                     <label htmlFor="staticEmail">Coupon Code</label>
                                                     <div className="col-sm-10">
                                                         <input type="text" className="form-control" value={coupon} onChange={(e)=>setCoupon(e.target.value)}/>
-                                                        {setCouponError && (
-                                                            <small className="form-text text-muted mt-2 d-block">Invalid Coupon.</small>
+                                                        {couponError && (
+                                                            <small className="form-text mt-2 d-block text-danger">{couponErrorText}.</small>
                                                         )}
                                                     </div>
                                                 <button className="btn btn-primary btn-sm mt-3" onClick={applyDiscountCoupon}>Apply</button>
