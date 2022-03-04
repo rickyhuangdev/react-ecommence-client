@@ -18,11 +18,7 @@ const PaymentIndex = () => {
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
         createPaymentIntent().then(re=>{
-            // if(re.success ===true){
-            //
-            // }
             setClientSecret(re.clientSecret)
-            console.log(re)
         })
     }, []);
     return (
