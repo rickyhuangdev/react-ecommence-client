@@ -1,19 +1,11 @@
 import React, {useState} from 'react';
 import {toast} from "react-toastify";
 import {useDispatch} from "react-redux";
-import {saveToken} from "../../store/actions/login";
+import {login, saveToken} from "../../store/actions/login";
 import {Link, useHistory, useLocation} from "react-router-dom";
-import {Button} from "antd";
 import {GoogleOutlined, MailOutlined} from "@ant-design/icons";
-import {
-    createUserWithEmailAndPassword,
-    getAuth,
-    GoogleAuthProvider,
-    signInWithEmailAndPassword,
-    signInWithPopup
-} from "firebase/auth";
-import {createOrUpdateUser, setUser} from "../../store/actions/profile";
-import {createOrUpdateUserApi} from "../../api/user";
+import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {setUser} from "../../store/actions/profile";
 
 const LoginAndRegisterForm = (prop) => {
     const [email, setEmail] = useState('')
@@ -41,76 +33,12 @@ const LoginAndRegisterForm = (prop) => {
             setSendingData(false)
             return
         }
-        let auth = getAuth();
-        let tokenInfo = null
         if (!prop.islogin) {
-            createUserWithEmailAndPassword(auth, email, password)
-                .then(async (userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    tokenInfo = userCredential._tokenResponse.refreshToken
-                    const idTokenResult = await user.getIdTokenResult()
-                    dispatch(saveToken(idTokenResult.token))
-                    dispatch(createOrUpdateUser())
-                    history.push('/')
-                    toast.success('Register Successfully!');
 
-                    // ...
-                })
-
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    let message = null
-                    switch (errorCode) {
-                        case 'auth/weak-password':
-                            message = "Password should be at least 6 characters"
-                            break;
-                        case 'auth/email-already-in-use':
-                            message = "This email address is already being used"
-                            break;
-                        default:
-                            message = null;
-                    }
-                    setSendingData(false)
-                    toast.error(`${message}`);
-
-                    // ..
-                });
 
         } else {
+            dispatch(login(email, password))
 
-            await signInWithEmailAndPassword(auth, email, password)
-                .then(async (userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    const idTokenResult = await user.getIdTokenResult()
-                    dispatch(saveToken(idTokenResult.token))
-                    createOrUpdateUserApi({token:idTokenResult.token}).then(res => {
-                        dispatch(setUser({
-                            name: res.name,
-                            email: res.email,
-                        }))
-                        prop.loginRediect(res)
-                    })
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    let message = null
-                    console.log(error)
-                    switch (errorCode) {
-                        case 'auth/wrong-password':
-                            message = "Invalid username or password, Please try again"
-                            break;
-                        case 'auth/user-not-found':
-                            message = "This email address does not exist"
-                            break;
-                        default:
-                            message = null;
-                    }
-                    setSendingData(false)
-                    toast.error(`${message}`);
-                });
         }
 }
 
@@ -169,9 +97,9 @@ const LoginAndRegisterForm = (prop) => {
             </div>
             {/*<button type="submit" className="btn btn-success">Submit</button>*/}
            <div className="form-group mb-3">
-               <button className="btn d-blue-bg d-flex align-items-center text-white shadow rounded">{prop.islogin ? <MailOutlined className="me-2"/> : ''} {prop.loginText}</button>
+               <button className="btn d-blue-bg d-flex align-items-center text-white shadow rounded" type="button" onClick={handleSubmit}>{prop.islogin ? <MailOutlined className="me-2"/> : ''} {prop.loginText}</button>
            </div>
-            <button type="button"  onClick={handleGoogleLogin} className="mt-3 btn btn-danger d-flex align-items-center text-white shadow rounded">
+            <button type="button"  onClick={handleGoogleLogin}  className="mt-3 btn btn-danger d-flex align-items-center text-white shadow rounded">
                 {prop.islogin ? <GoogleOutlined className="me-2"/> : ''} Login With Google
             </button>
             <div className="mt-3" style={{color:'red'}}>

@@ -31,35 +31,8 @@ instance.interceptors.request.use(config => {
 
 instance.interceptors.response.use(res => res.data, error => {
 
+    return Promise.reject(error)
 
-    if (error.response && error.response.status === 400 && error.response.data.errors.name === 'ValidationError') {
-        console.log(error.response.data.errors[0].message)
-
-    }
-
-    if (error.response && error.response.status === 401 && error.response.data.err.code === 'auth/id-token-expired') {
-        // toast.warning("Your login has expired")
-        // removeTokenInfo()
-        // setTimeout(() => {
-        //     window.location.href = '/login'
-        // }, 4000)
-        return error
-
-    }
-
-    // if (error.response && error.response.status === 401) {
-    //     const {data} = error.response
-    //     removeTokenInfo()
-    //     toast.warn(`${data.err}`)
-    //     window.location.reload()
-    //     // 1. 清空无效用户信息
-    //     // 2. 跳转到登录页
-    //     // 3. 跳转需要传参（当前路由地址）给登录页码
-    //     // 当前路由地址
-    //     // 组件里头：`/user?a=10` $route.path === /user  $route.fullPath === /user?a=10
-    //     // js模块中：router.currentRoute.value.fullPath 就是当前路由地址，router.currentRoute 是ref响应式数据
-    //     const fullPath = encodeURIComponent(window.location.pathname)
-    // }
 })
 
 // 请求工具函数

@@ -27,6 +27,9 @@ export const logout = () => {
 
 export const login = (email, password) => {
     return async dispatch => {
+        dispatch({
+            type: 'USER_LOGIN_REQUEST'
+        })
         userLoginApi({email, password}).then(data => {
             if (data) {
                 dispatch({
@@ -34,6 +37,11 @@ export const login = (email, password) => {
                     payload: data
                 })
             }
+        }).catch(error => {
+            dispatch({
+                type: 'USER_LOGIN_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
         })
 
     }

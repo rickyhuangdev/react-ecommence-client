@@ -1,20 +1,20 @@
 import React, {useEffect} from 'react';
 import LoginAndRegisterForm from "../../components/form/loginAndRegisterForm";
 import {useSelector} from "react-redux";
-import {useHistory} from "react-router-dom";
+import {useHistory, useLocation} from "react-router-dom";
 
 const Login = () => {
-    const login = useSelector(state => state.login)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo,loading,error} = loginInfo
     const history = useHistory()
+    const location = useLocation()
+    const redirect = location.search ? location.search.split('=')[1] : '/'
     useEffect(() => {
-        let intended = history.location.state
-        if (intended) {
-            return
-        } else {
-            if (login && login.token) history.replace('/')
+        if (userInfo) {
+            history.push(redirect)
         }
 
-    }, [login])
+    }, [userInfo, history, redirect])
 
     const loginRedirect = (res) => {
         let intended = history.location.state
@@ -33,6 +33,11 @@ const Login = () => {
             <div className="row d-flex align-items-center" style={{minHeight: '65vh'}}>
                 <div className="col col-md-6 offset-md-3 mx-auto">
                     <h4>Login</h4>
+                    {error && (
+                        <div className="alert alert-dismissible alert-danger">
+                            <p className="mb-0">{error}</p>
+                        </div>
+                    )}
                     <LoginAndRegisterForm islogin={true} loginText="Login with Email/Password"
                                           loginRediect={loginRedirect}/>
                 </div>
