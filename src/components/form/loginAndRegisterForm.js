@@ -155,26 +155,25 @@ const LoginAndRegisterForm = (prop) => {
     }
 
     return (
-        <form className='mt-5'>
+        <form className='mt-3'>
             <h1>{prop.islogin}</h1>
-            <div className="form-group">
+            <div className="form-group mb-3">
                 <label htmlFor="exampleInputEmail1">Email address</label>
                 <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                        onChange={(event => setEmail(event.target.value))}/>
             </div>
-            <div className="form-group">
+            <div className="form-group mb-3">
                 <label htmlFor="exampleInputPassword1">Password</label>
                 <input type="password" className="form-control" id="exampleInputPassword1"
                        onChange={(event => setPassword(event.target.value))}/>
             </div>
             {/*<button type="submit" className="btn btn-success">Submit</button>*/}
-            <Button type="primary" disabled={!email || password.length < 6 || sendingData} onClick={handleSubmit} block
-                    className="mt-3">
-                {prop.islogin ? <MailOutlined/> : ''} {prop.loginText}
-            </Button>
-            <Button type="primary" danger onClick={handleGoogleLogin} block className="mt-3">
-                {prop.islogin ? <GoogleOutlined/> : ''} Login With Google
-            </Button>
+           <div className="form-group mb-3">
+               <button className="btn d-blue-bg d-flex align-items-center text-white shadow rounded">{prop.islogin ? <MailOutlined className="me-2"/> : ''} {prop.loginText}</button>
+           </div>
+            <button type="button"  onClick={handleGoogleLogin} className="mt-3 btn btn-danger d-flex align-items-center text-white shadow rounded">
+                {prop.islogin ? <GoogleOutlined className="me-2"/> : ''} Login With Google
+            </button>
             <div className="mt-3" style={{color:'red'}}>
                 <Link to="/resetPassword">Forgot Password ?</Link>
             </div>
