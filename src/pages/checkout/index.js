@@ -9,6 +9,7 @@ import countryList from 'react-select-country-list'
 import Select from 'react-select'
 import {Collapse} from 'antd';
 import {applyCouponApi} from "../../api/coupon";
+import {applyCoupon} from "../../store/actions/coupon";
 
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
@@ -66,6 +67,7 @@ const CheckOutIndex = () => {
                 setCoupon("")
                 setCouponError(false)
                 setCouponResponseText("")
+                dispatch(applyCoupon(false))
                 toast.info("Cart is empty, Please continue shopping...")
                 history.replace('/')
             }
@@ -95,9 +97,11 @@ const CheckOutIndex = () => {
                 setCouponResponseText(re.message)
                 toast.success(re.message)
                 setCoupon("")
+                dispatch(applyCoupon(true))
             }else{
                 setCouponResponseText(re.message)
                 setCouponError(true)
+                dispatch(applyCoupon(false))
             }
         })
     }
@@ -265,7 +269,7 @@ const CheckOutIndex = () => {
                                     </button>
                                 </div>
                                 <div className="w-100 mt-4">
-                                    <button className="btn btn-primary w-100 btn-flat-info"
+                                    <button className="btn btn-primary w-100 btn-flat-info" onClick={()=>{history.push('/payment')}}
                                             disabled={!saveAddress}>Place Order
                                     </button>
                                 </div>
