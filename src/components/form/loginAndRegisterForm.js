@@ -90,8 +90,6 @@ const LoginAndRegisterForm = (prop) => {
                         dispatch(setUser({
                             name: res.name,
                             email: res.email,
-                            token: idTokenResult.token,
-                            _id: res._id,
                         }))
                         prop.loginRediect(res)
                     })

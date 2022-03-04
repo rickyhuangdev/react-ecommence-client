@@ -14,6 +14,7 @@ import {applyCoupon} from "../../store/actions/coupon";
 const CheckOutIndex = () => {
     const user = useSelector(state => state.profile.user)
     const cart = useSelector(state => state.cart)
+    const token = useSelector(state => state.login)
     const dispatch = useDispatch()
     const history = useHistory()
     const [products, setProducts] = useState([])
@@ -37,7 +38,7 @@ const CheckOutIndex = () => {
     })
     const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
-        if (user && user.token && cart.length > 0) {
+        if (user && token && cart.length > 0) {
             getCarts()
         } else {
             history.push('/')

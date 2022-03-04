@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
+import React, {useEffect, useState} from "react";
+import {loadStripe} from "@stripe/stripe-js";
+import {Elements} from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import '../../assets/css/payment.css'
 import {createPaymentIntent} from "../../api/payment";
+import {useSelector} from "react-redux";
+
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KET);
 
 const PaymentIndex = () => {
     const [clientSecret, setClientSecret] = useState("");
+    const coupon = useSelector(state => state.coupon)
+    console.log(coupon)
     const appearance = {
         theme: 'stripe',
     };
@@ -17,7 +21,7 @@ const PaymentIndex = () => {
     };
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        createPaymentIntent().then(re=>{
+        createPaymentIntent().then(re => {
             setClientSecret(re.clientSecret)
         })
     }, []);

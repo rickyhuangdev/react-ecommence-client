@@ -11,6 +11,7 @@ import {saveCartToDBApi} from "../../api/cart";
 const CartIndex = () => {
     const cart = useSelector(state => state.cart)
     const user = useSelector(state => state.profile.user)
+    const token = useSelector(state => state.login)
     const dispatch = useDispatch()
     const history = useHistory()
     const confirmToRemoveFromCart = (product_id) => {
@@ -128,7 +129,7 @@ const CartIndex = () => {
                                 </ul>
                             </div>
                         </div>
-                        {user && user.token ? (
+                        {user && token ? (
                             <div className="col col-lg-6 d-flex justify-content-end align-items-end">
                                 <ul className="btns_group ul_li_right mb-0">
                                     <li>
