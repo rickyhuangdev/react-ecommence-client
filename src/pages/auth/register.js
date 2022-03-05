@@ -11,7 +11,6 @@ import isStrongPassword from 'validator/lib/isStrongPassword';
 const Register = () => {
     const {userInfo, loading, error} = useSelector(state => state.register)
     const loginInfo = useSelector(state => state.login)
-    const {userInfor} = loginInfo
     const history = useHistory()
     const location = useLocation()
     const redirect = location.search ? location.search.split('=')[1] : '/'

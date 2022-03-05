@@ -4,8 +4,6 @@
 // 4. 导出一个函数，调用当前的axsio实例发请求，返回值promise
 
 import axios from "axios";
-import {getTokenInfo, removeTokenInfo} from "./storage";
-import {toast} from "react-toastify";
 
 
 export const baseURL = process.env.REACT_APP_API_URL
@@ -15,28 +13,21 @@ const instance = axios.create({
     timeout: 5000
 })
 instance.interceptors.request.use(config => {
-    // 拦截业务逻辑
-    // 进行请求配置的修改
-    // 如果本地又token就在头部携带
-    // 1. 获取用户信息对象
-    const token = getTokenInfo()
-    // 2. 判断是否有token
-    if (token) {
-        config.headers.Authorization = token
-    }
+
+    console.log(config)
     return config;
 }, error => {
     return Promise.reject(error)
 })
 
 instance.interceptors.response.use(res => res.data, error => {
-
+    console.log(error)
     return Promise.reject(error)
 
 })
 
 // 请求工具函数
-export default (url, method = 'get', submitData) => {
+export default (url, method = 'get', submitData, config) => {
     // 负责发请求：请求地址，请求方式，提交的数据
     return instance({
         url,
@@ -46,6 +37,7 @@ export default (url, method = 'get', submitData) => {
         // [] 设置一个动态的key, 写js表达式，js表达式的执行结果当作KEY
         // method参数：get,Get,GET  转换成小写再来判断
         // 在对象，['params']:submitData ===== params:submitData 这样理解
-        [method.toLowerCase() === 'get' ? 'params' : 'data']: submitData
+        [method.toLowerCase() === 'get' ? 'params' : 'data']: submitData,
+        headers:config
     })
 }

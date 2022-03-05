@@ -4,8 +4,7 @@ import {Link, useHistory, useLocation} from "react-router-dom";
 import Loader from "../../components/loader/Loader";
 import Message from "../../components/message/Message";
 import {MailOutlined} from "@ant-design/icons";
-import {toast} from "react-toastify";
-import {login, register} from "../../store/actions/login";
+import {login} from "../../store/actions/login";
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 

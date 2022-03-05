@@ -1,6 +1,6 @@
 import {combineReducers} from "redux";
 import {login} from "./login";
-import {profile} from "./profile";
+import {profile,userUpdateProfileReducer} from "./profile";
 import {cart} from './cart'
 import {coupon} from './coupon'
 import {register} from './register'
@@ -9,6 +9,7 @@ const rootReducer = combineReducers({
     profile,
     cart,
     coupon,
-    register
+    register,
+    userUpdateProfile:userUpdateProfileReducer
 })
 export default rootReducer

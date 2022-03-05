@@ -4,8 +4,8 @@ export const createOrUpdateUserApi = (token) => {
     return request('/user/create-or-update-user', 'post', token)
 }
 
-export const getUserProfileApi = () => {
-    return request('/user/current-user', 'post')
+export const getUserProfileApi = (config) => {
+    return request('/user/profile', 'get','',config)
 }
 export const getAdminProfileApi = () => {
     return request('/user/current-admin', 'post')
@@ -21,3 +21,8 @@ export const userLoginApi = (data) => {
 export const userRegisterApi = (data) => {
     return request('/user', 'post',data)
 }
+export const userUpdateProfileApi = (data,config) => {
+    return request('/user/profile', 'put',data,config)
+}
+
+

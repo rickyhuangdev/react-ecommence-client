@@ -5,7 +5,12 @@ const TOKEN_KEY = 'persist:root'
  * 从本地缓存中获取 Token 信息
  */
 export const getTokenInfo = () => {
-    return JSON.parse(JSON.parse(localStorage.getItem(TOKEN_KEY)).login).token
+    if(JSON.parse(JSON.parse(localStorage.getItem(TOKEN_KEY)).login)){
+        return JSON.parse(JSON.parse(localStorage.getItem(TOKEN_KEY)).login).userInfo.token
+    }else{
+        return ''
+    }
+
 }
 /**
  * 从本地缓存中获取 cart 信息

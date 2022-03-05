@@ -1,7 +1,10 @@
 import React from 'react';
 import UserNav from "../../components/nav/UserNav";
+import {useSelector} from "react-redux";
 
 const Dashboard = () => {
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo} = loginInfo
     return (
         <div className="container py-5">
             <div className="row align-items-start justify-content-between">
