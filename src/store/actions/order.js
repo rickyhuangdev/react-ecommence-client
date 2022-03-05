@@ -15,7 +15,7 @@ export const saveOrder = (order) => {
             if (re.success === true) {
                 dispatch({
                     type: 'SAVE_ORDER_SUCCESS',
-                    payload: re.data
+                    payload: re.data.orderId
                 })
             }
         }).catch(error => {

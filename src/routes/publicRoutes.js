@@ -50,7 +50,7 @@ const publicRoutes = [
         exact: true
     },
     {
-        path: '/payment',
+        path: '/payment/:orderId',
         component: PaymentIndex,
         exact: true,
         role: 'user',

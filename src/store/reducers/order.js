@@ -8,7 +8,7 @@ export const order = (state = {}, action) => {
             return {
                 loading: false,
                 success: true,
-                orderItems: payload
+                orderId: payload
             }
         case 'SAVE_ORDER_FAIL':
             return {loading: false, success: false, error: payload}

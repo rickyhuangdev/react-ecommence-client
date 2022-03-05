@@ -20,7 +20,7 @@ const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
     const orderInfo = useSelector(state => state.order)
-    const {success, loading} = orderInfo
+    const {success, loading,orderId} = orderInfo
     const cart = useSelector(state => state.cart)
     const {cartItems} = cart
     const dispatch = useDispatch()
@@ -57,7 +57,7 @@ const CheckOutIndex = () => {
             history.push('/')
         }
         if(success){
-            history.push(`/payment`)
+            history.push(`/payment/${orderId}`)
         }
     }, [address, cart, userInfo,success])
     const changeHandler = value => {
