@@ -1,6 +1,6 @@
 import {getOrderInfoApi, saveOrderToDBApi} from "../../api/order";
 
-export const saveOrder = (order) => {
+export const saveOrder = (address) => {
     return async (dispatch,getState) => {
         const {userInfo} = getState().login
         const config = {
@@ -10,11 +10,11 @@ export const saveOrder = (order) => {
         dispatch({
             type: 'SAVE_ORDER_REQUEST'
         })
-        saveOrderToDBApi({order}, config).then(re => {
+        saveOrderToDBApi(address, config).then(re => {
             if (re.success === true) {
                 dispatch({
                     type: 'SAVE_ORDER_SUCCESS',
-                    payload: re.data.orderId
+                    payload: re.data
                 })
             }
         }).catch(error => {
@@ -39,8 +39,8 @@ export const getOrderDetail = (id) => {
         getOrderInfoApi(id, config).then(re => {
             if (re.success === true) {
                 dispatch({
-                    type: 'ORDER_DETAIL_REQUEST',
-                    payload: re.data.orderId
+                    type: 'ORDER_DETAIL_SUCCESS',
+                    payload: re.data
                 })
             }
         }).catch(error => {

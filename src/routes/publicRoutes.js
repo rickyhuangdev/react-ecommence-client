@@ -7,6 +7,7 @@ import CategoryIndex from "../pages/category";
 import CartIndex from "../pages/cart";
 import CheckOutIndex from "../pages/checkout";
 import PaymentIndex from "../pages/payment/PaymentIndex";
+import Order from "../pages/Order/Order";
 
 const publicRoutes = [
     {
@@ -55,6 +56,14 @@ const publicRoutes = [
         exact: true,
         role: 'user',
         backUrl: '/'
+    },
+    {
+        path: '/order/:orderId',
+        component: Order,
+        exact: true,
+        role: 'user',
+        backUrl: '/'
+
     }
 ]
 export default publicRoutes

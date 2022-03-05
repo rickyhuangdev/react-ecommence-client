@@ -8,7 +8,7 @@ export const order = (state = {}, action) => {
             return {
                 loading: false,
                 success: true,
-                orderId: payload
+                order: payload
             }
         case 'CREATE_ORDER_COMPLETE':
             return {}
@@ -20,13 +20,13 @@ export const order = (state = {}, action) => {
             return state
     }
 }
-export const orderDetailReducer = (state = {orderItems: [], shippingAddress: {}}, action) => {
+export const orderDetailReducer = (state = {loading: true, orderItems: [], shippingAddress: {}}, action) => {
     const {type, payload} = action
     switch (type) {
 
         case 'ORDER_DETAIL_REQUEST':
             return {...state, loading: true}
-        case 'ORDER_DETAIL_REQUEST':
+        case 'ORDER_DETAIL_SUCCESS':
             return {
                 loading: false,
                 order: payload

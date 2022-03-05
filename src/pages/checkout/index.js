@@ -16,11 +16,12 @@ import Message from "../../components/message/Message";
 import {saveOrder} from "../../store/actions/order";
 import Loader from "../../components/loader/Loader";
 import {Form} from "react-bootstrap"
+
 const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
     const orderInfo = useSelector(state => state.order)
-    const {success, loading,orderId} = orderInfo
+    const {success, loading, order} = orderInfo
     const cart = useSelector(state => state.cart)
     const {cartItems} = cart
     const dispatch = useDispatch()
@@ -51,13 +52,8 @@ const CheckOutIndex = () => {
     }
     const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
-        if (userInfo && cartItems.length > 0) {
-            getCarts()
-        } else if(success){
-            history.push(`/payment/${orderId}`)
-        }else {
-
-            history.push('/')
+        if (success) {
+            history.push(`/order/${order._id}`)
         }
     }, [address, cart, userInfo,success])
     const changeHandler = value => {
@@ -140,7 +136,7 @@ const CheckOutIndex = () => {
         } else if (isEmpty(address.phone)) {
             setMessage("Phone is required")
         } else {
-            await dispatch(saveOrder(address))
+            await dispatch(saveOrder({address}))
         }
 
     }
