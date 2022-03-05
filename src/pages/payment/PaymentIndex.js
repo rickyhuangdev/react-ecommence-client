@@ -6,9 +6,8 @@ import '../../assets/css/payment.css'
 import {createPaymentIntent} from "../../api/payment";
 import {useSelector} from "react-redux";
 import {Table} from "react-bootstrap";
-import {getCartInfoApi} from "../../api/cart";
 import {getOrderInfoApi} from "../../api/order";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KET);
 
@@ -21,8 +20,9 @@ const PaymentIndex = ({match}) => {
     const [total, setTotal] = useState(0)
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
     const params = useParams()
+    const history = useHistory()
     const config = {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json application/x-www-form-urlencoded',
         'Authorization': `Bearer ${userInfo.token}`
     }
     const appearance = {
@@ -33,18 +33,31 @@ const PaymentIndex = ({match}) => {
         appearance,
     };
     useEffect(() => {
-
+        if (userInfo && params.orderId) {
+            createPaymentIntent(config).then(re => {
+                setClientSecret(re.clientSecret)
+            })
+            getOrderInfoApi(params.orderId,config).then(re => {
+                if (re) {
+                    setProducts(re.data.products)
+                    setTotal(re.data.cartTotal)
+                    setTotalAfterDiscount(re.data.totalAfterDiscount)
+                }
+            }).catch(e=>{
+                console.log(e.response.data)
+            })
+        }
+        else {
+            history.push('/')
+        }
         // Create PaymentIntent as soon as the page loads
-        createPaymentIntent(config).then(re => {
-            setClientSecret(re.clientSecret)
-        })
-        getCarts()
-    }, [userInfo,params.orderId]);
+
+
+    }, [userInfo, params.orderId, history]);
     const getCarts = () => {
 
         getOrderInfoApi(params.orderId,config).then(re => {
             if (re) {
-                console.log(re)
                 setProducts(re.data.products)
                 setTotal(re.data.cartTotal)
                 setTotalAfterDiscount(re.data.totalAfterDiscount)
@@ -118,7 +131,7 @@ const PaymentIndex = ({match}) => {
                         <div className="payment-form-area d-flex justify-content-center mt-5">
                             {clientSecret && (
                                 <Elements options={options} stripe={stripePromise}>
-                                    <CheckoutForm />
+                                    <CheckoutForm clientSecret={clientSecret}/>
                                 </Elements>
                             )}
                         </div>

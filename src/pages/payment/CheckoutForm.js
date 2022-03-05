@@ -1,12 +1,16 @@
 import React, {useEffect, useState} from "react";
-import {CardElement, PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
+import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
+import {useDispatch} from "react-redux";
+import {completeOrder} from "../../store/actions/order";
+import {useParams} from "react-router-dom";
 
-const CheckoutForm = ({history}) => {
+const CheckoutForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState(null);
     const elements = useElements();
     const stripe = useStripe();
-
+    const dispatch = useDispatch()
+    const params = useParams()
     useEffect(() => {
         if (!stripe) {
             return;
@@ -42,21 +46,24 @@ const CheckoutForm = ({history}) => {
         if (!stripe || !elements) {
             // Stripe.js has not yet loaded.
             // Make sure to disable form submission until Stripe.js has loaded.
-             return;
+            return;
         }
         setIsLoading(true);
-        const { error } = await stripe.confirmPayment({
+        const result = await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: "http://localhost:3000",
+                 return_url: "http://localhost:3000/user",
             },
         });
-        if (error.type === "card_error" || error.type === "validation_error") {
-            setMessage(error.message);
+        if (result.error.type === "card_error" || result.error.type === "validation_error") {
+            setMessage(result.error.message);
         } else {
             setMessage("An unexpected error occured.");
         }
+        console.log(result)
+        // dispatch(updateOrderPayment({id:params.orderId,result}))
+        dispatch(completeOrder())
 
         setIsLoading(false);
 

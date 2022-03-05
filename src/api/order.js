@@ -10,4 +10,7 @@ export const getOrderListApi = () => {
 export const getOrderInfoApi = (id,config) => {
     return request(`/order/${id}`, 'get','',config)
 }
+export const updateOrderPaymentApi = (data,config) => {
+    return request(`/order/${data.id}`, 'put','',config)
+}
 

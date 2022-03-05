@@ -25,6 +25,8 @@ export const cart = (state = {cartItems: []}, action) => {
             return [...state, payload];
         case 'REMOVE_ITEM_FROM_CART':
             return {...state,cartItems:[...state.cartItems.filter((item) => item.product._id !== payload)]}
+        case 'CART_SAVE_PAYMENT_METHOD':
+            return {...state,paymentMethod:payload}
         case 'REMOVE_ALL_ITEM_FROM_CART':
             return []
         // 默认

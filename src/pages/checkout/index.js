@@ -15,7 +15,7 @@ import isEmpty from 'validator/lib/isEmpty';
 import Message from "../../components/message/Message";
 import {saveOrder} from "../../store/actions/order";
 import Loader from "../../components/loader/Loader";
-
+import {Form} from "react-bootstrap"
 const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
@@ -53,11 +53,11 @@ const CheckOutIndex = () => {
     useEffect(() => {
         if (userInfo && cartItems.length > 0) {
             getCarts()
-        } else {
-            history.push('/')
-        }
-        if(success){
+        } else if(success){
             history.push(`/payment/${orderId}`)
+        }else {
+
+            history.push('/')
         }
     }, [address, cart, userInfo,success])
     const changeHandler = value => {
@@ -142,6 +142,9 @@ const CheckOutIndex = () => {
         } else {
             await dispatch(saveOrder(address))
         }
+
+    }
+    const setPaymentMethod = (e)=>{
 
     }
     return (
@@ -308,6 +311,13 @@ const CheckOutIndex = () => {
 
                                     </tfoot>
                                 </table>
+                                <div className="row">
+                                    <div className="col mx-3">
+                                        <Form.Check type="radio" label='PayPal or Credit Card' id='PayPal' name="paymentMethod" value="paypal" checked
+                                            onChange={(e)=>setPaymentMethod(e.target.value)}
+                                        />
+                                    </div>
+                                </div>
                                 <div className="w-100 d-flex mt-5 justify-content-end">
                                     <button className="order-btn btn btn-warning btn-sm" onClick={removeCart}>Clear
                                         Cart
