@@ -1,7 +1,7 @@
 import request from "../utils/request";
 
-export const saveOrderToDBApi = (data) => {
-    return request('/order', 'post', data)
+export const saveOrderToDBApi = (data,config) => {
+    return request('/order', 'post', data,config)
 }
 export const getOrderInfoApi = (id) => {
     return request(`/order/${id}`, 'get')

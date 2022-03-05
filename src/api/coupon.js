@@ -15,7 +15,7 @@ export const deleteCouponApi = (id) => {
 export const createCouponApi = data => {
     return request('/coupon', 'post', data)
 }
-export const applyCouponApi = coupon => {
-    return request('/user/cart/coupon', 'post', coupon)
+export const applyCouponApi = (coupon,config) => {
+    return request('/user/cart/coupon', 'post', coupon,config)
 }
 

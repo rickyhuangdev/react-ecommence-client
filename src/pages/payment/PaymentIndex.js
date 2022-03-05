@@ -10,8 +10,13 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KET);
 
 const PaymentIndex = () => {
     const [clientSecret, setClientSecret] = useState("");
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo, error} = loginInfo
     const coupon = useSelector(state => state.coupon)
-    console.log(coupon)
+    const config = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo.token}`
+    }
     const appearance = {
         theme: 'stripe',
     };
@@ -21,7 +26,7 @@ const PaymentIndex = () => {
     };
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        createPaymentIntent().then(re => {
+        createPaymentIntent(config).then(re => {
             setClientSecret(re.clientSecret)
         })
     }, []);

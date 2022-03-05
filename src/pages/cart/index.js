@@ -10,8 +10,8 @@ import {saveCartToDBApi} from "../../api/cart";
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart.cartItems)
-    const user = useSelector(state => state.profile.user)
-    const token = useSelector(state => state.login)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo, error} = loginInfo
     const dispatch = useDispatch()
     const history = useHistory()
     const confirmToRemoveFromCart = (product_id) => {
@@ -24,7 +24,11 @@ const CartIndex = () => {
         }, 0)
     }
     const saveOrderToDB = async () => {
-       const re = await saveCartToDBApi(cart)
+        const config = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+       const re = await saveCartToDBApi(cart,config)
         if(re.success === true){
             history.push('/checkout')
         }
@@ -129,7 +133,7 @@ const CartIndex = () => {
                                 </ul>
                             </div>
                         </div>
-                        {user && token ? (
+                        {userInfo? (
                             <div className="col col-lg-6 d-flex justify-content-end align-items-end">
                                 <ul className="btns_group ul_li_right mb-0">
                                     <li>

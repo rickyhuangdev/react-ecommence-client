@@ -10,12 +10,19 @@ import Select from 'react-select'
 import {Collapse} from 'antd';
 import {applyCouponApi} from "../../api/coupon";
 import {applyCoupon} from "../../store/actions/coupon";
-import {saveOrderToDBApi} from "../../api/order";
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from 'validator/lib/isEmpty';
+import Message from "../../components/message/Message";
+import {saveOrder} from "../../store/actions/order";
+import Loader from "../../components/loader/Loader";
 
 const CheckOutIndex = () => {
-    const user = useSelector(state => state.profile.user)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo, error} = loginInfo
+    const orderInfo = useSelector(state => state.order)
+    const {success, loading} = orderInfo
     const cart = useSelector(state => state.cart)
-    const token = useSelector(state => state.login)
+    const {cartItems} = cart
     const dispatch = useDispatch()
     const history = useHistory()
     const [products, setProducts] = useState([])
@@ -27,6 +34,7 @@ const CheckOutIndex = () => {
     const [saveAddress, setSaveAddress] = useState(false)
     const [totalAfterDiscount, setTotalAfterDiscount] = useState(0)
     const {Panel} = Collapse;
+    const [message, setMessage] = useState(null)
     const [address, setAddress] = useState({
         country: '',
         email: '',
@@ -37,21 +45,29 @@ const CheckOutIndex = () => {
         postCode: '',
         address: ''
     })
+    const config = {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo.token}`
+    }
     const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
-        if (user && token && cart.length > 0) {
+        if (userInfo && cartItems.length > 0) {
             getCarts()
         } else {
             history.push('/')
         }
-    }, [address, cart])
+        if(success){
+            history.push(`/payment`)
+        }
+    }, [address, cart, userInfo,success])
     const changeHandler = value => {
         setCountry(value)
         setAddress({...address, country: value["label"]})
     }
 
     const getCarts = () => {
-        getCartInfoApi().then(re => {
+
+        getCartInfoApi(config).then(re => {
             if (re) {
                 setProducts(re.products)
                 setTotal(re.cartTotal)
@@ -81,7 +97,7 @@ const CheckOutIndex = () => {
 
     }
     const checkSaveAddress = () => {
-        if (!address.phone || !address.email || !address.address || !address.lastName || !address.firstName || !address.phone) {
+        if (!address.phone || !address.email || !address.address || !address.lastName || !address.firstName) {
             setSaveAddress(false)
             return false
         } else {
@@ -92,28 +108,41 @@ const CheckOutIndex = () => {
     function callback(key) {
     }
     const applyDiscountCoupon = () => {
-        applyCouponApi({coupon}).then(re=>{
-            if(re.success === true){
+        applyCouponApi({coupon}, config).then(re => {
+            if (re.success === true) {
                 setTotalAfterDiscount(re.data)
                 setCouponError(false)
                 setCouponResponseText(re.message)
                 toast.success(re.message)
                 setCoupon("")
                 dispatch(applyCoupon(true))
-            }else{
+            } else {
                 setCouponResponseText(re.message)
                 setCouponError(true)
                 dispatch(applyCoupon(false))
             }
         })
     }
-    const saveOrder = (e) => {
-      e.preventDefault()
-       saveOrderToDBApi({address}).then(re=>{
-           if(re.success === true){
-               history.push('/payment')
-           }
-       })
+    const saveOrderHandler = async (e) => {
+        e.preventDefault()
+        if (isEmpty(address.country)) {
+            setMessage("Please Select a Country")
+        } else if (isEmpty(address.firstName)) {
+            setMessage("First Name is required")
+        } else if (isEmpty(address.lastName)) {
+            setMessage("Last Name is required")
+        } else if (isEmpty(address.address)) {
+            setMessage("Address is required")
+        } else if (isEmpty(address.email)) {
+            setMessage("Email is required")
+        } else if (!isEmail(address.email)) {
+            setMessage("Invalid Email Address")
+        } else if (isEmpty(address.phone)) {
+            setMessage("Phone is required")
+        } else {
+            await dispatch(saveOrder(address))
+        }
+
     }
     return (
         <section className="checkout-section section_space">
@@ -122,27 +151,32 @@ const CheckOutIndex = () => {
                     <div className="col col-xs-12">
                         <div className="woocommerce">
                             <div className="woocommerce-info">
-                                {!user && !user.token &&(
-                                <div className="alert alert-warning" role="alert">
-                                    Returning customer? <Link to="/login">Click here to login</Link>
-                                </div>
+                                {!userInfo && (
+                                    <div className="alert alert-warning" role="alert">
+                                        Returning customer? <Link to="/login">Click here to login</Link>
+                                    </div>
                                 )}
 
                             </div>
                             <div className="woocommerce-info mt-20">
                                 {/*{!user && !user.token &&(*/}
                                 <Collapse onChange={callback}>
-                                    <Panel header="Have a coupon? Click here to enter your code" key="1" className="shadow-3">
+                                    <Panel header="Have a coupon? Click here to enter your code" key="1"
+                                           className="shadow-3">
                                         <div className="row">
                                             <div className="col-6">
-                                                    <label htmlFor="staticEmail">Coupon Code</label>
-                                                    <div className="col-sm-10">
-                                                        <input type="text" className="form-control" value={coupon} onChange={(e)=>setCoupon(e.target.value)}/>
-                                                        {couponError && (
-                                                            <small className="form-text mt-2 d-block text-danger">{couponResponseText}.</small>
-                                                        )}
-                                                    </div>
-                                                <button className="btn btn-primary btn-sm mt-3" onClick={applyDiscountCoupon}>Apply</button>
+                                                <label htmlFor="staticEmail">Coupon Code</label>
+                                                <div className="col-sm-10">
+                                                    <input type="text" className="form-control" value={coupon}
+                                                           onChange={(e) => setCoupon(e.target.value)}/>
+                                                    {couponError && (
+                                                        <small
+                                                            className="form-text mt-2 d-block text-danger">{couponResponseText}.</small>
+                                                    )}
+                                                </div>
+                                                <button className="btn btn-primary btn-sm mt-3"
+                                                        onClick={applyDiscountCoupon}>Apply
+                                                </button>
                                             </div>
                                         </div>
                                     </Panel>
@@ -159,6 +193,7 @@ const CheckOutIndex = () => {
                     <div className="col-lg-6">
                         <div className="checkbox-form">
                             <h3>Billing Details</h3>
+                            {message && <Message variant="danger" children={message}/>}
                             <div className="row">
                                 <div className="col-md-12">
                                     <div className="country-select">
@@ -278,9 +313,16 @@ const CheckOutIndex = () => {
                                         Cart
                                     </button>
                                 </div>
-                                <div className="w-100 mt-4">
-                                    <button className="btn btn-primary w-100 btn-flat-info" onClick={saveOrder}
-                                            disabled={!saveAddress}>Place Order
+                                <div className="w-100 mt-4 d-flex align-items-center">
+                                    <button
+                                        className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
+                                        onClick={saveOrderHandler} disabled={loading}>
+                                        Place Order
+                                        {loading && (
+                                            <span className="d-flex align-items-center"> <Loader width="25px"
+                                                                                                 height="25px"/><p
+                                                className="p-0 m-0 ms-2">processing...</p></span>
+                                        )}
                                     </button>
                                 </div>
                             </div>
