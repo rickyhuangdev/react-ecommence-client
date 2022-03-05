@@ -8,6 +8,7 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
     key: 'root',
     storage,
+    blacklist: ['register','profile','coupon']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(persistedReducer,{

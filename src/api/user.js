@@ -18,3 +18,6 @@ export const saveUserAddressApi = (data) => {
 export const userLoginApi = (data) => {
     return request('/login', 'post',data)
 }
+export const userRegisterApi = (data) => {
+    return request('/user', 'post',data)
+}
