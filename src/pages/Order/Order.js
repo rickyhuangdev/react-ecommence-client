@@ -11,9 +11,12 @@ const Order = ({match}) => {
     const orderDetails = useSelector(state => state.orderDetails)
     const {loading, error, order} = orderDetails
     useEffect(() => {
-        dispatch(getOrderDetail(orderId))
+        if(!order || order._id !== orderId){
+            dispatch(getOrderDetail(orderId))
+        }
 
-    }, [])
+
+    }, [dispatch,orderId])
     return (
         <div className="container p-4">
             <div className="row">

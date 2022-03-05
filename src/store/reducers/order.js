@@ -39,3 +39,23 @@ export const orderDetailReducer = (state = {loading: true, orderItems: [], shipp
             return state
     }
 }
+export const orderPayReducer = (state = {}, action) => {
+    const {type, payload} = action
+    switch (type) {
+
+        case 'ORDER_PAY_REQUEST':
+            return {loading: true}
+        case 'ORDER_PAY_SUCCESS':
+            return {
+                loading: false,
+                success:true
+            }
+        case 'ORDER_PAY_FAIL':
+            return {loading: false, error: payload}
+        case 'ORDER_PAY_RESET':
+            return {}
+        default:
+            return state
+    }
+}
+

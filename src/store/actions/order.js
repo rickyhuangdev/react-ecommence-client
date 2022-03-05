@@ -1,4 +1,4 @@
-import {getOrderInfoApi, saveOrderToDBApi} from "../../api/order";
+import {getOrderInfoApi, saveOrderToDBApi, updateOrderPaymentApi} from "../../api/order";
 
 export const saveOrder = (address) => {
     return async (dispatch,getState) => {
@@ -52,8 +52,29 @@ export const getOrderDetail = (id) => {
 
     }
 }
-export const completeOrder = () => {
-    return {
-        type: 'CREATE_ORDER_COMPLETE'
+export const payOrder = (paymentResult) => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        const config = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+        dispatch({
+            type: 'ORDER_PAY_REQUEST'
+        })
+        updateOrderPaymentApi(paymentResult, config).then(re => {
+            if (re.success === true) {
+                dispatch({
+                    type: 'ORDER_PAY_SUCCESS',
+                    payload: re.data
+                })
+            }
+        }).catch(error => {
+            dispatch({
+                type: 'ORDER_PAY_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
     }
 }
