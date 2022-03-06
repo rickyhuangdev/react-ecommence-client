@@ -16,6 +16,8 @@ const Order = ({match}) => {
     const orderPay = useSelector(state => state.orderPay)
     const {loading: loadingPay, success: successPay} = orderPay
     const [sdkReady, setSdkReady] = useState(false)
+    const [products,setProducts] = useState([])
+    const [address,setAddress] = useState({})
     useEffect(() => {
         const addPayPalScript = async () => {
             const client_id = await getPayPayClient()
@@ -29,7 +31,6 @@ const Order = ({match}) => {
             document.body.appendChild(script)
 
         }
-
         if (!order || successPay) {
             dispatch({type:'ORDER_PAY_RESET'})
             dispatch(getOrderDetail(orderId))
@@ -77,7 +78,7 @@ const Order = ({match}) => {
                         </ListGroup.Item>
                     <ListGroup.Item>
                         <h3>Payment Method</h3>
-                        {/*{order.paymentMethod}*/}
+                        <p>{order.paymentMethod.toUpperCase()}</p>
                         {order.isPaid?(
                             <Message variant="success">Paid on {order.paidAt}</Message>
                         ):(

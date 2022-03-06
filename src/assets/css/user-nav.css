@@ -12,13 +12,14 @@
 
 .dashboard_author > ul > li > a {
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     display: flex;
     align-items: center;
 }
 
 .dashboard_author > ul > li > a .anticon {
-    font-size: 18px;
+    font-size: 20px;
+    margin-right: 13px;
 }
 
 @media (min-width: 993px) {

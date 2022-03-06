@@ -20,7 +20,7 @@ const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
     const orderInfo = useSelector(state => state.order)
-    const {success, loading, order} = orderInfo
+    const {success:orderSuccess, loading, order} = orderInfo
     const cart = useSelector(state => state.cart)
     const getCartsToCheckout = useSelector(state => state.getCartsToCheckout)
     const {cartItems, loading: CheckoutLoading, error: CheckoutError, success: CheckoutSuccess} = getCartsToCheckout
@@ -55,8 +55,11 @@ const CheckOutIndex = () => {
             setTotalAfterDiscount(cartItems.totalAfterDiscount)
             setTotal(cartItems.cartTotal)
         }
+        if(orderSuccess){
+            history.push(`/order/${order._id}`)
+        }
 
-    }, [loginInfo, dispatch])
+    }, [loginInfo, dispatch,orderSuccess])
     const changeHandler = value => {
         setCountry(value)
         setAddress({...address, country: value["label"]})
