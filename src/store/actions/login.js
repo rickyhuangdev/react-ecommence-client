@@ -76,7 +76,7 @@ export const logout = () => {
 
     }
 }
-export const getUserDetail = (id) => {
+export const getUserDetail = () => {
     return async (dispatch, getState) => {
         const {userInfo} = getState().login
         dispatch({

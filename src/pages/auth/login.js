@@ -20,10 +20,14 @@ const Login = () => {
     const [password, setPassword] = useState('')
     const [sendingData, setSendingData] = useState(false)
     const dispatch = useDispatch()
+    const intended = history.location.state
     useEffect(() => {
-        if (userInfo) {
+        if (userInfo && redirect && !intended) {
             history.push(redirect)
+        } else if (userInfo && intended) {
+            history.push(intended.from)
         }
+
 
     }, [userInfo, history, redirect])
 

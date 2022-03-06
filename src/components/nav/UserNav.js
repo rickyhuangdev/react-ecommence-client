@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../../assets/css/user-nav.css'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     CreditCardOutlined,
     HeartOutlined,
@@ -12,9 +12,11 @@ import {
 } from "@ant-design/icons";
 import {Link} from "react-router-dom";
 import avatar from '../../assets/images/default_user.png'
+import {getUserDetail, logout} from "../../store/actions/login";
 
 const UserNav = () => {
-    const user = useSelector(state => state.profile.user)
+    const user = useSelector(state => state.profile)
+    const dispatch = useDispatch()
     return (
         <div className="d-block rounded">
             <div className="dashboard_author">
@@ -44,8 +46,8 @@ const UserNav = () => {
                     </li>
                     <li className="list-group-item"><Link to="/user/password"><SettingOutlined className="mr-2"/>Password Setting</Link>
                     </li>
-                    <li className="list-group-item"><Link to="/user/payment"><LoginOutlined className="mr-2"/>Log
-                        Out</Link></li>
+                    <li className="list-group-item"><a type="button" onClick={()=>{dispatch(logout())}}><LoginOutlined className="mr-2"/>Log
+                        Out</a></li>
                 </ul>
             </div>
 

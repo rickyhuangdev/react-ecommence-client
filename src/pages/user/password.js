@@ -63,7 +63,7 @@ const Password = () => {
                             <div className="col">
                                 <h4>Update your password</h4>
                                 <form className="mt-4" onSubmit={passwordChangeHandler}>
-                                    <div className="form-group">
+                                    <div className="form-group mb-4">
                                         <label htmlFor="password">Current Password</label>
                                         <input type="password" className="form-control" id="password"
                                                onChange={(e) => setPassword(e.target.value)}
