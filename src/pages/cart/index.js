@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import '../../assets/css/cart.css'
 import {useDispatch, useSelector} from "react-redux";
 import {Link, useHistory} from "react-router-dom";
 import {BsTrash} from "react-icons/bs";
-import {addToCart, removeItemFromCart} from "../../store/actions/cart";
+import {addToCart, removeItemFromCart, saveCartToDB} from "../../store/actions/cart";
 import {Popconfirm} from "antd";
 import {toast} from "react-toastify";
-import {saveCartToDBApi} from "../../api/cart";
+import Loader from "../../components/loader/Loader";
+import Message from "../../components/message/Message";
 
 const CartIndex = () => {
     const cart = useSelector(state => state.cart.cartItems)
+    const saveCart = useSelector(state => state.saveCart)
+    const {success:saveCartSuccess,error:saveCartError,loading:saveCartLoading} = saveCart
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
     const dispatch = useDispatch()
@@ -24,22 +27,20 @@ const CartIndex = () => {
         }, 0)
     }
     const saveOrderToDB = async () => {
-        const config = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${userInfo.token}`
-        }
-       const re = await saveCartToDBApi(cart,config)
-        if(re.success === true){
+        dispatch(saveCartToDB(cart))
+    }
+    useEffect(()=>{
+        if(saveCartSuccess && cart.length>0){
             history.push('/checkout')
         }
-    }
+    },[saveCartSuccess,dispatch])
     return (
         <section className="cart_section section_space">
             <div className="container">
-                <div className="cart_update_wrap"><p className="mb-0"><i className="fal fa-check-square"></i>Shipping
-                    costs updated.</p></div>
+                {saveCartLoading&&<Loader/>}
+                {saveCartError && <Message variant="danger" children={saveCartError} />}
                 {cart && cart.length > 0 && (
-                    <div className="cart_table table-responsive">
+                    <div className="cart_table table-responsive mb-4">
                         <table className="table shadow-1 border-bottom-0">
                             <thead>
                             <tr>
@@ -102,24 +103,6 @@ const CartIndex = () => {
 
                             </tbody>
                         </table>
-                    </div>
-                )}
-                {cart && cart.length > 0 && (
-                    <div className="cart_btns_wrap">
-                        <div className="row">
-                            <div className="col col-lg-6">
-                                <form action="#">
-                                    <div className="coupon_form form_item mb-0">
-                                        <input type="text" name="coupon" placeholder="Coupon Code..."/>
-                                        <button type="button" className="btn d-blue-bg shadow-1 text-white">Apply
-                                            Coupon
-                                        </button>
-                                        <div className="info_icon"></div>
-                                    </div>
-                                </form>
-                            </div>
-
-                        </div>
                     </div>
                 )}
                 {cart && cart.length > 0 ? (

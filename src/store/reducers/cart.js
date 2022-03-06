@@ -24,12 +24,32 @@ export const cart = (state = {cartItems: []}, action) => {
             }
             return [...state, payload];
         case 'REMOVE_ITEM_FROM_CART':
-            return {...state,cartItems:[...state.cartItems.filter((item) => item.product._id !== payload)]}
+            return {...state, cartItems: [...state.cartItems.filter((item) => item.product._id !== payload)]}
         case 'CART_SAVE_PAYMENT_METHOD':
-            return {...state,paymentMethod:payload}
+            return {...state, paymentMethod: payload}
         case 'REMOVE_ALL_ITEM_FROM_CART':
             return []
         // 默认
+        default:
+            return state
+    }
+}
+
+export const saveCartReducer = (state = {}, action) => {
+    const {type, payload} = action
+    switch (type) {
+
+        case 'SAVE_CART_REQUEST':
+            return {loading: true}
+        case 'SAVE_CART_SUCCESS':
+            return {
+                loading: false,
+                success: true,
+            }
+        case 'SAVE_CART_FAIL':
+            return {loading: false, error: payload, success: false}
+        case 'SAVE_CART_RESET':
+            return {}
         default:
             return state
     }
