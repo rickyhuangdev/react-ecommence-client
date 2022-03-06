@@ -56,3 +56,22 @@ export const userListReducer = (state = {users:[]}, action) => {
     }
 }
 
+
+export const userDetailReducer = (state = {user:{}}, action) => {
+    const {type, payload} = action
+    switch (type) {
+
+        case 'USER_DETAIL_REQUEST':
+            return {loading: true}
+        case 'USER_DETAIL_SUCCESS':
+            return {
+                loading: false,
+                user: payload
+            }
+        case 'USER_DETAIL_FAIL':
+            return {loading: false, error: payload}
+        default:
+            return state
+
+    }
+}

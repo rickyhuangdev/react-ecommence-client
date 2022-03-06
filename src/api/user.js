@@ -27,5 +27,11 @@ export const userUpdateProfileApi = (data,config) => {
 export const getUserListApi = (config) => {
     return request('/user', 'get','',config)
 }
+export const getUserByIdApi = (id,config) => {
+    return request(`/user/${id}`, 'get','',config)
+}
+export const updateUserByIdApi = (data,config) => {
+    return request(`/user/${data.id}`, 'put',data,config)
+}
 
 

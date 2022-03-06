@@ -1,4 +1,10 @@
-import {getUserProfileApi, userLoginApi, userRegisterApi, userUpdateProfileApi} from "../../api/user";
+import {
+    getUserProfileApi,
+    updateUserByIdApi,
+    userLoginApi,
+    userRegisterApi,
+    userUpdateProfileApi
+} from "../../api/user";
 
 export const saveToken = tokenInfo => {
     return {
@@ -122,6 +128,35 @@ export const updateUserProfile = (user) => {
     })
 
 }
+}
+
+
+export const updateUser = (user) => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        dispatch({
+            type: 'USER_UPDATE_PROFILE_REQUEST'
+        })
+        const config = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+
+        updateUserByIdApi(user, config).then(data => {
+            if (data) {
+                dispatch({
+                    type: 'USER_UPDATE_PROFILE_SUCCESS',
+                    payload: data
+                })
+            }
+        }).catch(error => {
+            dispatch({
+                type: 'USER_UPDATE_PROFILE_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
 }
 
 

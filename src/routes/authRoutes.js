@@ -12,6 +12,7 @@ import CouponIndex from "../pages/admin/coupon/CouponIndex";
 import CouponCreate from "../pages/admin/coupon/CouponCreate";
 import CouponEdit from "../pages/admin/coupon/CouponEdit";
 import User from "../pages/admin/users/User";
+import UserEdit from "../pages/admin/users/UserEdit";
 
 const authRoutes = [
     {
@@ -78,7 +79,7 @@ const authRoutes = [
     },
     {
         path: '/admin/user/edit/:id',
-        component: User,
+        component: UserEdit,
         exact: true,
         role: 'admin',
         backUrl:'/user'
