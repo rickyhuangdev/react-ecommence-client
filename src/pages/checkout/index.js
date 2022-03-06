@@ -2,8 +2,8 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import '../../assets/css/checkout.css'
-import {getCartInfoApi, removeCartInfoApi} from "../../api/cart";
-import {removeAllItemFromCart} from "../../store/actions/cart";
+import {removeCartInfoApi} from "../../api/cart";
+import {getCartCheckoutDetails, removeAllItemFromCart} from "../../store/actions/cart";
 import {toast} from "react-toastify";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
@@ -14,8 +14,7 @@ import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import Message from "../../components/message/Message";
 import {saveOrder} from "../../store/actions/order";
-import Loader from "../../components/loader/Loader";
-import {Form} from "react-bootstrap"
+import {Button, Col, Form, ListGroup, Row} from "react-bootstrap"
 
 const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
@@ -23,13 +22,15 @@ const CheckOutIndex = () => {
     const orderInfo = useSelector(state => state.order)
     const {success, loading, order} = orderInfo
     const cart = useSelector(state => state.cart)
-    const {cartItems} = cart
+    const getCartsToCheckout = useSelector(state => state.getCartsToCheckout)
+    const {cartItems, loading: CheckoutLoading, error: CheckoutError, success: CheckoutSuccess} = getCartsToCheckout
     const dispatch = useDispatch()
     const history = useHistory()
     const [products, setProducts] = useState([])
     const [total, setTotal] = useState(0)
     const [country, setCountry] = useState('')
     const [coupon, setCoupon] = useState('')
+    const [paymentMethod, setPaymentMethod] = useState('paypal')
     const [couponError, setCouponError] = useState(false)
     const [couponResponseText, setCouponResponseText] = useState('')
     const [saveAddress, setSaveAddress] = useState(false)
@@ -46,31 +47,21 @@ const CheckOutIndex = () => {
         postCode: '',
         address: ''
     })
-    const config = {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${userInfo.token}`
-    }
     const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
-        if (success) {
-            history.push(`/order/${order._id}`)
+        if (userInfo && userInfo.token) {
+            dispatch(getCartCheckoutDetails())
+            setProducts(cartItems.products)
+            setTotalAfterDiscount(cartItems.totalAfterDiscount)
+            setTotal(cartItems.cartTotal)
         }
-    }, [address, cart, userInfo,success])
+
+    }, [loginInfo, dispatch])
     const changeHandler = value => {
         setCountry(value)
         setAddress({...address, country: value["label"]})
     }
 
-    const getCarts = () => {
-
-        getCartInfoApi(config).then(re => {
-            if (re) {
-                setProducts(re.products)
-                setTotal(re.cartTotal)
-            }
-        })
-
-    }
     const removeCart = () => {
         removeCartInfoApi().then(re => {
             if (re.success === true) {
@@ -104,7 +95,7 @@ const CheckOutIndex = () => {
     function callback(key) {
     }
     const applyDiscountCoupon = () => {
-        applyCouponApi({coupon}, config).then(re => {
+        applyCouponApi({coupon}).then(re => {
             if (re.success === true) {
                 setTotalAfterDiscount(re.data)
                 setCouponError(false)
@@ -136,11 +127,8 @@ const CheckOutIndex = () => {
         } else if (isEmpty(address.phone)) {
             setMessage("Phone is required")
         } else {
-            await dispatch(saveOrder({address}))
+            await dispatch(saveOrder({...address,paymentMethod}))
         }
-
-    }
-    const setPaymentMethod = (e)=>{
 
     }
     return (
@@ -188,8 +176,8 @@ const CheckOutIndex = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row mt-5">
-                    <div className="col-lg-6">
+                <div className="row mt-md-5">
+                    <div className="col-lg-7">
                         <div className="checkbox-form">
                             <h3>Billing Details</h3>
                             {message && <Message variant="danger" children={message}/>}
@@ -209,9 +197,12 @@ const CheckOutIndex = () => {
                                     </div>
                                 </div>
                                 <div className="col-md-6">
-                                    <label>Last name <span className="required">*</span></label>
-                                    <input type="text" className="form-control" placeholder="Last name" name="lastName"
-                                           value={address.lastName} onChange={handleChange}/>
+                                    <div className="checkout-form-list">
+                                        <label>Last name <span className="required">*</span></label>
+                                        <input type="text" className="form-control" placeholder="Last name"
+                                               name="lastName"
+                                               value={address.lastName} onChange={handleChange}/>
+                                    </div>
                                 </div>
                                 <div className="col-md-12">
                                     <div className="checkout-form-list">
@@ -251,87 +242,55 @@ const CheckOutIndex = () => {
 
                         </div>
                     </div>
-                    <div className="col-lg-6">
-                        <div className="your-order mb-30 ">
-                            <h3>Order Summary</h3>
-                            <div className="your-order-table table-responsive">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th className="product-name">Product</th>
-                                        <th className="product-total">Total</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {products && products.length>0 && products.map((item)=>(
-                                        <tr className="cart_item" key={item.product._id}>
-                                            <td className="product-name"> {item.product.title} <strong
-                                                className="product-quantity">× {item.count}</strong></td>
-                                            <td className="product-total"><span className="amount">${item.product.price * item.count}</span></td>
-                                        </tr>
+                    <div className="col-lg-5">
+                        <div className="mb-30 p-4">
+                            <h4>Order Summary</h4>
+                            <ListGroup>
+                                <ListGroup.Item>Products</ListGroup.Item>
+
+                                <ListGroup.Item className="p-3">
+                                    {products && products.length > 0 && products.map((item) => (
+                                        <Row key={item.product._id}>
+                                            <Col md={8}>{item.product.title} <span
+                                                className="d-block text-end">× {item.count}</span></Col>
+                                            <Col md={4}><span
+                                                className="d-block text-end">${item.product.price * item.count}</span></Col>
+                                        </Row>
                                     ))}
+                                </ListGroup.Item>
 
-                                    </tbody>
-                                    <tfoot>
-                                    <tr className="cart-subtotal">
-                                        <th>Cart Subtotal</th>
-                                        <td><span className="amount">${total}</span></td>
-                                    </tr>
-                                    <tr className="shipping">
-                                        <th>Shipping</th>
-                                        <td>
-                                            <ul>
-                                                <li><input type="radio" name="shipping"/><label>Flat Rate:<span
-                                                    className="amount">$7.00</span></label></li>
-                                                <li><input type="radio" name="shipping"/><label>Free Shipping:</label>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                    <tr className="order-total">
-                                        <th>Order Total</th>
-                                        <td><strong><span className="amount">${total}</span></strong></td>
-                                    </tr>
-                                    {totalAfterDiscount > 0 && (
-                                        <tr className="order-total">
-                                            <td colSpan="2">
-                                                <div className="alert alert-dismissible alert-success  d-flex justify-content-between">
-                                                  <div>Discount Applied:</div>
-                                                    <div className="w-50">
-                                                        <strong>Total Payable: ${totalAfterDiscount}</strong>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    )}
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col md={8}>Shipping</Col>
+                                        <Col md={4}><span
+                                            className="d-block text-end">$0</span></Col>
+                                    </Row>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col md={8}>Total</Col>
+                                        <Col md={4}><span
+                                            className="d-block text-end fw-bold">$0</span></Col>
+                                    </Row>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Row className="mb-3">
+                                        <Col md={6}>Choose Payment</Col>
+                                    </Row>
+                                    <Row>
 
-                                    </tfoot>
-                                </table>
-                                <div className="row">
-                                    <div className="col">
-                                        <Form.Check type="radio" label='PayPal or Credit Card' id='PayPal' name="paymentMethod" value="paypal" checked
-                                            onChange={(e)=>setPaymentMethod(e.target.value)}
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-100 d-flex mt-5 justify-content-end">
-                                    <button className="order-btn btn btn-warning btn-sm" onClick={removeCart}>Clear
-                                        Cart
-                                    </button>
-                                </div>
-                                <div className="w-100 mt-4 d-flex align-items-center">
-                                    <button
-                                        className="btn btn-primary w-100 d-flex align-items-center justify-content-center"
-                                        onClick={saveOrderHandler} disabled={loading}>
-                                        Place Order
-                                        {loading && (
-                                            <span className="d-flex align-items-center"> <Loader width="25px"
-                                                                                                 height="25px"/><p
-                                                className="p-0 m-0 ms-2">processing...</p></span>
-                                        )}
-                                    </button>
-                                </div>
-                            </div>
+                                        <Col md={12}>
+                                            <Form.Check type="radio" label='PayPal or Credit Card' id='PayPal'
+                                                        name="paymentMethod" value="paypal" checked className="mb-3"
+                                                        onChange={(e) => setPaymentMethod(e.target.value)}></Form.Check>
+                                        </Col>
+                                    </Row>
+                                </ListGroup.Item>
+                                <ListGroup.Item className="text-end">
+                                    <Button variant="dark" onClick={saveOrderHandler}>Place Order</Button>
+                                </ListGroup.Item>
+
+                            </ListGroup>
                         </div>
                     </div>
                 </div>

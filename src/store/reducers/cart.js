@@ -54,4 +54,24 @@ export const saveCartReducer = (state = {}, action) => {
             return state
     }
 }
+export const getCartsToCheckoutReducer = (state = {cartItems:[]}, action) => {
+    const {type, payload} = action
+    switch (type) {
+
+        case 'GET_CART_CHECKOUT_REQUEST':
+            return {loading: true}
+        case 'GET_CART_CHECKOUT_SUCCESS':
+            return {
+                loading: false,
+                success: true,
+                cartItems: payload
+            }
+        case 'GET_CART_CHECKOUT_FAIL':
+            return {loading: false, error: payload, success: false}
+        case 'GET_CART_CHECKOUT_RESET':
+            return {}
+        default:
+            return state
+    }
+}
 

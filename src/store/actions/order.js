@@ -1,6 +1,6 @@
 import {getMyOrdersApi, getOrderInfoApi, saveOrderToDBApi, updateOrderPaymentApi} from "../../api/order";
 
-export const saveOrder = (address) => {
+export const saveOrder = (data) => {
     return async (dispatch,getState) => {
         const {userInfo} = getState().login
         const config = {
@@ -10,7 +10,7 @@ export const saveOrder = (address) => {
         dispatch({
             type: 'SAVE_ORDER_REQUEST'
         })
-        saveOrderToDBApi(address, config).then(re => {
+        saveOrderToDBApi(data, config).then(re => {
             if (re.success === true) {
                 dispatch({
                     type: 'SAVE_ORDER_SUCCESS',

@@ -1,5 +1,4 @@
-import {getMyOrdersApi} from "../../api/order";
-import {saveCartToDBApi} from "../../api/cart";
+import {getCartInfoApi, saveCartToDBApi} from "../../api/cart";
 
 export const addToCart = carts => {
     return {
@@ -57,3 +56,28 @@ export const saveCartToDB = (carts) => {
     }
 }
 
+export const getCartCheckoutDetails = () => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        const config = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+        dispatch({
+            type: 'GET_CART_CHECKOUT_REQUEST'
+        })
+        getCartInfoApi(config).then(data => {
+            dispatch({
+                type: 'GET_CART_CHECKOUT_SUCCESS',
+                payload: data
+            })
+
+        }).catch(error => {
+            dispatch({
+                type: 'GET_CART_CHECKOUT_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
+}
