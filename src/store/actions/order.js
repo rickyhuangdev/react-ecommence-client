@@ -63,7 +63,7 @@ export const payOrder = (paymentResult) => {
             type: 'ORDER_PAY_REQUEST'
         })
         updateOrderPaymentApi(paymentResult, config).then(re => {
-            if (re.success === true) {
+            if (re) {
                 dispatch({
                     type: 'ORDER_PAY_SUCCESS',
                     payload: re.data

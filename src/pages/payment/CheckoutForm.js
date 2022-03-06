@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {PaymentElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import {useDispatch} from "react-redux";
-import {completeOrder} from "../../store/actions/order";
 import {useParams} from "react-router-dom";
 
 const CheckoutForm = () => {
@@ -63,7 +62,7 @@ const CheckoutForm = () => {
         }
         console.log(result)
         // dispatch(updateOrderPayment({id:params.orderId,result}))
-        dispatch(completeOrder())
+
 
         setIsLoading(false);
 
