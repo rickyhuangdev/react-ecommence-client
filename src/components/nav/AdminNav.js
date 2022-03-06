@@ -27,23 +27,27 @@ const AdminNav = () => {
                 <Menu.Item key="1" icon={<PieChartOutlined />}>
                     <Link to="/admin/dashboard">Dashboard</Link>
                 </Menu.Item>
-                <SubMenu key="sub2" icon={<AppstoreOutlined/>} title="Category">
-                    <Menu.Item key="5">  <Link to="/admin/category">Category Lists</Link></Menu.Item>
-                    <Menu.Item key="6"><Link to="/admin/category/create">Create Category</Link></Menu.Item>
-                    <SubMenu key="sub3" title="Sub Category">
-                        <Menu.Item key="7"> <Link to="/admin/subCategory">SubCategory Lists</Link></Menu.Item>
-                        <Menu.Item key="8"><Link to="/admin/subCategory/create">Create subCategory</Link></Menu.Item>
+                <SubMenu key="sub1" icon={<SettingOutlined/>} title="商品管理">
+                    <Menu.Item key="2"><Link to="/admin/product">商品列表</Link></Menu.Item>
+                    <Menu.Item key="3"><Link to="/admin/product/create">添加商品</Link></Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub2" icon={<AppstoreOutlined/>} title="商品分類管理">
+                    <Menu.Item key="4">  <Link to="/admin/category">分類列表</Link></Menu.Item>
+                    <Menu.Item key="5"><Link to="/admin/category/create">添加分類</Link></Menu.Item>
+                    <SubMenu key="sub3" title="商品子分類">
+                        <Menu.Item key="6"> <Link to="/admin/subCategory">子分類列表</Link></Menu.Item>
+                        <Menu.Item key="7"><Link to="/admin/subCategory/create">添加子分類</Link></Menu.Item>
                     </SubMenu>
                 </SubMenu>
-                <SubMenu key="sub4" icon={<SettingOutlined/>} title="Orders">
-                    <Menu.Item key="9">Option 9</Menu.Item>
-                    <Menu.Item key="10">Option 10</Menu.Item>
-                    <Menu.Item key="11">Option 11</Menu.Item>
-                    <Menu.Item key="12">Option 12</Menu.Item>
+                <SubMenu key="sub4" icon={<SettingOutlined/>} title="訂單管理">
+                    <Menu.Item key="8"><Link to="/admin/orders">訂單列表</Link></Menu.Item>
                 </SubMenu>
-                <SubMenu key="sub5" icon={<SettingOutlined/>} title="Products">
-                    <Menu.Item key="13"><Link to="/admin/product">Product List</Link></Menu.Item>
-                    <Menu.Item key="14"><Link to="/admin/product/create">Create Product</Link></Menu.Item>
+
+                <SubMenu key="sub5" icon={<SettingOutlined/>} title="會員管理">
+                    <Menu.Item key="9"><Link to="/admin/users">會員列表</Link></Menu.Item>
+                </SubMenu>
+                <SubMenu key="sub6" icon={<SettingOutlined/>} title="優惠券管理">
+                    <Menu.Item key="10"><Link to="/admin/coupon">優惠券列表</Link></Menu.Item>
                 </SubMenu>
             </Menu>
         </div>

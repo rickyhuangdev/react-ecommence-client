@@ -11,6 +11,7 @@ import ProductCreate from "../pages/admin/product/ProductCreate";
 import CouponIndex from "../pages/admin/coupon/CouponIndex";
 import CouponCreate from "../pages/admin/coupon/CouponCreate";
 import CouponEdit from "../pages/admin/coupon/CouponEdit";
+import User from "../pages/admin/users/User";
 
 const authRoutes = [
     {
@@ -61,6 +62,23 @@ const authRoutes = [
     {
         path: '/admin/subCategory/edit/:slug',
         component: subCategoryEdit,
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
+    },
+    /**
+     * user routes
+     */
+    {
+        path: '/admin/users',
+        component: User,
+        exact: true,
+        role: 'admin',
+        backUrl:'/user'
+    },
+    {
+        path: '/admin/user/edit/:id',
+        component: User,
         exact: true,
         role: 'admin',
         backUrl:'/user'
