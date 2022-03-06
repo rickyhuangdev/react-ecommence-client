@@ -4,7 +4,7 @@ import {profile,userUpdateProfileReducer} from "./profile";
 import {cart} from './cart'
 import {coupon} from './coupon'
 import {register} from './register'
-import {order, orderDetailReducer, orderPayReducer} from './order'
+import {order, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
 const rootReducer = combineReducers({
     login,
     profile,
@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
     userUpdateProfile:userUpdateProfileReducer,
     order,
     orderDetails:orderDetailReducer,
-    orderPay:orderPayReducer
+    orderPay:orderPayReducer,
+    orderMyList:orderMyListReducer
 
 })
 export default rootReducer
