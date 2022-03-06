@@ -308,7 +308,7 @@ const CheckOutIndex = () => {
                                     </tfoot>
                                 </table>
                                 <div className="row">
-                                    <div className="col mx-3">
+                                    <div className="col">
                                         <Form.Check type="radio" label='PayPal or Credit Card' id='PayPal' name="paymentMethod" value="paypal" checked
                                             onChange={(e)=>setPaymentMethod(e.target.value)}
                                         />

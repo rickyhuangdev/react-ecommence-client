@@ -73,8 +73,8 @@ tbody, td, tfoot, th, thead, tr {
     border: 1px solid #eaf0f2;
 }
 .container .row {
-    margin-left: -15px;
-    margin-right: -15px;
+    /*margin-left: -15px;*/
+    /*margin-right: -15px;*/
 }
 .coupon_form {
     display: flex;
@@ -119,9 +119,9 @@ tbody, td, tfoot, th, thead, tr {
     cursor: pointer;
 }
 .container .col {
-    flex: unset;
-    padding-left: 15px;
-    padding-right: 15px;
+    /*flex: unset;*/
+    /*padding-left: 15px;*/
+    /*padding-right: 15px;*/
 }
 .cart_btns_wrap .btns_group {
     margin: -10px;
