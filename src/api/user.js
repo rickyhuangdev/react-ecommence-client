@@ -24,5 +24,8 @@ export const userRegisterApi = (data) => {
 export const userUpdateProfileApi = (data,config) => {
     return request('/user/profile', 'put',data,config)
 }
+export const getUserListApi = (config) => {
+    return request('/user', 'get','',config)
+}
 
 

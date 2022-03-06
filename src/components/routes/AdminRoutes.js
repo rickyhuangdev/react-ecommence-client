@@ -6,33 +6,17 @@ import {toast} from "react-toastify";
 import RedirectRoute from "./RedirectRoute";
 
 const AdminRoutes = ({component: Component, key, path, ...rest}) => {
-    const user = useSelector(state => state.profile.user)
-    const [admin, setAdmin] = useState(false)
-    useEffect(() => {
-        if (user && user.token) {
-            getAdminProfileApi().then(res => {
-                if (res && res.role === 'admin') {
-                    setAdmin(true)
-                }
-            }).catch(err => {
-                toast.error(err)
-                setAdmin(false)
-            })
-
-
-        }
-
-    }, [user])
-
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo} = loginInfo
     return (
         <Route {...rest} render={props => {
             // 如果有 token，则展示传入的组件
-            if (admin) {
+            if (userInfo && userInfo.isAdmin) {
                 return <Component />
             }
             // 否则调用 Redirect 组件跳转到登录页
             return (
-                <RedirectRoute message="Access Denied" location="/user"/>
+                <RedirectRoute message="Access Denied" location="/"/>
             )
         }} />)
 };

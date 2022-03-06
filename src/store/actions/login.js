@@ -49,6 +49,7 @@ export const login = (email, password) => {
                     type: 'USER_LOGIN_SUCCESS',
                     payload: data
                 })
+
             }
         }).catch(error => {
             dispatch({

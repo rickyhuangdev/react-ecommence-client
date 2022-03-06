@@ -9,7 +9,7 @@ import {logout} from "../../store/actions/login";
 
 const {SubMenu} = Menu;
 const Header = () => {
-    const profile = useSelector(state => state.profile)
+    const profile = useSelector(state => state.login)
     const user = profile.user
     const dispatch = useDispatch();
     const [current, setCurrent] = useState('home')

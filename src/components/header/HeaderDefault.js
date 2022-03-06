@@ -171,6 +171,7 @@ const logoutHandler = () => {
                                             </Link>
                                         )}
 
+
                                     </div>
 
                                     <div className="block-wishlist action">
