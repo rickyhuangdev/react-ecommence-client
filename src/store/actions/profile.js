@@ -1,4 +1,4 @@
-import {getUserByIdApi, getUserListApi, getUserProfileApi} from "../../api/user";
+import {deleteUserByIdApi, getUserByIdApi, getUserListApi, getUserProfileApi} from "../../api/user";
 
 export const setUser = user => {
     return {
@@ -72,6 +72,32 @@ export const getUserDetail = (id) => {
         }).catch(error => {
             dispatch({
                 type: 'USER_DETAIL_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
+}
+export const deleteUser = (id) => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        const config = {
+            'Content-Type': 'application/x-www-form-urlencoded application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+        dispatch({
+            type: 'USER_DELETE_REQUEST'
+        })
+        deleteUserByIdApi(id, config).then(re => {
+
+                dispatch({
+                    type: 'USER_DELETE_SUCCESS',
+                    payload: re
+                })
+
+        }).catch(error => {
+            dispatch({
+                type: 'USER_DELETE_FAIL',
                 payload: error.response && error.response.data.message ? error.response.data.message : error.message
             })
         })

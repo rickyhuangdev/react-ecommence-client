@@ -33,5 +33,9 @@ export const getUserByIdApi = (id,config) => {
 export const updateUserByIdApi = (data,config) => {
     return request(`/user/${data.id}`, 'put',data,config)
 }
+export const deleteUserByIdApi = (id,config) => {
+    return request(`/user/${id}`, 'delete','',config)
+}
+
 
 

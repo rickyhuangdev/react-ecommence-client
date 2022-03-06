@@ -1,21 +1,24 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {userListReducer} from "../../../store/reducers/profile";
-import {getUserList} from "../../../store/actions/profile";
+import {deleteUser, getUserList} from "../../../store/actions/profile";
 import AdminNav from "../../../components/nav/AdminNav";
 import {Popconfirm, Space, Table, Tag,Avatar} from "antd";
 import {Link} from "react-router-dom";
 import {DeleteOutlined, EditOutlined} from "@ant-design/icons";
+import Message from "../../../components/message/Message";
 
 const User = () => {
     const userList = useSelector(state => state.userList)
+    const userDelete = useSelector(state => state.userDelete)
     const dispatch = useDispatch()
     const {loading, error, users} = userList
+    const {loading:userDeleteLoading, error:userDeleteError,success:deleteUserSuccess} = userDelete
     useEffect(()=>{
         dispatch(getUserList())
-    },[dispatch])
-    const deleteUser = (id) => {
-
+    },[dispatch,deleteUserSuccess])
+    const deleteUserById = (id) => {
+        dispatch(deleteUser(id))
     }
     const columns = [
         {
@@ -63,7 +66,7 @@ const User = () => {
                         title="Are you sure to delete this ?"
                         placement="rightBottom"
                         onConfirm={() => {
-                            deleteUser(record._id)
+                            deleteUserById(record._id)
                         }}
                         okText="Yes"
                         cancelText="No"
@@ -87,6 +90,8 @@ const User = () => {
                         <div className="row gy-5 g-xl-8">
                             <div className="col">
                                 <h5>用戶列表</h5>
+                                {error && <Message variant="danger" children={error}/>}
+                                {userDeleteLoading && <Message variant="danger" children={userDeleteError}/>}
                                 <Table columns={columns} dataSource={users} rowKey={record => record._id} className="mt-4"/>
                             </div>
                         </div>
