@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {getOrderDetail, payOrder} from "../../store/actions/order";
+import {getOrderDetail, payOrder, updateDeliverOrder} from "../../store/actions/order";
 import Loader from "../../components/loader/Loader";
 import Message from "../../components/message/Message";
-import {Col, Image, ListGroup, ListGroupItem, Row} from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import {Button, Col, Image, ListGroup, ListGroupItem, Row} from "react-bootstrap";
+import {Link, useHistory} from 'react-router-dom'
 import {getPayPayClient} from "../../api/vendor";
 import {PayPalButton} from "react-paypal-button-v2";
 
@@ -15,10 +15,18 @@ const Order = ({match}) => {
     const {loading, error, order} = orderDetails
     const orderPay = useSelector(state => state.orderPay)
     const {loading: loadingPay, success: successPay} = orderPay
+    const orderDelivered = useSelector(state => state.orderDelivered)
+    const {loading: loadingDelivered, success: successDelivered} = orderDelivered
     const [sdkReady, setSdkReady] = useState(false)
-    const [products,setProducts] = useState([])
-    const [address,setAddress] = useState({})
+    const [products, setProducts] = useState([])
+    const [address, setAddress] = useState({})
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo} = loginInfo
+    const history = useHistory()
     useEffect(() => {
+        if (!userInfo) {
+            history.push('/login')
+        }
         const addPayPalScript = async () => {
             const client_id = await getPayPayClient()
             const script = document.createElement('script')
@@ -31,8 +39,9 @@ const Order = ({match}) => {
             document.body.appendChild(script)
 
         }
-        if (!order || successPay) {
-            dispatch({type:'ORDER_PAY_RESET'})
+        if (!order || successPay || successDelivered) {
+            dispatch({type: 'ORDER_PAY_RESET'})
+            dispatch({type: 'ORDER_DELIVER_RESET'})
             dispatch(getOrderDetail(orderId))
         } else if (!order.isPaid) {
             if (!window.paypaly) {
@@ -42,10 +51,13 @@ const Order = ({match}) => {
             }
         }
         // dispatch(getOrderDetail(orderId))
-    }, [dispatch, orderId, successPay, order])
+    }, [dispatch, orderId, successPay, order, successDelivered])
     const successPaymentHandler = (paymentResult) => {
         paymentResult.order_id = orderId
         dispatch(payOrder(paymentResult))
+    }
+    const deliverHandler = () => {
+        dispatch(updateDeliverOrder(orderId))
     }
     return (
         <div className="container p-4 mt-5">
@@ -55,6 +67,7 @@ const Order = ({match}) => {
                         : (
                             <h3>Order {order._id}</h3>
                         )}
+                    {order && (
                     <ListGroup className="mt-5" variant="flush">
                         <ListGroup.Item>
                             <h2 className="mb-4">Shipping</h2>
@@ -71,14 +84,14 @@ const Order = ({match}) => {
                                 Phone: {order.address.phone}
                             </p>
                             {order.isDelivered?(
-                                <Message variant="success">Delivered on {order.deliveredAt}</Message>
+                                <Message variant="success">Delivered on {order.DeliveredAt}</Message>
                             ):(
                                 <Message variant="danger">Not Delivered</Message>
                             )}
                         </ListGroup.Item>
                     <ListGroup.Item>
                         <h3>Payment Method</h3>
-                        <p>{order.paymentMethod.toUpperCase()}</p>
+                        <p>{order.paymentMethod}</p>
                         {order.isPaid?(
                             <Message variant="success">Paid on {order.paidAt}</Message>
                         ):(
@@ -130,22 +143,73 @@ const Order = ({match}) => {
                         </ListGroup>
 
                     </ListGroup>
-                </div>
-                <div className="col-md-4">
-                    {!order.isPaid &&(<div className="mb-4"><h4>Complete your payment</h4></div>)}
-                    {!order.isPaid && (
-
-                        <ListGroup className="mt-20">
-                            <ListGroupItem className="mt-20">
-                                {loadingPay && <Loader/>}
-                                {!sdkReady ? <Loader/>:(
-                                    <PayPalButton amount={order.totalAfterDiscount ??order.cartTotal} onSuccess={successPaymentHandler} currency="USD" />
-                                )}
-                            </ListGroupItem>
-                        </ListGroup>
                     )}
                 </div>
+                {order && (
+                <div className="col-md-4">
+                    <h4>Order Summary</h4>
+                    <ListGroup className="mt-3">
+                        <ListGroup.Item>Products</ListGroup.Item>
+                        {order.products.length === 0 ? (
+                            <h3>No Order Summary Found</h3>
+                        ) : (
+                            <>
+                                <ListGroup.Item className="p-3">
+                                    {order.products && order.products.length > 0 && order.products.map((item) => (
+                                        <Row key={item.product._id}>
+                                            <Col md={8}>{item.product.title} <span
+                                                className="d-block text-end">× {item.count}</span></Col>
+                                            <Col md={4}><span
+                                                className="d-block text-end">${item.product.price * item.count}</span></Col>
+                                        </Row>
 
+                                    ))}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col md={8}>Shipping</Col>
+                                        <Col md={4}><span
+                                            className="d-block text-end">$0</span></Col>
+                                    </Row>
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <Row>
+                                        <Col md={8}>Total</Col>
+                                        <Col md={4}><span
+                                            className="d-block text-end fw-bold">
+                                ${order.totalAfterDiscount && order.totalAfterDiscount > 0 ? order.totalAfterDiscount : order.cartTotal}
+                            </span></Col>
+                                    </Row>
+                                </ListGroup.Item>
+                            </>
+                        )}
+
+                        {!order.isPaid && (
+                            <>
+                            <div className="mt-4 mb-4"><h4>Complete your payment</h4></div>
+                            <ListGroup>
+                                <ListGroupItem>
+                                    {loadingPay && <Loader/>}
+                                    {!sdkReady ? <Loader/> : (
+                                        <PayPalButton amount={order.totalAfterDiscount ?? order.cartTotal}
+                                                      onSuccess={successPaymentHandler} currency="USD"/>
+                                    )}
+                                </ListGroupItem>
+                            </ListGroup>
+                            </>
+                        )}
+
+                    </ListGroup>
+                    {loadingDelivered && <Loader/>}
+                    {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                        <ListGroupItem>
+                            <Button type="button" className="btn btn-block" onClick={deliverHandler}>
+                                Mark As Delivered
+                            </Button>
+                        </ListGroupItem>
+                    )}
+                </div>
+                )}
             </div>
         </div>
     );

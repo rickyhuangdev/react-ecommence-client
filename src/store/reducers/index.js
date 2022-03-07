@@ -4,7 +4,7 @@ import {profile, userDeleteReducer, userDetailReducer, userListReducer, userUpda
 import {cart, getCartsToCheckoutReducer, saveCartReducer} from './cart'
 import {coupon} from './coupon'
 import {register} from './register'
-import {order, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
+import {order, orderDeliveredReducer, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
 const rootReducer = combineReducers({
     login,
     profile,
@@ -20,7 +20,8 @@ const rootReducer = combineReducers({
     userList:userListReducer,
     userDetail:userDetailReducer,
     userDelete:userDeleteReducer,
-    getCartsToCheckout:getCartsToCheckoutReducer
+    getCartsToCheckout:getCartsToCheckoutReducer,
+    orderDelivered:orderDeliveredReducer
 
 })
 export default rootReducer

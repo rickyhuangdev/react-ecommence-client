@@ -1,4 +1,10 @@
-import {getMyOrdersApi, getOrderInfoApi, saveOrderToDBApi, updateOrderPaymentApi} from "../../api/order";
+import {
+    getMyOrdersApi,
+    getOrderInfoApi,
+    saveOrderToDBApi,
+    updateOrderDeliveredApi,
+    updateOrderPaymentApi
+} from "../../api/order";
 
 export const saveOrder = (data) => {
     return async (dispatch,getState) => {
@@ -99,6 +105,31 @@ export const listMyOrder = () => {
         }).catch(error => {
             dispatch({
                 type: 'ORDER_LIST_MY_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
+}
+export const updateDeliverOrder = (orderId) => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        const config = {
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+        dispatch({
+            type: 'ORDER_DELIVER_REQUEST'
+        })
+        updateOrderDeliveredApi(orderId, config).then(re => {
+            if (re) {
+                dispatch({
+                    type: 'ORDER_DELIVER_SUCCESS',
+                    payload: re.data
+                })
+            }
+        }).catch(error => {
+            dispatch({
+                type: 'ORDER_DELIVER_FAIL',
                 payload: error.response && error.response.data.message ? error.response.data.message : error.message
             })
         })
