@@ -1,11 +1,19 @@
 
-export const coupon = (state = false, action) => {
+export const coupon = (state = {}, action) => {
     const {type, payload} = action
     switch (type) {
-        // 设置基本信息
-        case 'COUPON_APPLIED':
-            return payload;
-        // 默认
+
+        case 'APPLY_COUPON_REQUEST':
+            return {loading: true}
+        case 'APPLY_COUPON_SUCCESS':
+            return {
+                loading: false,
+                success:true,
+            }
+        case 'APPLY_COUPON_FAIL':
+            return {loading: false, error: payload}
+        case 'APPLY_COUPON_RESET':
+            return {}
         default:
             return state
     }

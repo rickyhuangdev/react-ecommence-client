@@ -13,7 +13,6 @@ const instance = axios.create({
     timeout: 5000
 })
 instance.interceptors.request.use(config => {
-
     return config;
 }, error => {
     return Promise.reject(error)

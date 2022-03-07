@@ -16,7 +16,6 @@ export const cart = (state = {cartItems: []}, action) => {
 
         case 'UPDATE_CART':
             const cartIndex = state.findIndex(goods => goods.product._id === payload.product._id)
-            console.log(cartIndex)
             if (cartIndex > -1) {
                 state[cartIndex].count = payload.count
                 console.log(payload.count)
@@ -28,8 +27,9 @@ export const cart = (state = {cartItems: []}, action) => {
         case 'CART_SAVE_PAYMENT_METHOD':
             return {...state, paymentMethod: payload}
         case 'REMOVE_ALL_ITEM_FROM_CART':
-            return []
-        // 默认
+            return {...state,cartItems: []}
+        case 'REMOVE_CART_FAIL':
+            return {...state, success: false, error: payload}
         default:
             return state
     }

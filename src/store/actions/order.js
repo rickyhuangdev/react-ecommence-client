@@ -5,6 +5,7 @@ import {
     updateOrderDeliveredApi,
     updateOrderPaymentApi
 } from "../../api/order";
+import {removeCart} from "./cart";
 
 export const saveOrder = (data) => {
     return async (dispatch,getState) => {
@@ -21,6 +22,12 @@ export const saveOrder = (data) => {
                 dispatch({
                     type: 'SAVE_ORDER_SUCCESS',
                     payload: re.data
+                })
+                dispatch({
+                    type: 'GET_CART_CHECKOUT_RESET'
+                })
+                dispatch({
+                    type: 'CANCEL_ORDER'
                 })
             }
         }).catch(error => {
@@ -74,6 +81,16 @@ export const payOrder = (paymentResult) => {
                     type: 'ORDER_PAY_SUCCESS',
                     payload: re.data
                 })
+                dispatch({
+                    type: 'GET_CART_CHECKOUT_RESET',
+                })
+                dispatch({
+                    type: 'GET_CART_CHECKOUT_RESET',
+                })
+                dispatch({
+                    type: 'ORDER_DETAIL_RESET',
+                })
+                dispatch(removeCart())
             }
         }).catch(error => {
             dispatch({

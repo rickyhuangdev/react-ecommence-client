@@ -6,7 +6,7 @@ export const saveCartToDBApi = (data,config) => {
 export const getCartInfoApi = (config) => {
     return request('/cart', 'get','',config)
 }
-export const removeCartInfoApi = () => {
-    return request('/cart', 'delete')
+export const removeCartInfoApi = (config) => {
+    return request('/cart', 'delete','',config)
 }
 

@@ -8,20 +8,21 @@ import {toast} from "react-toastify";
 import countryList from 'react-select-country-list'
 import Select from 'react-select'
 import {Collapse} from 'antd';
-import {applyCouponApi} from "../../api/coupon";
-import {applyCoupon} from "../../store/actions/coupon";
+import {applyCoupon, applyDiscountCoupon} from "../../store/actions/coupon";
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from 'validator/lib/isEmpty';
 import Message from "../../components/message/Message";
 import {saveOrder} from "../../store/actions/order";
 import {Button, Col, Form, ListGroup, Row} from "react-bootstrap"
+import Loader from "../../components/loader/Loader";
 
 const CheckOutIndex = () => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo, error} = loginInfo
     const orderInfo = useSelector(state => state.order)
     const {success:orderSuccess, loading, order} = orderInfo
-    const cart = useSelector(state => state.cart)
+    const apply_coupon = useSelector(state => state.coupon)
+    const {success:applyCouponSuccess,error:applyCouponError,loading:applyCouponLoading} = apply_coupon
     const getCartsToCheckout = useSelector(state => state.getCartsToCheckout)
     const {cartItems, loading: CheckoutLoading, error: CheckoutError, success: CheckoutSuccess} = getCartsToCheckout
     const dispatch = useDispatch()
@@ -49,17 +50,14 @@ const CheckOutIndex = () => {
     })
     const options = useMemo(() => countryList().getData(), [])
     useEffect(() => {
-        if (userInfo && userInfo.token) {
-            dispatch(getCartCheckoutDetails())
-            setProducts(cartItems.products)
-            setTotalAfterDiscount(cartItems.totalAfterDiscount)
-            setTotal(cartItems.cartTotal)
+        if (!userInfo) {
+            history.push('/login')
         }
+            dispatch(getCartCheckoutDetails())
         if(orderSuccess){
             history.push(`/order/${order._id}`)
         }
-
-    }, [loginInfo, dispatch,orderSuccess])
+    }, [userInfo, dispatch,orderSuccess,applyCouponSuccess])
     const changeHandler = value => {
         setCountry(value)
         setAddress({...address, country: value["label"]})
@@ -97,22 +95,7 @@ const CheckOutIndex = () => {
     }
     function callback(key) {
     }
-    const applyDiscountCoupon = () => {
-        applyCouponApi({coupon}).then(re => {
-            if (re.success === true) {
-                setTotalAfterDiscount(re.data)
-                setCouponError(false)
-                setCouponResponseText(re.message)
-                toast.success(re.message)
-                setCoupon("")
-                dispatch(applyCoupon(true))
-            } else {
-                setCouponResponseText(re.message)
-                setCouponError(true)
-                dispatch(applyCoupon(false))
-            }
-        })
-    }
+
     const saveOrderHandler = async (e) => {
         e.preventDefault()
         if (isEmpty(address.country)) {
@@ -134,6 +117,9 @@ const CheckOutIndex = () => {
         }
 
     }
+    const applyDiscountCouponHandler = () => {
+      dispatch(applyDiscountCoupon(coupon))
+    }
     return (
         <section className="checkout-section section_space">
             <div className="container">
@@ -148,33 +134,36 @@ const CheckOutIndex = () => {
                                 )}
 
                             </div>
-                            <div className="woocommerce-info mt-20">
-                                {/*{!user && !user.token &&(*/}
-                                <Collapse onChange={callback}>
-                                    <Panel header="Have a coupon? Click here to enter your code" key="1"
-                                           className="shadow-3">
-                                        <div className="row">
-                                            <div className="col-6">
-                                                <label htmlFor="staticEmail">Coupon Code</label>
-                                                <div className="col-sm-10">
-                                                    <input type="text" className="form-control" value={coupon}
-                                                           onChange={(e) => setCoupon(e.target.value)}/>
-                                                    {couponError && (
-                                                        <small
-                                                            className="form-text mt-2 d-block text-danger">{couponResponseText}.</small>
-                                                    )}
-                                                </div>
-                                                <button className="btn btn-primary btn-sm mt-3"
-                                                        onClick={applyDiscountCoupon}>Apply
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </Panel>
+                            {/*<div className="woocommerce-info mt-20">*/}
+                            {/*    /!*{!user && !user.token &&(*!/*/}
+                            {/*    <Collapse onChange={callback}>*/}
+                            {/*        <Panel header="Have a coupon? Click here to enter your code" key="1"*/}
+                            {/*               className="shadow-3">*/}
+                            {/*            {applyCouponSuccess && ( <Message variant="success" children="Applied Coupon success" />)}*/}
 
-                                </Collapse>
-                                {/*)}*/}
+                            {/*            <div className="row">*/}
+                            {/*                <div className="col-6">*/}
+                            {/*                    <label htmlFor="staticEmail">Coupon Code</label>*/}
+                            {/*                    <div className="col-sm-10">*/}
+                            {/*                        <input type="text" className="form-control" value={coupon}*/}
+                            {/*                               onChange={(e) => setCoupon(e.target.value)}/>*/}
+                            {/*                        {applyCouponError && (*/}
+                            {/*                            <small*/}
+                            {/*                                className="form-text mt-2 d-block text-danger">{applyCouponError}.</small>*/}
+                            {/*                        )}*/}
+                            {/*                    </div>*/}
+                            {/*                    <button className="btn btn-primary btn-sm mt-3" disabled={applyCouponLoading}*/}
+                            {/*                            onClick={applyDiscountCouponHandler}>Apply*/}
+                            {/*                    </button>*/}
+                            {/*                    {applyCouponLoading&&(<Loader />)}*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </Panel>*/}
 
-                            </div>
+                            {/*    </Collapse>*/}
+                            {/*    /!*)}*!/*/}
+
+                            {/*</div>*/}
 
                         </div>
                     </div>
@@ -252,7 +241,7 @@ const CheckOutIndex = () => {
                                 <ListGroup.Item>Products</ListGroup.Item>
 
                                 <ListGroup.Item className="p-3">
-                                    {products && products.length > 0 && products.map((item) => (
+                                    {cartItems && cartItems.products && cartItems.products.map((item) => (
                                         <Row key={item.product._id}>
                                             <Col md={8}>{item.product.title} <span
                                                 className="d-block text-end">× {item.count}</span></Col>
@@ -262,18 +251,18 @@ const CheckOutIndex = () => {
                                     ))}
                                 </ListGroup.Item>
 
-                                <ListGroup.Item>
-                                    <Row>
-                                        <Col md={8}>Shipping</Col>
-                                        <Col md={4}><span
-                                            className="d-block text-end">$0</span></Col>
-                                    </Row>
-                                </ListGroup.Item>
+                                {/*<ListGroup.Item>*/}
+                                {/*    <Row>*/}
+                                {/*        <Col md={8}>Shipping</Col>*/}
+                                {/*        <Col md={4}><span*/}
+                                {/*            className="d-block text-end">$</span></Col>*/}
+                                {/*    </Row>*/}
+                                {/*</ListGroup.Item>*/}
                                 <ListGroup.Item>
                                     <Row>
                                         <Col md={8}>Total</Col>
                                         <Col md={4}><span
-                                            className="d-block text-end fw-bold">$0</span></Col>
+                                            className="d-block text-end fw-bold">${cartItems&&cartItems.cartTotal}</span></Col>
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item>

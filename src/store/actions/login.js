@@ -72,6 +72,12 @@ export const logout = () => {
         dispatch({
             type: 'USER_LOGOUT'
         })
+        dispatch({
+            type: 'GET_CART_CHECKOUT_RESET'
+        })
+        dispatch({
+            type: 'CANCEL_ORDER'
+        })
 
 
     }

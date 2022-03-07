@@ -5,15 +5,23 @@ import {listMyOrder} from "../../store/actions/order";
 import Loader from "../../components/loader/Loader";
 import Message from "../../components/message/Message";
 import {Badge, Button} from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 
 const Order = () => {
+    const history = useHistory()
     const orderMyList = useSelector(state => state.orderMyList)
     const dispatch = useDispatch()
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo} = loginInfo
     const {loading, error, orders} = orderMyList
     useEffect(() => {
-        dispatch(listMyOrder())
-    }, [])
+        if(!loginInfo){
+            history.push('/login')
+        }else{
+            dispatch(listMyOrder())
+        }
+
+    }, [dispatch,history,userInfo,loginInfo])
 
     return (
         <div className="container py-5">
@@ -50,7 +58,7 @@ const Order = () => {
                                                         <Badge bg="danger">Not Paid</Badge>
                                                     )}</td>
                                                     <td>{order.isDelivered ? (
-                                                        order.deliveredAt.substring(0, 10)) : (
+                                                        order.DeliveredAt.substring(0, 10) ) : (
                                                         <Badge bg="danger">Not Delivered</Badge>
                                                     )}</td>
                                                     <td>

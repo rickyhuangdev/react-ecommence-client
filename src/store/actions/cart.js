@@ -1,4 +1,4 @@
-import {getCartInfoApi, saveCartToDBApi} from "../../api/cart";
+import {getCartInfoApi, removeCartInfoApi, saveCartToDBApi} from "../../api/cart";
 
 export const addToCart = carts => {
     return {
@@ -75,6 +75,27 @@ export const getCartCheckoutDetails = () => {
         }).catch(error => {
             dispatch({
                 type: 'GET_CART_CHECKOUT_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
+}
+export const removeCart = () => {
+    return async (dispatch, getState) => {
+        const {userInfo} = getState().login
+        const config = {
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+
+        removeCartInfoApi(config).then(data => {
+            dispatch({
+                type: 'REMOVE_ALL_ITEM_FROM_CART',
+            })
+
+        }).catch(error => {
+            dispatch({
+                type: 'REMOVE_CART_FAIL',
                 payload: error.response && error.response.data.message ? error.response.data.message : error.message
             })
         })

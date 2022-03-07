@@ -51,7 +51,7 @@ const Order = ({match}) => {
             }
         }
         // dispatch(getOrderDetail(orderId))
-    }, [dispatch, orderId, successPay, order, successDelivered])
+    }, [dispatch, orderId, successPay, order, successDelivered,userInfo])
     const successPaymentHandler = (paymentResult) => {
         paymentResult.order_id = orderId
         dispatch(payOrder(paymentResult))

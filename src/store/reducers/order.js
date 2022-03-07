@@ -33,7 +33,7 @@ export const orderDetailReducer = (state = {loading: true, orderItems: [], shipp
             }
         case 'ORDER_DETAIL_FAIL':
             return {loading: false, error: payload}
-        case 'CANCEL_ORDER':
+        case 'ORDER_DETAIL_RESET':
             return {}
         default:
             return state
