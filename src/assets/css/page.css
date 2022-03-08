@@ -51,12 +51,14 @@
     padding-bottom: 0;
     transition: .3s;
     min-height: 150px;
+    margin-bottom: 15px;
 }
-.product__content-3 h6{
+.product__content-3 a{
     font-weight: 900;
-    margin-bottom: 8px;
-    height: 60px;
-    letter-spacing: 2px
+    margin-bottom: 15px;
+    height: 75px;
+    letter-spacing: 2px;
+    display: block;
 }
 .rating {
     transition: .3s;
@@ -100,4 +102,8 @@
     padding-bottom: 10px;
     font-size: 15px;
     font-weight: 500;
+}
+.product__star .star-ratings{
+    display: flex;
+    justify-content: start;
 }

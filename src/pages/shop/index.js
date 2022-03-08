@@ -7,10 +7,10 @@ import sl_banner_sm from '../../assets/images/sl-banner-sm.png'
 import {BsEye, BsHddStack, BsHeart} from "react-icons/bs";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getProductSearchDetail} from "../../store/actions/product";
 import Message from "../../components/message/Message";
 import {getCategoryDetail} from "../../store/actions/category";
 import {fetchProductsByFilterApi, getProductsApi} from "../../api/product";
+import Star from "../../components/form/Star";
 
 const ShopIndex = ({match}) => {
     const {keyword} = match.params
@@ -19,6 +19,7 @@ const ShopIndex = ({match}) => {
     const [price, setPrice] = useState([0, 0])
     const [products, setProducts] = useState([])
     const [ok, setOk] = useState(false)
+    const [star, setStar] = useState('')
     const productSearch = useSelector(state => state.productSearch)
     const {loading: searchLoading, searchText, productList} = productSearch
     const category = useSelector(state => state.category)
@@ -46,7 +47,6 @@ const ShopIndex = ({match}) => {
 
     }, [searchText, filterCategory])
     useEffect(() => {
-        console.log("ok to request");
         fetchProducts({ price });
     }, [ok]);
     const listProducts = () => {
@@ -74,6 +74,7 @@ const ShopIndex = ({match}) => {
 
     const handleCategory = (e) => {
         setFilterCategory(e)
+        setStar("")
         dispatch({
             type: 'PRODUCT_SEARCH_RESET'
         })
@@ -83,6 +84,7 @@ const ShopIndex = ({match}) => {
     }
     const handleSlider = (value) => {
         setPrice(value)
+        setStar("")
         dispatch({
             type: 'PRODUCT_SEARCH_RESET'
         })
@@ -90,7 +92,15 @@ const ShopIndex = ({match}) => {
             setOk(!ok);
         }, 300);
     }
-
+    const handleStarClick = (num) => {
+        dispatch({
+            type: 'PRODUCT_SEARCH_RESET'
+        })
+        setPrice([0, 0])
+        setFilterCategory([])
+        setStar(num)
+        fetchProducts({stars: num});
+    }
     return (
         <div className="shop-area mb-20 my-5">
             <div className="container">
@@ -110,25 +120,20 @@ const ShopIndex = ({match}) => {
                                 <div>
                                     <Slider range defaultValue={[1000, 999999]}
                                             onChange={handleSlider}
-                                            tipFormatter={(v)=>`$${v}`}
+                                            tipFormatter={(v) => `$${v}`}
                                             min={0}
                                             max={40000}
                                             className="text-danger"/>
                                 </div>
                             </div>
                         </div>
-                        <div className="product-widget mb-30"><h5 className="pt-title">Choose Color</h5>
-                            <div className="product__color mt-20">
-                                <ul>
-                                    <li><a href="#" className="black"></a></li>
-                                    <li><a href="#" className="blue"></a></li>
-                                    <li><a href="#" className="red"></a></li>
-                                    <li><a href="#" className="yellow"></a></li>
-                                    <li><a href="#" className="pink"></a></li>
-                                    <li><a href="#" className="brown"></a></li>
-                                    <li><a href="#" className="green"></a></li>
-                                    <li><a href="#" className="oragne"></a></li>
-                                </ul>
+                        <div className="product-widget mb-30"><h5 className="pt-title">Choose Rating</h5>
+                            <div className="product__star mt-20">
+                                <Star starClick={handleStarClick} numberOfStar={5}/>
+                                <Star starClick={handleStarClick} numberOfStar={4}/>
+                                <Star starClick={handleStarClick} numberOfStar={3}/>
+                                <Star starClick={handleStarClick} numberOfStar={2}/>
+                                <Star starClick={handleStarClick} numberOfStar={1}/>
                             </div>
                         </div>
                         <div className="product-widget mb-30"><h5 className="pt-title">Choose Brand</h5>
