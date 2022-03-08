@@ -7,6 +7,7 @@ import {register} from './register'
 import {order, orderDeliveredReducer, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
 import {productDetailReducer, productSearchReducer} from "./product";
 import {categoryReducer} from "./category";
+import {getWishlistReducer, removeWishlistReducer, saveWishlistReducer} from "./wishlist";
 
 const rootReducer = combineReducers({
     login,
@@ -25,9 +26,12 @@ const rootReducer = combineReducers({
     userDelete: userDeleteReducer,
     getCartsToCheckout: getCartsToCheckoutReducer,
     orderDelivered: orderDeliveredReducer,
-    productSearch:productSearchReducer,
-    category:categoryReducer,
-    productDetail:productDetailReducer
+    productSearch: productSearchReducer,
+    category: categoryReducer,
+    productDetail: productDetailReducer,
+    saveWishlist: saveWishlistReducer,
+    getWishlist: getWishlistReducer,
+    removeWishlist: removeWishlistReducer
 
 
 })
