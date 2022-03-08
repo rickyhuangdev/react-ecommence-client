@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import '../../assets/css/category_left.css'
-import '../../assets/css/category_right.css'
-import {Checkbox, Slider} from 'antd';
+import '../../assets/css/page.css'
+import {Checkbox, Rate, Slider} from 'antd';
 import sl_banner from '../../assets/images/sl-banner.jpeg'
 import sl_banner_sm from '../../assets/images/sl-banner-sm.png'
 import {getCategoryApi, readCategoryApi} from "../../api/category";
+import {BsEye, BsHddStack, BsHeart} from "react-icons/bs";
 import {getProductsApi} from "../../api/product";
 
-const CategoryIndex = ({match}) => {
+const ShopIndex = ({match}) => {
     const {slug} = match.params
     const [categoryOptions, setCategoryOptions] = useState([])
     const [products, setProducts] = useState([])
@@ -57,7 +58,7 @@ const CategoryIndex = ({match}) => {
                                 Product categories
                             </h5>
                             <div className="widget-category-list mt-20 d-flex flex-column">
-                                    <Checkbox.Group options={categoryOptions} onChange={onChange}/>
+                                <Checkbox.Group options={categoryOptions} onChange={onChange}/>
                             </div>
                         </div>
                         <div className="product-widget mb-30"><h5 className="pt-title">Filter By Price</h5>
@@ -187,76 +188,108 @@ const CategoryIndex = ({match}) => {
                             </div>
                         </div>
                         <div className="tab-content">
-                            <div className="tp-wrapper-2">
-                                {/*{products && products.length > 0 && products.map(product => (*/}
-                                {/*    <div className="single-item-pd" key={product._id}>*/}
-                                {/*        <div className="row align-items-center">*/}
-                                {/*            <div className="col-xl-9">*/}
-                                {/*                <div*/}
-                                {/*                    className="single-features-item single-features-item-df b-radius mb-20">*/}
-                                {/*                    <div className="row g-0 align-items-center">*/}
-                                {/*                        <div className="col-md-4">*/}
-                                {/*                            <div className="features-thum">*/}
-                                {/*                                <div className="features-product-image w-img">*/}
-                                {/*                                    <Link to={`/product/${product.slug}`}><img*/}
-                                {/*                                        src={product.images[0].url}*/}
-                                {/*                                        alt={product.title}/></Link>*/}
-                                {/*                                </div>*/}
-                                {/*                                <div className="product__offer">*/}
-                                {/*                                <span*/}
-                                {/*                                    className="discount bg-success font-weight-bold">-15%</span>*/}
-                                {/*                                </div>*/}
-                                {/*                                <div className="product-action">*/}
-                                {/*                                    <a href="#" className="icon-box icon-box-1"*/}
-                                {/*                                       data-bs-toggle="modal"*/}
-                                {/*                                       data-bs-target="#productModalId"><BsEye/></a>*/}
-                                {/*                                    <a href="#"*/}
-                                {/*                                       className="icon-box icon-box-1"><BsHeart/></a>*/}
-                                {/*                                    <a href="#"*/}
-                                {/*                                       className="icon-box icon-box-1"><BsHddStack/></a>*/}
-                                {/*                                </div>*/}
-                                {/*                            </div>*/}
-                                {/*                        </div>*/}
-                                {/*                        <div className="col-md-8">*/}
-                                {/*                            <div className="product__content product__content-d">*/}
-                                {/*                                <h6> <Link to={`/product/${product.slug}`}>{product.title}</Link>*/}
-                                {/*                                </h6>*/}
-                                {/*                                <div className="rating mb-5">*/}
-                                {/*                                    <Rate allowHalf defaultValue={2.5} value={2.5}*/}
-                                {/*                                          disabled style={{fontSize: '15px'}}/>*/}
-                                {/*                                </div>*/}
-                                {/*                            </div>*/}
-                                {/*                        </div>*/}
-                                {/*                    </div>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*            <div className="col-xl-3">*/}
-                                {/*                <div className="product-stock mb-15">*/}
-                                {/*                    <h5>Availability:<span>{product.quantity} in stock</span></h5>*/}
-                                {/*                    <h6>${product.price} - <del>$240.00</del></h6>*/}
-                                {/*                </div>*/}
-                                {/*                <div className="stock-btn ">*/}
-                                {/*                    <button type="button"*/}
-                                {/*                            className="btn btn-warning shadow-1 cart-btn d-flex mb-10 align-items-center justify-content-center w-100 text-white">Add*/}
-                                {/*                        to Cart*/}
-                                {/*                    </button>*/}
-                                {/*                    <button type="button"*/}
-                                {/*                            className="btn btn-dark shadow-1 wc-checkout d-flex align-items-center justify-content-center w-100"*/}
-                                {/*                            data-bs-toggle="modal"*/}
-                                {/*                            data-bs-target="#productModalId">Quick*/}
-                                {/*                        View*/}
-                                {/*                    </button>*/}
-                                {/*                </div>*/}
-                                {/*            </div>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*))}*/}
+                            {/*<div className="tp-wrapper-2">*/}
+                            {/*    {products && products.length > 0 && products.map(product => (*/}
+                            {/*        <div className="single-item-pd" key={product._id}>*/}
+                            {/*            <div className="row align-items-center">*/}
+                            {/*                <div className="col-xl-9">*/}
+                            {/*                    <div*/}
+                            {/*                        className="single-features-item single-features-item-df b-radius mb-20">*/}
+                            {/*                        <div className="row g-0 align-items-center">*/}
+                            {/*                            <div className="col-md-4">*/}
+                            {/*                                <div className="features-thum">*/}
+                            {/*                                    <div className="features-product-image w-img">*/}
+                            {/*                                        <Link to={`/product/${product.slug}`}><img*/}
+                            {/*                                            src={product.images[0].url}*/}
+                            {/*                                            alt={product.title}/></Link>*/}
+                            {/*                                    </div>*/}
+                            {/*                                    <div className="product__offer">*/}
+                            {/*                                    <span*/}
+                            {/*                                        className="discount bg-success font-weight-bold">-15%</span>*/}
+                            {/*                                    </div>*/}
+                            {/*                                    <div className="product-action">*/}
+                            {/*                                        <a href="#" className="icon-box icon-box-1"*/}
+                            {/*                                           data-bs-toggle="modal"*/}
+                            {/*                                           data-bs-target="#productModalId"><BsEye/></a>*/}
+                            {/*                                        <a href="#"*/}
+                            {/*                                           className="icon-box icon-box-1"><BsHeart/></a>*/}
+                            {/*                                        <a href="#"*/}
+                            {/*                                           className="icon-box icon-box-1"><BsHddStack/></a>*/}
+                            {/*                                    </div>*/}
+                            {/*                                </div>*/}
+                            {/*                            </div>*/}
+                            {/*                            <div className="col-md-8">*/}
+                            {/*                                <div className="product__content product__content-d">*/}
+                            {/*                                    <h6> <Link to={`/product/${product.slug}`}>{product.title}</Link>*/}
+                            {/*                                    </h6>*/}
+                            {/*                                    <div className="rating mb-5">*/}
+                            {/*                                        <Rate allowHalf defaultValue={2.5} value={2.5}*/}
+                            {/*                                              disabled style={{fontSize: '15px'}}/>*/}
+                            {/*                                    </div>*/}
+                            {/*                                </div>*/}
+                            {/*                            </div>*/}
+                            {/*                        </div>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*                <div className="col-xl-3">*/}
+                            {/*                    <div className="product-stock mb-15">*/}
+                            {/*                        <h5>Availability:<span>{product.quantity} in stock</span></h5>*/}
+                            {/*                        <h6>${product.price} - <del>$240.00</del></h6>*/}
+                            {/*                    </div>*/}
+                            {/*                    <div className="stock-btn ">*/}
+                            {/*                        <button type="button"*/}
+                            {/*                                className="btn btn-warning shadow-1 cart-btn d-flex mb-10 align-items-center justify-content-center w-100 text-white">Add*/}
+                            {/*                            to Cart*/}
+                            {/*                        </button>*/}
+                            {/*                        <button type="button"*/}
+                            {/*                                className="btn btn-dark shadow-1 wc-checkout d-flex align-items-center justify-content-center w-100"*/}
+                            {/*                                data-bs-toggle="modal"*/}
+                            {/*                                data-bs-target="#productModalId">Quick*/}
+                            {/*                            View*/}
+                            {/*                        </button>*/}
+                            {/*                    </div>*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    ))}*/}
+
+                            {/*</div>*/}
+                            <div className="tp-wrapper">
                                 <div className="row g-0">
-                                    <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-<div className="product__item product__item-d">
-    
-</div>
+                                    {products && products.length > 0 && products.map(product => (
+                                    <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6" key={product._id}>
+                                        <div className="product__item product__item-d">
+                                            <div className="product__thumb fix">
+                                                <div className="product-image w-img"><a href="product-details.html"><img
+                                                    src={product.images[0].url} className="img-fluid"
+                                                    alt={product.title}/></a></div>
+                                                <div className="product-action">
+                                                    <a href="#" className="icon-box icon-box-1"><BsEye/></a><a
+                                                    href="#" className="icon-box icon-box-1"><BsHeart/></a><a href="#"
+                                                                                                              className="icon-box icon-box-1"><BsHddStack/></a>
+                                                </div>
+                                            </div>
+                                            <div className="product__content-3"><h6><a href="product-details.html">{product.title}</a></h6>
+                                                <div className="rating mb-2">
+                                                    <Rate allowHalf defaultValue={2.5} value={2.5} disabled
+                                                          style={{fontSize: '15px'}}/>
+                                                    <span>(01 review)</span></div>
+                                                <div className="price mb-10"><span>${product.price}</span></div>
+                                            </div>
+                                            <div className="product__add-cart-s text-center">
+                                                <button type="button"
+                                                        className="cart-btn d-flex mb-10 align-items-center justify-content-center w-100 shadow-3">Add
+                                                    to Cart
+                                                </button>
+                                                <button type="button"
+                                                        className="wc-checkout d-flex align-items-center justify-content-center w-100"
+                                                        data-bs-toggle="modal" data-bs-target="#productModalId">Quick
+                                                    View
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    ))}
                                 </div>
                             </div>
                         </div>
@@ -267,4 +300,4 @@ const CategoryIndex = ({match}) => {
     );
 };
 
-export default CategoryIndex;
+export default ShopIndex;

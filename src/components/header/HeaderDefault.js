@@ -1,24 +1,14 @@
 import React, {useState} from 'react';
 import '../../assets/css/header.css'
 import {Dropdown, Menu} from 'antd';
-import {
-    BsBag,
-    BsCamera,
-    BsHeart,
-    BsJustify,
-    BsLaptop,
-    BsPerson,
-    BsPhone,
-    BsSearch,
-    BsTrash,
-    BsWifi2
-} from "react-icons/bs";
+import {BsBag, BsCamera, BsHeart, BsJustify, BsLaptop, BsPerson, BsPhone, BsTrash, BsWifi2} from "react-icons/bs";
 import {IoBedOutline, IoShirtOutline} from "react-icons/io5";
 import {AiOutlineAudio} from "react-icons/ai";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../../store/actions/cart";
 import {logout} from "../../store/actions/login";
+import HeaderSearch from "../form/HeaderSearch";
 
 const HeaderDefault = () => {
     const cart = useSelector(state => state.cart.cartItems)
@@ -26,15 +16,12 @@ const HeaderDefault = () => {
     const {userInfo} = loginInfo
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
-    const [searchText, setSearchText] = useState('')
     const dispatch = useDispatch()
     const changeLang = ({key}) => {
         setLocalLang(key)
     }
     const changeCurrency = ({key}) => {
         setCurrency(key)
-    }
-    const handleSearch = () => {
     }
 const logoutHandler = () => {
   dispatch(logout())
@@ -134,15 +121,7 @@ const logoutHandler = () => {
                             </div>
                             <div className="col-xl-5 col-lg-4 d-none d-lg-block">
                                 <div className="header__search">
-                                    <form action="#">
-                                        <div className="header__search-box"><input
-                                            className="search-input search-input-2 text-dark" type="text"
-                                            placeholder="I'm shopping for..." value={searchText}
-                                            onChange={e=>setSearchText(e.target.value)}/>
-                                            <button className="button button-2 button-3" type="button"><BsSearch/>
-                                            </button>
-                                        </div>
-                                    </form>
+                                    <HeaderSearch/>
                                 </div>
                             </div>
                             <div className="col-xl-4 col-lg-5 col-md-8 col-sm-8">

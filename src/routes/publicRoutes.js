@@ -8,6 +8,7 @@ import CartIndex from "../pages/cart";
 import CheckOutIndex from "../pages/checkout";
 import PaymentIndex from "../pages/payment/PaymentIndex";
 import Order from "../pages/Order/Order";
+import ShopIndex from "../pages/shop";
 
 const publicRoutes = [
     {
@@ -60,6 +61,14 @@ const publicRoutes = [
     {
         path: '/order/:orderId',
         component: Order,
+        exact: true,
+        role: 'user',
+        backUrl: '/'
+
+    },
+    {
+        path: '/shop/:keyword?',
+        component: ShopIndex,
         exact: true,
         role: 'user',
         backUrl: '/'
