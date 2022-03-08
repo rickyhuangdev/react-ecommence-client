@@ -46,6 +46,7 @@ export const getProductList = () => {
 }
 
 export const getProductDetail = (id) => {
+    console.log(id)
     return async (dispatch, getState) => {
         dispatch({
             type: 'PRODUCT_DETAIL_REQUEST'

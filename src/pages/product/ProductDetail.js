@@ -25,9 +25,11 @@ const ProductDetail = ({match}) => {
     const {userInfo, loading, error} = loginInfo
     const productDetail = useSelector(state => state.productDetail)
     const {product, loading:productLoading, error:ProductError} = productDetail
+    const [qty,setQty] =useState(1)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getProductDetail(slug))
+        console.log(product)
     }, [slug])
     useEffect(()=>{
         if(product.ratings && userInfo){
@@ -48,11 +50,12 @@ const ProductDetail = ({match}) => {
     //         }
     //     })
     // }
-    const onChange = () => {
+    const onChange = (e) => {
+        setQty(e)
     }
 
     const addToCartHandler = () => {
-        dispatch(addToCart({product, count: 1}))
+        dispatch(addToCart({product, count: qty}))
         toast.success("Add to cart successfully",{toastId:product._id})
 
     }
@@ -60,7 +63,7 @@ const ProductDetail = ({match}) => {
         customPaging: function (i) {
             return (
                 <a>
-                    <img src={imageSlider[i].url} />
+                    <img src={product.images[i].url} />
                 </a>
 
 
@@ -88,7 +91,7 @@ const ProductDetail = ({match}) => {
                             <div className="product__details-nav">
                                 <div className="product__details-thumb">
                                     <Slider {...settings}>
-                                        {product.images && product.images.map(item => (
+                                        {product &&product.images && product.images.map(item => (
                                             <div key={item.public_id} className="d-flex justify-content-center align-items-start p-0 m-0">
                                                 <InnerImageZoom src={item.url} zoomSrc={item.url}>
                                                     <img src={item.url} alt={item.public_id} style={{height:"500px"}} className="product-slider-image" />

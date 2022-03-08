@@ -43,7 +43,7 @@ export const deleteWishlistByIdApi = (id,config) => {
     return request(`/user/${id}/wishlist}`, 'put','',config)
 }
 export const createWishlistApi = (id,config) => {
-    return request(`/user/wishlist`, 'delete',id,config)
+    return request(`/user/wishlist`, 'post',id,config)
 }
 
 

@@ -11,6 +11,7 @@ import Message from "../../components/message/Message";
 import {getCategoryDetail} from "../../store/actions/category";
 import {fetchProductsByFilterApi, getProductsApi} from "../../api/product";
 import Star from "../../components/form/Star";
+import {saveWishlist} from "../../store/actions/wishlist";
 
 const ShopIndex = ({match}) => {
     const {keyword} = match.params
@@ -24,6 +25,8 @@ const ShopIndex = ({match}) => {
     const {loading: searchLoading, searchText, productList} = productSearch
     const category = useSelector(state => state.category)
     const {loading: categoryLoading, categories} = category
+    const saveWishlist = useSelector(state => state.saveWishlist)
+    const {loading: saveWishlistLoading, success:saveWishlistSuccess} = saveWishlist
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getCategoryDetail())
@@ -49,6 +52,7 @@ const ShopIndex = ({match}) => {
     useEffect(() => {
         fetchProducts({ price });
     }, [ok]);
+
     const listProducts = () => {
         getProductsApi().then(re => {
             setProducts(re)
@@ -100,6 +104,9 @@ const ShopIndex = ({match}) => {
         setFilterCategory([])
         setStar(num)
         fetchProducts({stars: num});
+    }
+    const addToWishlist = (id) => {
+        dispatch(saveWishlist(id))
     }
     return (
         <div className="shop-area mb-20 my-5">
@@ -175,85 +182,7 @@ const ShopIndex = ({match}) => {
                         </div>
                         {products && products.length > 0 ? (
                             <>
-                                <div className="product-lists-top">
-                                    <div className="product__filter-wrap">
-                                        <div className="row align-items-center">
-                                            <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
-                                                <div className="product__filter d-sm-flex align-items-center">
-                                                    <div className="product__col">
-                                                        <ul className="nav nav-tabs" id="myTab" role="tablist">
-                                                            <li className="nav-item" role="presentation">
-                                                                <button className="nav-link active" id="FourCol-tab"
-                                                                        data-bs-toggle="tab" data-bs-target="#FourCol"
-                                                                        type="button" role="tab" aria-controls="FourCol"
-                                                                        aria-selected="true"><i
-                                                                    className="fal fa-th"></i>
-                                                                </button>
-                                                            </li>
-                                                            <li className="nav-item" role="presentation">
-                                                                <button className="nav-link" id="FiveCol-tab"
-                                                                        data-bs-toggle="tab"
-                                                                        data-bs-target="#FiveCol" type="button"
-                                                                        role="tab"
-                                                                        aria-controls="FiveCol" aria-selected="false"><i
-                                                                    className="fal fa-list"></i></button>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className="product__result pl-60"><p>Showing 1-20 of 29
-                                                        relults</p>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                            <div className="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
-                                                <div
-                                                    className="product__filter-right d-flex align-items-center justify-content-md-end">
-                                                    <div className="product__sorting product__show-no"><select
-                                                        style={{display: 'none'}}>
-                                                        <option>10</option>
-                                                        <option>20</option>
-                                                        <option>30</option>
-                                                        <option>40</option>
-                                                    </select>
-                                                        <div className="nice-select" tabIndex="0"><span
-                                                            className="current">10</span>
-                                                            <ul className="list">
-                                                                <li data-value="10"
-                                                                    className="option selected focus">10
-                                                                </li>
-                                                                <li data-value="20" className="option">20</li>
-                                                                <li data-value="30" className="option">30</li>
-                                                                <li data-value="40" className="option">40</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div className="product__sorting product__show-position ml-20">
-                                                        <select
-                                                            style={{display: 'none'}}>
-                                                            <option>Latest</option>
-                                                            <option>New</option>
-                                                            <option>Up comeing</option>
-                                                        </select>
-                                                        <div className="nice-select" tabIndex="0"><span
-                                                            className="current">Latest</span>
-                                                            <ul className="list">
-                                                                <li data-value="Latest"
-                                                                    className="option selected">Latest
-                                                                </li>
-                                                                <li data-value="New" className="option">New</li>
-                                                                <li data-value="Up comeing" className="option">Up
-                                                                    comeing
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
                                 <div className="tab-content">
                                     <div className="tp-wrapper">
                                         <div className="row g-0">
@@ -265,13 +194,13 @@ const ShopIndex = ({match}) => {
                                                                 to={`/product/${product.slug}`}><img
                                                                 src={product.images[0].url} className="img-fluid"
                                                                 alt={product.title}/></Link></div>
-                                                            <div className="product-action">
-                                                                <a href="#" className="icon-box icon-box-1"><BsEye/></a><a
-                                                                href="#"
-                                                                className="icon-box icon-box-1"><BsHeart/></a><a
-                                                                href="#"
-                                                                className="icon-box icon-box-1"><BsHddStack/></a>
-                                                            </div>
+                                                            {/*<div className="product-action">*/}
+                                                            {/*    <button type="button" className="icon-box icon-box-1"><BsEye/></button><a*/}
+                                                            {/*    type="button"*/}
+                                                            {/*    className="icon-box icon-box-1" onClick={()=>{addToWishlist(product._id)}}><BsHeart/></a><a*/}
+                                                            {/*    href="#"*/}
+                                                            {/*    className="icon-box icon-box-1"><BsHddStack/></a>*/}
+                                                            {/*</div>*/}
                                                         </div>
                                                         <div className="product__content-3"><Link
                                                             to={`/product/${product.slug}`}>{product.title}</Link>
@@ -287,12 +216,12 @@ const ShopIndex = ({match}) => {
                                                                     className="cart-btn d-flex mb-10 align-items-center justify-content-center w-100 shadow-3">
                                                                 {product.quantity<=0 ?'OUT OF STOCK':'ADD TO CART'}
                                                             </button>
-                                                            <button type="button"
-                                                                    className="wc-checkout d-flex align-items-center justify-content-center w-100"
-                                                                    data-bs-toggle="modal"
-                                                                    data-bs-target="#productModalId">Quick
-                                                                View
-                                                            </button>
+                                                            {/*<button type="button"*/}
+                                                            {/*        className="wc-checkout d-flex align-items-center justify-content-center w-100"*/}
+                                                            {/*        data-bs-toggle="modal"*/}
+                                                            {/*        data-bs-target="#productModalId">Quick*/}
+                                                            {/*    View*/}
+                                                            {/*</button>*/}
                                                         </div>
                                                     </div>
                                                 </div>
