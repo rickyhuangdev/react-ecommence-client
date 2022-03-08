@@ -283,9 +283,9 @@ const ShopIndex = ({match}) => {
                                                             </div>
                                                         </div>
                                                         <div className="product__add-cart-s text-center">
-                                                            <button type="button"
-                                                                    className="cart-btn d-flex mb-10 align-items-center justify-content-center w-100 shadow-3">Add
-                                                                to Cart
+                                                            <button type="button" disabled={product.quantity<=0}
+                                                                    className="cart-btn d-flex mb-10 align-items-center justify-content-center w-100 shadow-3">
+                                                                {product.quantity<=0 ?'OUT OF STOCK':'ADD TO CART'}
                                                             </button>
                                                             <button type="button"
                                                                     className="wc-checkout d-flex align-items-center justify-content-center w-100"

@@ -125,8 +125,8 @@ const ProductDetail = ({match}) => {
                                             </Space>
                                         </div>
                                     </div>
-                                    <button className="btn btn-warning my-1 text-white shadow-none" type="button" onClick={addToCartHandler}>Add to
-                                        Cart
+                                    <button className="btn btn-warning my-1 text-white shadow-none" type="button" onClick={addToCartHandler} disabled={product.quantity<=0}>
+                                        {product.quantity<=0 ?'OUT OF STOCK':'ADD TO CART'}
                                     </button>
                                 </div>
                                 <div className="details-meta my-4">

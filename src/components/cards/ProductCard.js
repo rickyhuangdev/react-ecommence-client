@@ -21,8 +21,8 @@ const ProductCard = ({product}) => {
                             <Link to={`/product/${product.slug}`} style={{color:'#0068c9',fontSize:'15px',fontWeight:'800'}}>{product.title}</Link>
                         </div>
                         {product && product.ratings && product.ratings.length > 0 ? showAverage(product) : (<div className="mb-0 d-flex align-items-center" style={{height:'30px'}}>No rating yet</div>)}
-                        <button className="btn btn-info d-flex w-100 mt-4 justify-content-center align-items-center shadow-none" type="button" onClick={addToCartHandler}><ShoppingCartOutlined style={{fontSize:"18px"}}className="mr-2" />ADD TO CART</button>
-                    </div>
+                        <button className="btn btn-info d-flex w-100 mt-4 justify-content-center align-items-center shadow-none" type="button" onClick={addToCartHandler} disabled={product.quantity<=0}><ShoppingCartOutlined style={{fontSize:"18px"}}className="mr-2" />{product.quantity<=0 ?'OUT OF STOCK':'ADD TO CART'}</button>
+            </div>
             </div>
     );
 };
