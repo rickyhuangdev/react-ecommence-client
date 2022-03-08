@@ -8,7 +8,7 @@ import storage from 'redux-persist/lib/storage'
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['register','orderDelivered','profile','coupon','userUpdateProfile','orderMyList','orderPay','userList','userDelete','userDetail','saveCart','order','orderDetails','getCartsToCheckout']
+    blacklist: ['register','orderDelivered','profile','coupon','userUpdateProfile','orderMyList','orderPay','userList','userDelete','userDetail','saveCart','orderDetails','getCartsToCheckout']
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(persistedReducer,{

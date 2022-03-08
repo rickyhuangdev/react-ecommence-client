@@ -52,12 +52,17 @@ const CheckOutIndex = () => {
     useEffect(() => {
         if (!userInfo) {
             history.push('/login')
+        } else {
+            if (orderSuccess) {
+                history.push(`/order/${order._id}`)
+            }
+            if(!cartItems || cartItems.length ===0 || applyCouponSuccess){
+                dispatch(getCartCheckoutDetails())
+            }
         }
-            dispatch(getCartCheckoutDetails())
-        if(orderSuccess){
-            history.push(`/order/${order._id}`)
-        }
-    }, [userInfo, dispatch,orderSuccess,applyCouponSuccess])
+
+
+    }, [userInfo,loginInfo, dispatch, orderSuccess,history,applyCouponSuccess])
     const changeHandler = value => {
         setCountry(value)
         setAddress({...address, country: value["label"]})
@@ -126,48 +131,52 @@ const CheckOutIndex = () => {
                 <div className="row">
                     <div className="col col-xs-12">
                         <div className="woocommerce">
+                            {cartItems && !cartItems.products ?(
                             <div className="woocommerce-info">
-                                {!userInfo && (
-                                    <div className="alert alert-warning" role="alert">
-                                        Returning customer? <Link to="/login">Click here to login</Link>
+                                    <div className="alert alert-info" role="alert">
+                                        No items in your cart, Please <Link to="/">Click here to find your products</Link>
                                     </div>
-                                )}
 
                             </div>
-                            {/*<div className="woocommerce-info mt-20">*/}
-                            {/*    /!*{!user && !user.token &&(*!/*/}
-                            {/*    <Collapse onChange={callback}>*/}
-                            {/*        <Panel header="Have a coupon? Click here to enter your code" key="1"*/}
-                            {/*               className="shadow-3">*/}
-                            {/*            {applyCouponSuccess && ( <Message variant="success" children="Applied Coupon success" />)}*/}
+                                ):(
+                                <div className="woocommerce-info mt-20">
+                                    {/*{!user && !user.token &&(*/}
+                                    <Collapse onChange={callback}>
+                                        <Panel header="Have a coupon? Click here to enter your code" key="1"
+                                               className="shadow-3">
+                                            {applyCouponSuccess && ( <Message variant="success" children="Applied Coupon success" />)}
 
-                            {/*            <div className="row">*/}
-                            {/*                <div className="col-6">*/}
-                            {/*                    <label htmlFor="staticEmail">Coupon Code</label>*/}
-                            {/*                    <div className="col-sm-10">*/}
-                            {/*                        <input type="text" className="form-control" value={coupon}*/}
-                            {/*                               onChange={(e) => setCoupon(e.target.value)}/>*/}
-                            {/*                        {applyCouponError && (*/}
-                            {/*                            <small*/}
-                            {/*                                className="form-text mt-2 d-block text-danger">{applyCouponError}.</small>*/}
-                            {/*                        )}*/}
-                            {/*                    </div>*/}
-                            {/*                    <button className="btn btn-primary btn-sm mt-3" disabled={applyCouponLoading}*/}
-                            {/*                            onClick={applyDiscountCouponHandler}>Apply*/}
-                            {/*                    </button>*/}
-                            {/*                    {applyCouponLoading&&(<Loader />)}*/}
-                            {/*                </div>*/}
-                            {/*            </div>*/}
-                            {/*        </Panel>*/}
+                                            <div className="row">
+                                                <div className="col-6">
+                                                    <label htmlFor="staticEmail">Coupon Code</label>
+                                                    <div className="col-sm-10">
+                                                        <input type="text" className="form-control" value={coupon}
+                                                               onChange={(e) => setCoupon(e.target.value)}/>
+                                                        {applyCouponError && (
+                                                            <small
+                                                                className="form-text mt-2 d-block text-danger">{applyCouponError}.</small>
+                                                        )}
+                                                    </div>
+                                                    <button className="btn btn-primary btn-sm mt-3" disabled={applyCouponLoading}
+                                                            onClick={applyDiscountCouponHandler}>Apply
+                                                    </button>
+                                                    {applyCouponLoading&&(<Loader />)}
+                                                </div>
+                                            </div>
+                                        </Panel>
 
-                            {/*    </Collapse>*/}
-                            {/*    /!*)}*!/*/}
+                                    </Collapse>
+                                    {/*)}*/}
 
-                            {/*</div>*/}
+                                </div>
+                            )}
+
 
                         </div>
                     </div>
                 </div>
+
+                {cartItems&& cartItems.products&&(
                 <div className="row mt-md-5">
                     <div className="col-lg-7">
                         <div className="checkbox-form">
@@ -261,8 +270,13 @@ const CheckOutIndex = () => {
                                 <ListGroup.Item>
                                     <Row>
                                         <Col md={8}>Total</Col>
-                                        <Col md={4}><span
-                                            className="d-block text-end fw-bold">${cartItems&&cartItems.cartTotal}</span></Col>
+                                        <Col md={4}>
+                                            {cartItems.totalAfterDiscount &&(
+                                                <span className="d-block text-end fw-bold text-danger"><del>{cartItems.cartTotal}</del></span>
+                                                )}
+
+                                            <span
+                                            className="d-block text-end fw-bold">${cartItems.totalAfterDiscount??cartItems.cartTotal}</span></Col>
                                     </Row>
                                 </ListGroup.Item>
                                 <ListGroup.Item>
@@ -286,6 +300,7 @@ const CheckOutIndex = () => {
                         </div>
                     </div>
                 </div>
+                    )}
             </div>
         </section>
     );
