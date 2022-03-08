@@ -136,17 +136,11 @@ const logoutHandler = () => {
                                 <div className="header__search">
                                     <form action="#">
                                         <div className="header__search-box"><input
-                                            className="search-input search-input-2" type="text"
+                                            className="search-input search-input-2 text-dark" type="text"
                                             placeholder="I'm shopping for..." value={searchText}
-                                            onChange={handleSearch}/>
+                                            onChange={e=>setSearchText(e.target.value)}/>
                                             <button className="button button-2 button-3" type="button"><BsSearch/>
                                             </button>
-                                        </div>
-                                        <div className="header__search-cat">
-                                            <Dropdown overlay={LangMenu} placement="bottomLeft"
-                                                      overlayClassName="category-select">
-                                                <span className="text-dark">{localLang}</span>
-                                            </Dropdown>
                                         </div>
                                     </form>
                                 </div>

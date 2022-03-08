@@ -123,7 +123,7 @@ const Order = ({match}) => {
                                             <Row>
                                                 <Col>
                                                     <Message variant="success">
-                                                        <strong>Total Payable: <del className="text-danger">${order.cartTotal}</del> <span className="font-weight-bold text-dark fs-3">${order.totalAfterDiscount}</span></strong>
+                                                        Total Payable: <span> <del className="text-danger">${order.cartTotal}</del> <span className="font-weight-bold text-dark">${order.totalAfterDiscount}</span></span>
                                                     </Message>
                                                 </Col>
 
