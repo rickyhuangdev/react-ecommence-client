@@ -20,14 +20,15 @@ const ProductDetail = ({match}) => {
     const [relativeProduct, setRelativeProduct] = useState([]);
     const [existingRatingObject, setExistingRatingObject] = useState(0);
     const {TabPane} = Tabs;
-    const profile = useSelector(state => state.profile)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo, loading, error} = loginInfo
     useEffect(() => {
         getProductDetail()
     }, [slug])
     useEffect(()=>{
-        if(product.ratings && profile){
+        if(product.ratings && userInfo){
             let existingRatingObject = product.ratings.find(
-                (ele) => ele.postedBy === profile.user._id
+                (ele) => ele.postedBy === userInfo._id
             );
             existingRatingObject && setExistingRatingObject(existingRatingObject.star)
         }

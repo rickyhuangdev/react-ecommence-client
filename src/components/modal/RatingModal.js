@@ -9,13 +9,14 @@ import {createProductRatingApi} from "../../api/product";
 import {toast} from "react-toastify";
 
 const RatingModal = ({title,product_id,existingRatingObject}) => {
-    const user = useSelector(state => state.profile.user)
+    const loginInfo = useSelector(state => state.login)
+    const {userInfo, loading, error} = loginInfo
     const [modalVisible, setModalVisible] = useState(false)
     const history = useHistory()
     const params = useParams()
     const [star, setStar] = useState(0);
     const handleModal = ()=>{
-        if(user && user.token){
+        if(userInfo){
             setModalVisible(true)
             setStar(existingRatingObject)
         }else{
@@ -27,7 +28,11 @@ const RatingModal = ({title,product_id,existingRatingObject}) => {
     }
     const changeRating = (newRating, name) => {
         setStar(newRating)
-        createProductRatingApi(name, newRating).then(res => {
+        const config = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${userInfo.token}`
+        }
+        createProductRatingApi(name, newRating,config).then(res => {
             if(res){
                 setModalVisible(false)
                 toast.success("Leaving rating successfully")
@@ -38,7 +43,7 @@ const RatingModal = ({title,product_id,existingRatingObject}) => {
         <>
             <button className="btn btn-light shadow-none d-flex align-items-center"
                     onClick={handleModal}>
-                <BsStar className="mr-2 text-warning"/>{user && user.token ? 'leave a Rating' : 'login to leave rating'}
+                <BsStar className="mr-2 text-warning"/>{userInfo ? 'leave a Rating' : 'login to leave rating'}
             </button>
             <Modal
                 title={`Leaving a rating for [ ${title} ]`}
