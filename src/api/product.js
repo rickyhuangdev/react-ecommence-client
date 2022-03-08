@@ -25,3 +25,6 @@ export const createProductRatingApi = (id, star) => {
 export const getRelativeProductApi = (id) => {
     return request(`/product/related/${id}`, 'get')
 }
+export const fetchProductsByFilterApi = (query) => {
+    return request(`/products/search`, 'post',query)
+}
