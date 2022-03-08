@@ -9,17 +9,17 @@ export const getProductSearchDetail = (query) => {
         //     'Authorization': `Bearer ${userInfo.token}`
         // }
         dispatch({
-            type: 'PRODUCT_SEARCH_REQUEST'
+            type: 'PRODUCT_LIST_REQUEST'
         })
         fetchProductsByFilterApi(query).then(re => {
                 dispatch({
-                    type: 'PRODUCT_SEARCH_SUCCESS',
+                    type: 'PRODUCT_LIST_SUCCESS',
                     payload: re
                 })
 
         }).catch(error => {
             dispatch({
-                type: 'PRODUCT_SEARCH_FAIL',
+                type: 'PRODUCT_LIST_FAIL',
                 payload: error.response && error.response.data.message ? error.response.data.message : error.message
             })
         })

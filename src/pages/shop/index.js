@@ -14,8 +14,8 @@ import Message from "../../components/message/Message";
 const ShopIndex = ({match}) => {
     const {keyword} = match.params
     const [categoryOptions, setCategoryOptions] = useState([])
-    const [products, setProducts] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [price, setPrice] = useState([0,0])
+    const [ok, setOk] = useState(false)
     const productSearch = useSelector(state => state.productSearch)
     const {loading: searchLoading, searchText, productList} = productSearch
     const dispatch = useDispatch()
@@ -29,6 +29,11 @@ const ShopIndex = ({match}) => {
         }
 
     }, [searchText])
+    useEffect(()=>{
+        dispatch(getProductSearchDetail({price}))
+        console.log(price)
+    },[ok])
+
 
     const getCategoryRelatedProduct = async () => {
         await getCategoryApi().then(re => {
@@ -59,6 +64,15 @@ const ShopIndex = ({match}) => {
     const onChange = (e) => {
         console.log(e)
     }
+    const handleSlider = (value) => {
+        setPrice(value)
+        dispatch({
+            type:'PRODUCT_SEARCH_RESET'
+        })
+        setTimeout(()=>{
+            setOk(!ok)
+        },300)
+    }
     return (
         <div className="shop-area mb-20 my-5">
             <div className="container">
@@ -75,7 +89,11 @@ const ShopIndex = ({match}) => {
                         <div className="product-widget mb-30"><h5 className="pt-title">Filter By Price</h5>
                             <div className="price__slider mt-30">
                                 <div>
-                                    <Slider range={{draggableTrack: true}} defaultValue={[20, 50]}
+                                    <Slider range defaultValue={[1000, 999999]}
+                                            onChange={handleSlider}
+                                            tipFormatter={(v)=>`$${v}`}
+                                            min={0}
+                                            max={40000}
                                             className="text-danger"/>
                                 </div>
                             </div>
