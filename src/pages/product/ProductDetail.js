@@ -12,18 +12,22 @@ import {showAverage} from "../../utils/rating";
 import ProductSlider from "../home/productSlider";
 import {addToCart} from "../../store/actions/cart";
 import {toast} from "react-toastify";
-
+import {EmailShareButton, FacebookShareButton} from 'react-share'
+import {productDetailReducer} from "../../store/reducers/product";
+import {getProductDetail} from "../../store/actions/product";
 const ProductDetail = ({match}) => {
     const {slug} = match.params
-    const [product, setProduct] = useState({});
     const [imageSlider, setImageSlider] = useState([]);
     const [relativeProduct, setRelativeProduct] = useState([]);
     const [existingRatingObject, setExistingRatingObject] = useState(0);
     const {TabPane} = Tabs;
     const loginInfo = useSelector(state => state.login)
     const {userInfo, loading, error} = loginInfo
+    const productDetail = useSelector(state => state.productDetail)
+    const {product, loading:productLoading, error:ProductError} = productDetail
+    const dispatch = useDispatch()
     useEffect(() => {
-        getProductDetail()
+        dispatch(getProductDetail(slug))
     }, [slug])
     useEffect(()=>{
         if(product.ratings && userInfo){
@@ -33,20 +37,20 @@ const ProductDetail = ({match}) => {
             existingRatingObject && setExistingRatingObject(existingRatingObject.star)
         }
     })
-    const getProductDetail = () => {
-        readProductApi(slug).then(res => {
-            if (res) {
-                setProduct(res)
-                setImageSlider(res.images)
-                getRelativeProductApi(res._id).then(res => {
-                    setRelativeProduct(res)
-                })
-            }
-        })
-    }
+    // const getProductDetail = () => {
+    //     readProductApi(slug).then(res => {
+    //         if (res) {
+    //             setProduct(res)
+    //             setImageSlider(res.images)
+    //             getRelativeProductApi(res._id).then(res => {
+    //                 setRelativeProduct(res)
+    //             })
+    //         }
+    //     })
+    // }
     const onChange = () => {
     }
-    const dispatch = useDispatch()
+
     const addToCartHandler = () => {
         dispatch(addToCart({product, count: 1}))
         toast.success("Add to cart successfully",{toastId:product._id})
@@ -84,7 +88,7 @@ const ProductDetail = ({match}) => {
                             <div className="product__details-nav">
                                 <div className="product__details-thumb">
                                     <Slider {...settings}>
-                                        {imageSlider && imageSlider.map(item => (
+                                        {product.images && product.images.map(item => (
                                             <div key={item.public_id} className="d-flex justify-content-center align-items-start p-0 m-0">
                                                 <InnerImageZoom src={item.url} zoomSrc={item.url}>
                                                     <img src={item.url} alt={item.public_id} style={{height:"500px"}} className="product-slider-image" />
@@ -150,10 +154,11 @@ const ProductDetail = ({match}) => {
                                     </div>
                                     <div className="d-meta-left">
                                         <div className="dm-item">
-                                            <button className="btn btn-info shadow-none d-flex align-items-center">
-                                                <BsShare
-                                                    className="mr-1"/>Share
-                                            </button>
+                                            {/*<button className="btn btn-info shadow-none d-flex align-items-center">*/}
+                                            {/*    <BsShare*/}
+                                            {/*        className="mr-1"/>Share*/}
+                                            {/*</button>*/}
+
                                         </div>
                                     </div>
                                 </div>

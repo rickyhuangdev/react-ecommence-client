@@ -5,7 +5,7 @@ import {cart, getCartsToCheckoutReducer, saveCartReducer} from './cart'
 import {coupon} from './coupon'
 import {register} from './register'
 import {order, orderDeliveredReducer, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
-import {productSearchReducer} from "./product";
+import {productDetailReducer, productSearchReducer} from "./product";
 import {categoryReducer} from "./category";
 
 const rootReducer = combineReducers({
@@ -26,7 +26,8 @@ const rootReducer = combineReducers({
     getCartsToCheckout: getCartsToCheckoutReducer,
     orderDelivered: orderDeliveredReducer,
     productSearch:productSearchReducer,
-    category:categoryReducer
+    category:categoryReducer,
+    productDetail:productDetailReducer
 
 
 })
