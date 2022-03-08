@@ -36,6 +36,15 @@ export const updateUserByIdApi = (data,config) => {
 export const deleteUserByIdApi = (id,config) => {
     return request(`/user/${id}`, 'delete','',config)
 }
+export const getUserWishlisthApi = (id,config) => {
+    return request(`/user/wishlist`, 'get','',config)
+}
+export const deleteWishlistByIdApi = (id,config) => {
+    return request(`/user/${id}/wishlist}`, 'put','',config)
+}
+export const createWishlistApi = (id,config) => {
+    return request(`/user/wishlist`, 'delete',id,config)
+}
 
 
 
