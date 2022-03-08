@@ -132,16 +132,16 @@ const ProductDetail = ({match}) => {
                                 <div className="details-meta my-4">
                                     <div className="d-meta-left d-flex flex-column flex-sm-row">
                                         <div className="dm-item mr-20 pb-2">
-                                            <button className="btn btn-secondary shadow-none d-flex align-items-center">
-                                                <BsHeart className="mr-1 text-white font-weight-bold"/>Add to
+                                            <button className="btn btn-primary shadow-none d-flex align-items-center">
+                                                <BsHeart className="me-1 text-white font-weight-bold"/>Add to
                                                 wishlist
                                             </button>
                                         </div>
-                                        <div className="dm-item mr-20 pb-2">
-                                            <button className="btn btn-light shadow-none d-flex align-items-center">
-                                                <BsBookmarks className="mr-1"/>Compare
-                                            </button>
-                                        </div>
+                                        {/*<div className="dm-item mr-20 pb-2">*/}
+                                        {/*    <button className="btn btn-light shadow-none d-flex align-items-center">*/}
+                                        {/*        <BsBookmarks className="mr-1"/>Compare*/}
+                                        {/*    </button>*/}
+                                        {/*</div>*/}
                                         <div className="dm-item pb-2">
                                             <RatingModal title={product.title} existingRatingObject={existingRatingObject}
                                                          product_id={product._id}>
@@ -162,10 +162,12 @@ const ProductDetail = ({match}) => {
                                         className="title">SKU:</span><span className="sku">DK1002</span></span><span
                                         className="posted_in"><span className="title">Categories:</span><a
                                         href="#">
-                                    {/*{product.category.name}*/}
-                                    </a></span><span className="tagged_as"><span
-                                        className="title">Tags:</span><a href="#">Smartphone</a>,<a
-                                        href="#">Tablets</a></span></div>
+                                    {product.category.name}
+                                    </a></span>
+                                        {/*<span className="tagged_as"><span*/}
+                                        {/*className="title">Tags:</span><a href="#">Smartphone</a>,<a*/}
+                                        {/*href="#">Tablets</a></span>*/}
+                                    </div>
                                 </div>
                             </div>
                         </div>

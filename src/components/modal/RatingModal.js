@@ -41,9 +41,9 @@ const RatingModal = ({title,product_id,existingRatingObject}) => {
     }
     return (
         <>
-            <button className="btn btn-light shadow-none d-flex align-items-center"
+            <button className="btn btn-warning shadow-none d-flex align-items-center"
                     onClick={handleModal}>
-                <BsStar className="mr-2 text-warning"/>{userInfo ? 'leave a Rating' : 'login to leave rating'}
+                <BsStar className="me-2 text-white"/>{userInfo ? 'leave a Rating' : 'login to leave rating'}
             </button>
             <Modal
                 title={`Leaving a rating for [ ${title} ]`}
