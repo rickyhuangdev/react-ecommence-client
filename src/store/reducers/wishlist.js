@@ -11,6 +11,8 @@ export const saveWishlistReducer = (state = {}, action) => {
             }
         case 'SAVE_WISHLIST_FAIL':
             return {loading: false, success: false, error: payload}
+        case 'SAVE_WISHLIST_RESET':
+            return {}
         default:
             return state
     }
