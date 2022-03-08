@@ -1,21 +1,18 @@
-import {getOrderInfoApi} from "../../api/order";
-import {fetchProductsByFilterApi} from "../../api/product";
+import {fetchProductsByFilterApi, getProductsApi} from "../../api/product";
 
-export const getProductSearchDetail = (query) => {
+export const getProductSearchDetail = (arg) => {
     return async (dispatch, getState) => {
-        const {userInfo} = getState().login
-        // const config = {
-        //     'Content-Type': 'application/json',
-        //     'Authorization': `Bearer ${userInfo.token}`
-        // }
+        const config = {
+            'Content-Type': 'application/json',
+        }
         dispatch({
             type: 'PRODUCT_LIST_REQUEST'
         })
-        fetchProductsByFilterApi(query).then(re => {
-                dispatch({
-                    type: 'PRODUCT_LIST_SUCCESS',
-                    payload: re
-                })
+        fetchProductsByFilterApi(arg).then(re => {
+            dispatch({
+                type: 'PRODUCT_LIST_SUCCESS',
+                payload: re
+            })
 
         }).catch(error => {
             dispatch({
@@ -26,3 +23,25 @@ export const getProductSearchDetail = (query) => {
 
     }
 }
+
+export const getProductList = () => {
+    return async (dispatch, getState) => {
+        dispatch({
+            type: 'PRODUCT_LIST_REQUEST'
+        })
+        getProductsApi().then(re => {
+            dispatch({
+                type: 'PRODUCT_LIST_SUCCESS',
+                payload: re
+            })
+
+        }).catch(error => {
+            dispatch({
+                type: 'PRODUCT_LIST_FAIL',
+                payload: error.response && error.response.data.message ? error.response.data.message : error.message
+            })
+        })
+
+    }
+}
+

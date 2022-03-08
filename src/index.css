@@ -325,3 +325,6 @@ a:hover{
 button:focus,input:focus {
   outline: 0!important;
 }
+.mt-30{
+  margin-top: 30px;
+}

@@ -93,3 +93,11 @@
 .price span{
     font-weight: 700;
 }
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px!important;
+}
+.widget-category-list >*{
+    padding-bottom: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}

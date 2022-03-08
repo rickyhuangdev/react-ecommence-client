@@ -4,75 +4,93 @@ import '../../assets/css/page.css'
 import {Checkbox, Rate, Slider} from 'antd';
 import sl_banner from '../../assets/images/sl-banner.jpeg'
 import sl_banner_sm from '../../assets/images/sl-banner-sm.png'
-import {getCategoryApi} from "../../api/category";
 import {BsEye, BsHddStack, BsHeart} from "react-icons/bs";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getProductSearchDetail} from "../../store/actions/product";
 import Message from "../../components/message/Message";
+import {getCategoryDetail} from "../../store/actions/category";
+import {fetchProductsByFilterApi, getProductsApi} from "../../api/product";
 
 const ShopIndex = ({match}) => {
     const {keyword} = match.params
     const [categoryOptions, setCategoryOptions] = useState([])
-    const [price, setPrice] = useState([0,0])
+    const [filterCategory, setFilterCategory] = useState([])
+    const [price, setPrice] = useState([0, 0])
+    const [products, setProducts] = useState([])
     const [ok, setOk] = useState(false)
     const productSearch = useSelector(state => state.productSearch)
     const {loading: searchLoading, searchText, productList} = productSearch
+    const category = useSelector(state => state.category)
+    const {loading: categoryLoading, categories} = category
     const dispatch = useDispatch()
     useEffect(() => {
-        // getCategoryRelatedProduct()
-        if(searchText){
+        dispatch(getCategoryDetail())
+        categoryHandleOptions()
+        listProducts()
+    }, [])
+    useEffect(() => {
+        if (searchText) {
             const delayed = setTimeout(() => {
-                dispatch(getProductSearchDetail({query: searchText}))
+                fetchProducts({query: searchText});
             }, 300)
             return () => clearTimeout(delayed)
+        } else if (filterCategory.length > 0) {
+            const delayed = setTimeout(() => {
+                fetchProducts({category: filterCategory});
+            }, 300)
+            return () => clearTimeout(delayed)
+        } else {
+            listProducts()
         }
 
-    }, [searchText])
-    useEffect(()=>{
-        dispatch(getProductSearchDetail({price}))
-        console.log(price)
-    },[ok])
-
-
-    const getCategoryRelatedProduct = async () => {
-        await getCategoryApi().then(re => {
-            if (re) {
-                let categoryOptions = []
-                re.map(item => {
-                    categoryOptions.push({label: item.name, value: item._id})
-                })
-                setCategoryOptions(categoryOptions)
-            }
-
+    }, [searchText, filterCategory])
+    useEffect(() => {
+        console.log("ok to request");
+        fetchProducts({ price });
+    }, [ok]);
+    const listProducts = () => {
+        getProductsApi().then(re => {
+            setProducts(re)
         })
-        // if (slug) {
-        //     await readCategoryApi(slug).then(res => {
-        //         if (res) {
-        //             setProducts(res.products)
-        //             console.log(products)
-        //         }
-        //     })
-        // } else {
-        //     await getProductsApi().then(res => {
-        //         setProducts(res)
-        //     })
-        // }
+
+    }
+    const fetchProducts = (arg) => {
+        fetchProductsByFilterApi(arg).then((res) => {
+            setProducts(res);
+        });
+    };
+    const categoryHandleOptions = () => {
+        let categoryOptions = []
+        categories.map(item => {
+            return categoryOptions.push({
+                label: item.name,
+                value: item._id
+            })
+        })
+        setCategoryOptions(categoryOptions)
 
     }
 
-    const onChange = (e) => {
-        console.log(e)
+    const handleCategory = (e) => {
+        setFilterCategory(e)
+        dispatch({
+            type: 'PRODUCT_SEARCH_RESET'
+        })
+        setPrice([0, 0])
+
+
     }
     const handleSlider = (value) => {
         setPrice(value)
         dispatch({
-            type:'PRODUCT_SEARCH_RESET'
+            type: 'PRODUCT_SEARCH_RESET'
         })
-        setTimeout(()=>{
-            setOk(!ok)
-        },300)
+        setTimeout(() => {
+            setOk(!ok);
+        }, 300);
     }
+
     return (
         <div className="shop-area mb-20 my-5">
             <div className="container">
@@ -83,7 +101,8 @@ const ShopIndex = ({match}) => {
                                 Product categories
                             </h5>
                             <div className="widget-category-list mt-20 d-flex flex-column">
-                                <Checkbox.Group options={categoryOptions} onChange={onChange}/>
+                                <Checkbox.Group options={categoryOptions} onChange={handleCategory}/>
+
                             </div>
                         </div>
                         <div className="product-widget mb-30"><h5 className="pt-title">Filter By Price</h5>
@@ -149,7 +168,7 @@ const ShopIndex = ({match}) => {
                                         now</a></div>
                             </div>
                         </div>
-                        {productList && productList.length > 0 ? (
+                        {products && products.length > 0 ? (
                             <>
                                 <div className="product-lists-top">
                                     <div className="product__filter-wrap">
@@ -233,7 +252,7 @@ const ShopIndex = ({match}) => {
                                 <div className="tab-content">
                                     <div className="tp-wrapper">
                                         <div className="row g-0">
-                                            {productList && productList.length > 0 && productList.map(product => (
+                                            {products && products.length > 0 && products.map(product => (
                                                 <div className="col-xl-3 col-lg-4 col-md-6 col-sm-6" key={product._id}>
                                                     <div className="product__item product__item-d">
                                                         <div className="product__thumb fix">

@@ -6,6 +6,7 @@ import {coupon} from './coupon'
 import {register} from './register'
 import {order, orderDeliveredReducer, orderDetailReducer, orderMyListReducer, orderPayReducer} from './order'
 import {productSearchReducer} from "./product";
+import {categoryReducer} from "./category";
 
 const rootReducer = combineReducers({
     login,
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     userDelete: userDeleteReducer,
     getCartsToCheckout: getCartsToCheckoutReducer,
     orderDelivered: orderDeliveredReducer,
-    productSearch:productSearchReducer
+    productSearch:productSearchReducer,
+    category:categoryReducer
 
 
 })

@@ -1,9 +1,10 @@
 export const productSearchReducer = (state = {loading: false,searchText:"", productList: []},action) => {
     const {type, payload} = action
     switch (type) {
-
+        case 'PRODUCT_SEARCH_REQUEST':
+            return {...state,searchText:payload}
         case 'PRODUCT_LIST_REQUEST':
-            return {...state, loading: true,searchText:payload}
+            return {...state,productList:payload}
         case 'PRODUCT_LIST_SUCCESS':
             return {
                 loading: false,
