@@ -16,7 +16,7 @@ const Home = () => {
             <SliderArea />
             <ProductSlider />
             <FeatureArea />
-            <CategorySection />
+            {/*<CategorySection />*/}
             <Banner/>
             <NewArrivals />
             <TwoColBanner/>

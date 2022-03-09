@@ -41,11 +41,6 @@ const UserNav = () => {
                     <li className="list-group-item"><Link to="/user/address"><HomeOutlined
                         className="mr-2"/>Addresses</Link>
                     </li>
-                    <li className="list-group-item"><Link to="/user/payment"><CreditCardOutlined className="mr-2"/>Payment
-                        Methode</Link>
-                    </li>
-                    <li className="list-group-item"><Link to="/user/password"><SettingOutlined className="mr-2"/>Password Setting</Link>
-                    </li>
                     <li className="list-group-item"><a type="button" onClick={()=>{dispatch(logout())}}><LoginOutlined className="mr-2"/>Log
                         Out</a></li>
                 </ul>

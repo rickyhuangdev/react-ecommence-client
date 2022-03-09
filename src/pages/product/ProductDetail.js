@@ -27,12 +27,14 @@ const ProductDetail = ({match}) => {
     const {product, loading: productLoading, error: ProductError} = productDetail
     const saveWishlists = useSelector(state => state.saveWishlist)
     const {success: saveWishlistSuccess} = saveWishlists
+    const getWishlists = useSelector(state => state.getWishlist)
+    const {loading: getWishlistsLoading, list, error: getWishlistsError, success} = getWishlists
     const [qty, setQty] = useState(1)
     const dispatch = useDispatch()
     const history = useHistory()
     useEffect(() => {
         dispatch(getProductDetail(slug))
-        if (product&&product.ratings && userInfo) {
+        if (product && product.ratings && userInfo) {
             let existingRatingObject = product.ratings.find(
                 (ele) => ele.postedBy === userInfo._id
             );
@@ -44,8 +46,17 @@ const ProductDetail = ({match}) => {
                 type: 'SAVE_WISHLIST_RESET'
             })
         }
-    }, [match, dispatch, history, saveWishlistSuccess])
+        if (Object.keys(product).length > 0 || saveWishlistSuccess) {
+            console.log(filterWishList())
+        }
 
+    }, [match, dispatch, history, saveWishlistSuccess])
+    const filterWishList = () => {
+        return product && list && list.some(item => {
+            return item.product_id === product._id
+        })
+
+    }
     // const getProductDetail = () => {
     //     readProductApi(slug).then(res => {
     //         if (res) {
@@ -70,7 +81,7 @@ const ProductDetail = ({match}) => {
         customPaging: function (i) {
             return (
                 <a>
-                    <img src={product.images[i].url} />
+                    <img src={product.images[i].url}/>
                 </a>
 
 
@@ -161,9 +172,10 @@ const ProductDetail = ({match}) => {
                                     <div className="d-meta-left d-flex flex-column flex-sm-row">
                                         <div className="dm-item mr-20 pb-2">
                                             <button className="btn btn-primary shadow-none d-flex align-items-center"
+                                                    disabled={filterWishList()}
                                                     onClick={addToWishlist}>
-                                                <BsHeart className="me-1 text-white font-weight-bold"/>Add to
-                                                wishlist
+                                                <BsHeart className="me-1 text-white font-weight-bold"/>
+                                                {filterWishList() ? 'Favorited' : 'Add to wishlist'}
                                             </button>
                                         </div>
                                         {/*<div className="dm-item mr-20 pb-2">*/}

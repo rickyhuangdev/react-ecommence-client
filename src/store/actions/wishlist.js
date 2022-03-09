@@ -11,12 +11,9 @@ export const saveWishlist = (id) => {
             type: 'SAVE_WISHLIST_REQUEST'
         })
         createWishlistApi({productId:id}, config).then(re => {
-            if (re.success === true) {
                 dispatch({
-                    type: 'SAVE_WISHLIST_SUCCESS',
-                    payload: re.data
+                    type: 'SAVE_WISHLIST_SUCCESS'
                 })
-            }
         }).catch(error => {
             dispatch({
                 type: 'SAVE_WISHLIST_FAIL',

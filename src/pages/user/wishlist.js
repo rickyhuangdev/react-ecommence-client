@@ -32,8 +32,7 @@ const Wishlist = () => {
                             <div className="col">
                                 <h4>Wishlist</h4>
                                 {removeWishlistLoading&&<Loader />}
-                                {removeWishlistSuccess&&<Message variant="success" children="Remove wish item successfully" />}
-                                {loading ? <Loader/> : error ? <Message variant="danger" children={error}/> : list? (
+                                {loading ? <Loader/> : error ? <Message variant="danger" children={error}/> : list&&list.length? (
                                     <div className="table-responsive">
                                         <table className="table align-middle">
                                             <thead>
@@ -44,19 +43,19 @@ const Wishlist = () => {
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {list&&list.products.map(item => (
+                                            {list&&list.map(item => (
                                                 <tr key={item._id}>
                                                     <td>
-                                                        <Link to={`/product/${item.slug}`}>
-                                                            <img src={item.images[0].url} alt={item.slug}
+                                                        <Link to={`/product/${item.products[0].slug}`}>
+                                                            <img src={item.products[0].images[0].url} alt={item.products[0].slug}
                                                                  className="img-fluid" style={{width: '60px'}}/>
                                                         </Link>
                                                     </td>
-                                                    <td><Link to={`/product/${item.slug}`}>{item.title}</Link></td>
+                                                    <td>{item.products[0].title}</td>
                                                     <td>
                                                         <Button variant="light" size="small"
                                                                 className="btn-outline-none"
-                                                                onClick={() => handleRemoveWishlistItem(item._id)}>
+                                                                onClick={() => handleRemoveWishlistItem(item.products[0]._id)}>
                                                             <BsTrash style={{fontSize: '18px'}}/>
                                                         </Button>
                                                     </td>

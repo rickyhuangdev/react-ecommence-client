@@ -66,7 +66,7 @@ const ShopIndex = ({match}) => {
     };
     const categoryHandleOptions = () => {
         let categoryOptions = []
-        categories.map(item => {
+        categories&&categories.map(item => {
             return categoryOptions.push({
                 label: item.name,
                 value: item._id
@@ -118,7 +118,9 @@ const ShopIndex = ({match}) => {
                                 Product categories
                             </h5>
                             <div className="widget-category-list mt-20 d-flex flex-column">
-                                <Checkbox.Group options={categoryOptions} onChange={handleCategory}/>
+                                {categories &&(
+                                    <Checkbox.Group options={categoryOptions} onChange={handleCategory}/>
+                                )}
 
                             </div>
                         </div>
@@ -143,30 +145,6 @@ const ShopIndex = ({match}) => {
                                 <Star starClick={handleStarClick} numberOfStar={1}/>
                             </div>
                         </div>
-                        <div className="product-widget mb-30"><h5 className="pt-title">Choose Brand</h5>
-                            <div className="widget-category-list mt-20">
-                                <form action="#">
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-1"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-1">CarRentals <span>(12)</span></label></div>
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-2"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-2">CarVoodoo <span>(60)</span></label></div>
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-3"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-3">Creative <span>(41)</span></label></div>
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-4"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-4">Impact <span>(28)</span></label></div>
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-5"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-5">IQVia <span>(21)</span></label></div>
-                                    <div className="single-widget-category"><input type="checkbox" id="brand-item-7"
-                                                                                   name="brand-item"/><label
-                                        htmlFor="brand-item-7">LeadsGreen <span>(62)</span></label></div>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                     <div className="col-xl-9 col-lg-8">
                         <div className="shop-banner mb-30">
@@ -176,8 +154,8 @@ const ShopIndex = ({match}) => {
                                 <div className="banner-content text-center"><p className="banner-text mb-30">Hurry
                                     Up!<br/>Free
                                     Shipping All Order Over $99</p>
-                                    <a href="shop.html" className="st-btn-d b-radius shadow-1">Discover
-                                        now</a></div>
+                                    <button className="st-btn-d b-radius shadow-1">Discover
+                                        now</button></div>
                             </div>
                         </div>
                         {products && products.length > 0 ? (

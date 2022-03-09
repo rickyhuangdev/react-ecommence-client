@@ -25,7 +25,6 @@ export const getWishlistReducer = (state = {}, action) => {
             return {loading: true, success: false}
         case 'GET_WISHLIST_SUCCESS':
             return {
-                ...state,
                 loading: false,
                 success: true,
                 list: payload

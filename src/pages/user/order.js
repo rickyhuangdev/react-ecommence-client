@@ -20,7 +20,6 @@ const Order = () => {
         }else{
             dispatch(listMyOrder())
         }
-
     }, [dispatch,history,userInfo,loginInfo])
 
     return (
@@ -34,7 +33,7 @@ const Order = () => {
                         <div className="row">
                             <div className="col">
                                 <h4>My orders</h4>
-                                {loading ? <Loader/> : error ? <Message variant="danger" children={error}/> : (
+                                {loading ? <Loader/> : error ? <Message variant="danger" children={error}/> : orders && orders.length>0? (
                                     <div className="table-responsive">
                                         <table className="table align-middle">
                                             <thead>
@@ -73,7 +72,7 @@ const Order = () => {
                                             </tbody>
                                         </table>
                                     </div>
-                                )}
+                                ):(<Message variant="info" children="No Order records"/>)}
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import '../../assets/css/header.css'
 import {Dropdown, Menu} from 'antd';
 import {BsBag, BsCamera, BsHeart, BsJustify, BsLaptop, BsPerson, BsPhone, BsTrash, BsWifi2} from "react-icons/bs";
@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {removeItemFromCart} from "../../store/actions/cart";
 import {logout} from "../../store/actions/login";
 import HeaderSearch from "../form/HeaderSearch";
+import {getWishlist} from "../../store/actions/wishlist";
 
 const HeaderDefault = () => {
     const cart = useSelector(state => state.cart.cartItems)
@@ -17,15 +18,23 @@ const HeaderDefault = () => {
     const [localLang, setLocalLang] = useState('English')
     const [currency, setCurrency] = useState('USD')
     const dispatch = useDispatch()
+    const getWishlists = useSelector(state => state.getWishlist)
+    const {loading, list, error,success} = getWishlists
+    const saveWishlists = useSelector(state => state.saveWishlist)
+    const {success: saveWishlistSuccess} = saveWishlists
     const changeLang = ({key}) => {
         setLocalLang(key)
     }
     const changeCurrency = ({key}) => {
         setCurrency(key)
     }
-const logoutHandler = () => {
-  dispatch(logout())
-}
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
+    useEffect(() => {
+            dispatch(getWishlist())
+    }, [dispatch,saveWishlistSuccess])
+
     const LangMenu = (
         <Menu onClick={changeLang}>
             <Menu.Item key="English">
@@ -87,10 +96,10 @@ const logoutHandler = () => {
                                 <div className="header-inner-end text-md-end">
                                     <div className="ovic-menu-wrapper ovic-menu-wrapper-2">
                                         <ul>
-                                            <li><a href="about.html">About Us</a></li>
-                                            <li><a href="contact.html">Order Tracking</a></li>
-                                            <li><a href="contact.html">Contact Us</a></li>
-                                            <li><a href="faq.html">FAQs</a></li>
+                                            <li><a href="#">About Us</a></li>
+                                            <li><a href="#">Order Tracking</a></li>
+                                            <li><a href="#">Contact Us</a></li>
+                                            <li><a href="#">FAQs</a></li>
                                             {userInfo && (
                                                 <li className="pointer" onClick={logoutHandler}><span>logout</span></li>
                                                 )}
@@ -148,10 +157,12 @@ const logoutHandler = () => {
                                     </div>
 
                                     <div className="block-wishlist action">
-                                        <Link  to="/wishlist" className="icon-link icon-link-2">
-                                            <BsHeart className="flaticon-heart" />
-                                            <span className="count count-2">0</span><span
-                                        className="text"><span className="sub">Favorite</span>My Wishlist </span></Link>
+                                        <Link to="/user/wishlist" className="icon-link icon-link-2">
+                                            <BsHeart className="flaticon-heart"/>
+                                            <span
+                                                className="count count-2">{list && list.length >0 ?list.length: 0}</span><span
+                                            className="text"><span
+                                            className="sub">Favorite</span>My Wishlist </span></Link>
                                     </div>
                                     <div className="block-cart action"><Link to='/cart' className="icon-link icon-link-2">
 
@@ -221,20 +232,20 @@ const logoutHandler = () => {
             <div className="header__bottom d-none d-lg-block">
                 <div className="container-fluid">
                         <div className="box-items-inner pt-10 pb-10">
-                            <div className="box-item"><a href="shop.html"><BsLaptop/>Laptop <br/>&amp; Computer </a>
+                            <div className="box-item"><a href="#"><BsLaptop/>Laptop <br/>&amp; Computer </a>
                             </div>
-                            <div className="box-item"><a href="shop.html"><BsPhone/>Tablets <br/>&amp; Mobile Phones
+                            <div className="box-item"><a href="#"><BsPhone/>Tablets <br/>&amp; Mobile Phones
                             </a></div>
-                            <div className="box-item"><a href="shop.html"><BsWifi2/>Digitals <br/>&amp; Electronics </a>
+                            <div className="box-item"><a href="#"><BsWifi2/>Digitals <br/>&amp; Electronics </a>
                             </div>
-                            <div className="box-item"><a href="shop.html"><BsCamera/>Camera <br/>&amp; Accesories </a>
+                            <div className="box-item"><a href="#"><BsCamera/>Camera <br/>&amp; Accesories </a>
                             </div>
-                            <div className="box-item"><a href="shop.html"><IoBedOutline/>Decor <br/>&amp; Furniture </a>
+                            <div className="box-item"><a href="#"><IoBedOutline/>Decor <br/>&amp; Furniture </a>
                             </div>
-                            <div className="box-item"><a href="shop.html"><IoShirtOutline/>Fashion <br/>&amp; Clotheing
+                            <div className="box-item"><a href="#"><IoShirtOutline/>Fashion <br/>&amp; Clotheing
                             </a></div>
                             <div className="box-item d-lg-none d-xl-block"><a
-                                href="shop.html"><AiOutlineAudio/>Audio <br/>&amp; Headphones </a></div>
+                                href="#"><AiOutlineAudio/>Audio <br/>&amp; Headphones </a></div>
                         </div>
                     </div>
             </div>
