@@ -89,7 +89,6 @@ export const getUserDetail = () => {
             type: 'USER_PROFILE_REQUEST'
         })
         const config = {
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${userInfo.token}`
         }
         getUserProfileApi(config).then(data => {

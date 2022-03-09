@@ -13,7 +13,7 @@ const persistConfig = {
         'coupon','userUpdateProfile','orderMyList',
         'orderPay','userList','userDelete','userDetail',
         'saveCart','orderDetails','getCartsToCheckout',
-        'removeWishlist','saveWishlist'
+        'removeWishlist','saveWishlist','getWishlist'
     ]
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)

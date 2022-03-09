@@ -7,8 +7,9 @@ export const profile = (state = {user: {}}, action) => {
             return {...state, loading: true}
         case 'USER_PROFILE_SUCCESS':
             return {
-                loading: false,
-                user: payload
+                loading: true,
+                user: payload,
+                success:true
             }
         case 'USER_PROFILE_FAIL':
             return {loading: false, error: payload}
