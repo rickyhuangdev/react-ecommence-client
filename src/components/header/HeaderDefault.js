@@ -10,7 +10,7 @@ import {removeItemFromCart} from "../../store/actions/cart";
 import {logout} from "../../store/actions/login";
 import HeaderSearch from "../form/HeaderSearch";
 import {getWishlist} from "../../store/actions/wishlist";
-
+import logo from '../../assets/images/logo.png'
 const HeaderDefault = () => {
     const cart = useSelector(state => state.cart.cartItems)
     const loginInfo = useSelector(state => state.login)
@@ -120,7 +120,8 @@ const HeaderDefault = () => {
                                 <div className="header__info header__info-2">
                                     <div className="logo logo-3">
                                       <Link to='/' className="logo-image">
-                                            <img src="http://v.bootstrapmb.com/2022/2/lu57m12063/assets/img/logo/logo1.svg" alt="logo" />
+                                            {/*<img src={logo} alt="logo" />*/}
+                                          Market
                                       </Link>
                                     </div>
                                     <div className="side-menu mr-20">

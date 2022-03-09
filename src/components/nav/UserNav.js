@@ -38,9 +38,6 @@ const UserNav = () => {
                     </li>
                     <li className="list-group-item"><Link to="/user/profile"><UserOutlined className="mr-2"/>Profile
                         Info</Link></li>
-                    <li className="list-group-item"><Link to="/user/address"><HomeOutlined
-                        className="mr-2"/>Addresses</Link>
-                    </li>
                     <li className="list-group-item"><a type="button" onClick={()=>{dispatch(logout())}}><LoginOutlined className="mr-2"/>Log
                         Out</a></li>
                 </ul>

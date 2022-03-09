@@ -15,7 +15,7 @@ const SliderArea = () => {
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
-        dots:true,
+        dots:false,
         autoplay: true,
     };
     return (

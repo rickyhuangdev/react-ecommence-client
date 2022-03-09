@@ -29,7 +29,14 @@
 /*    right: -35px;*/
 /*    content: "";*/
 /*}*/
-
+.logo-image{
+    font-size: 40px;
+}
+@media screen and (max-width:500px ){
+    .logo{
+        padding-left: 0px!important;
+    }
+}
 .header-inner-start .s-name span {
     color: #fff;
     font-size: 14px;
@@ -107,7 +114,9 @@
     justify-content: space-between;
     align-items: center;
 }
-
+.logo{
+    padding-left: 50px;
+}
 .logo-3 .logo-image img {
     width: 180px;
 }

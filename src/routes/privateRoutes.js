@@ -9,7 +9,7 @@ import Address from "../pages/user/address";
 const privateRoutes = [
     {
         path: '/user',
-        component: Dashboard,
+        component: Order,
         exact: true,
         role: 'user',
         backUrl:'/login'
@@ -29,33 +29,13 @@ const privateRoutes = [
         backUrl:'/login'
     },
     {
-        path: '/user/password',
-        component: Password,
-        exact: true,
-        role: 'user',
-        backUrl:'/login'
-    },
-    {
         path: '/user/profile',
         component: Profile,
         exact: true,
         role: 'user',
         backUrl:'/login'
     },
-    {
-        path: '/user/payment',
-        component: Payment,
-        exact: true,
-        role: 'user',
-        backUrl: '/login'
-    },
-    {
-        path: '/user/address',
-        component: Address,
-        exact: true,
-        role: 'user',
-        backUrl: '/login'
-    },
+
 
 ]
 export default privateRoutes

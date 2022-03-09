@@ -17,6 +17,7 @@ import Footer from "./components/nav/footer";
 import HeaderDefault from "./components/header/HeaderDefault";
 import {getUserProfile, setUser} from "./store/actions/profile";
 import {getUserProfileApi} from "./api/user";
+import NotFound from "./pages/NotFound";
 
 
 function App(props) {
@@ -64,6 +65,8 @@ function App(props) {
                         )
                     }
 
+                        <Route path="/404" component={NotFound} />
+                        <Route path="*" component={NotFound} />
                     </Switch>
 
                 </main>

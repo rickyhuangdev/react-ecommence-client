@@ -18,12 +18,12 @@ const Footer = () => {
                                             <div className="footer__widget-content">
                                                 <div className="footer__link">
                                                     <ul>
-                                                        <li><a href="faq.html">New Customers</a></li>
-                                                        <li><a href="faq.html">How to use Account</a></li>
-                                                        <li><a href="faq.html">Placing an Order</a></li>
-                                                        <li><a href="faq.html">Payment Methods</a></li>
-                                                        <li><a href="faq.html">Delivery &amp;Dispatch</a></li>
-                                                        <li><a href="faq.html">Problems with Order</a></li>
+                                                        <li><a href="#">New Customers</a></li>
+                                                        <li><a href="#">How to use Account</a></li>
+                                                        <li><a href="#">Placing an Order</a></li>
+                                                        <li><a href="#">Payment Methods</a></li>
+                                                        <li><a href="#">Delivery &amp;Dispatch</a></li>
+                                                        <li><a href="#">Problems with Order</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -35,11 +35,11 @@ const Footer = () => {
                                             <div className="footer__widget-content">
                                                 <div className="footer__link">
                                                     <ul>
-                                                        <li><a href="faq.html">Help Center</a></li>
-                                                        <li><a href="faq.html">Contact Us</a></li>
-                                                        <li><a href="faq.html">Report Abuse</a></li>
-                                                        <li><a href="faq.html">Submit a Dispute</a></li>
-                                                        <li><a href="faq.html">Policies &amp;Rules</a></li>
+                                                        <li><a href="#">Help Center</a></li>
+                                                        <li><a href="#">Contact Us</a></li>
+                                                        <li><a href="#">Report Abuse</a></li>
+                                                        <li><a href="#">Submit a Dispute</a></li>
+                                                        <li><a href="#">Policies &amp;Rules</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -58,14 +58,14 @@ const Footer = () => {
                                                         <div className="footer__widget-content">
                                                             <div className="footer__link">
                                                                 <ul>
-                                                                    <li><a href="faq.html">Product Support</a></li>
-                                                                    <li><a href="checkout.html">Checkout</a></li>
-                                                                    <li><a href="cart.html">Shopping Cart</a></li>
-                                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                                    <li><a href="#">Product Support</a></li>
+                                                                    <li><a href="#">Checkout</a></li>
+                                                                    <li><a href="#">Shopping Cart</a></li>
+                                                                    <li><a href="#">Wishlist</a></li>
                                                                     <li><a
-                                                                        href="faq.html">Terms &amp;Conditions &amp;</a>
+                                                                        href="#">Terms &amp;Conditions &amp;</a>
                                                                     </li>
-                                                                    <li><a href="faq.html">Redeem Voucher</a></li>
+                                                                    <li><a href="#">Redeem Voucher</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -77,10 +77,10 @@ const Footer = () => {
                                                         <div className="footer__widget-content">
                                                             <div className="footer__link">
                                                                 <ul>
-                                                                    <li><a href="contact.html">Store Location</a></li>
-                                                                    <li><a href="my-account.html">My account</a></li>
-                                                                    <li><a href="contact.html">Order Tracking</a></li>
-                                                                    <li><a href="faq.html">FAQs</a></li>
+                                                                    <li><a href="#">Store Location</a></li>
+                                                                    <li><a href="#">My account</a></li>
+                                                                    <li><a href="#">Order Tracking</a></li>
+                                                                    <li><a href="#">FAQs</a></li>
                                                                 </ul>
                                                             </div>
                                                         </div>
@@ -106,7 +106,7 @@ const Footer = () => {
                                                     <div className="footer__info">
                                                         <ul>
                                                             <li><span>Add:<a target="_blank"
-                                                                             href="https://goo.gl/maps/c82DDZ8ALvL878Bv8">Walls Street 68,Mahattan,New York,USA</a></span>
+                                                                             href="#">Lorem ipsum dolor sit.</a></span>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -125,30 +125,30 @@ const Footer = () => {
                             <div className="row">
                                 <div className="col-xl-12">
                                     <div className="footer__links text-center mb-25">
-                                        <p><a href="faq.html">Online
+                                        <p><a href="#">Online
                                         Shopping</a>
-                                            <a href="faq.html">Promotions</a>
-                                            <a href="faq.html">My Orders</a>
-                                            <a href="faq.html">Help</a>
-                                            <a href="faq.html">Customer Service</a>
-                                            <a href="faq.html">Support</a>
-                                            <a href="faq.html">Most Populars</a>
-                                            <a href="faq.html">New Arrivals</a>
-                                            <a href="faq.html">Special Products </a>
-                                            <a href="faq.html">Manufacturers</a>
+                                            <a href="#">Promotions</a>
+                                            <a href="#">My Orders</a>
+                                            <a href="#">Help</a>
+                                            <a href="#">Customer Service</a>
+                                            <a href="#">Support</a>
+                                            <a href="#">Most Populars</a>
+                                            <a href="#">New Arrivals</a>
+                                            <a href="#">Special Products </a>
+                                            <a href="#">Manufacturers</a>
                                             <br/>
-                                                <a href="faq.html">Garden Equipments</a>
-                                                <a href="faq.html">Powers And Hand Tools </a>
-                                                <a href="faq.html">Utensil &amp;Gadget </a>
-                                                <a href="faq.html">Printers</a>
-                                                <a href="faq.html">Projectors</a>
-                                                <a href="faq.html">Scanners</a>
-                                                <a href="faq.html">Store</a>
-                                                <a href="faq.html">Business</a>
+                                                <a href="#">Garden Equipments</a>
+                                                <a href="#">Powers And Hand Tools </a>
+                                                <a href="#">Utensil &amp;Gadget </a>
+                                                <a href="#">Printers</a>
+                                                <a href="#">Projectors</a>
+                                                <a href="#">Scanners</a>
+                                                <a href="#">Store</a>
+                                                <a href="#">Business</a>
                                             </p></div>
-                                    <div className="payment-image text-center mb-25"><a href="contact.html"><img
+                                    <div className="payment-image text-center mb-25"><a href="#"><img
                                         src={payment} alt="" /></a></div>
-                                    <div className="copy-right-area text-center"><p>Copyright © <span>DukaMarket.</span>All
+                                    <div className="copy-right-area text-center"><p>Copyright © <span>Market.</span>All
                                         Rights Reserved. Powered By <a
                                             href="#">RickyHuangDev</a></p></div>
                                 </div>
