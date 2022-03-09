@@ -1,4 +1,3 @@
-import {saveOrderToDBApi} from "../../api/order";
 import {createWishlistApi, deleteWishlistByIdApi, getUserWishlistApi} from "../../api/user";
 
 export const saveWishlist = (id) => {
@@ -37,11 +36,11 @@ export const getWishlist = () => {
         dispatch({
             type: 'GET_WISHLIST_REQUEST'
         })
-        getUserWishlistApi( config).then(data => {
-                dispatch({
-                    type: 'GET_WISHLIST_SUCCESS',
-                    payload: data
-                })
+        getUserWishlistApi(config).then(data => {
+            dispatch({
+                type: 'GET_WISHLIST_SUCCESS',
+                payload: data
+            })
 
         }).catch(error => {
             dispatch({
@@ -56,7 +55,6 @@ export const deleteWishlist = (id) => {
     return async (dispatch,getState) => {
         const {userInfo} = getState().login
         const config = {
-            'Content-Type': 'application/json',
             'Authorization': `Bearer ${userInfo.token}`
         }
         dispatch({

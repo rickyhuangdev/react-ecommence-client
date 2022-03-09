@@ -18,13 +18,14 @@ export const saveWishlistReducer = (state = {}, action) => {
     }
 }
 
-export const getWishlistReducer = (state = {list:[]}, action) => {
+export const getWishlistReducer = (state = {}, action) => {
     const {type, payload} = action
     switch (type) {
         case 'GET_WISHLIST_REQUEST':
             return {loading: true, success: false}
         case 'GET_WISHLIST_SUCCESS':
             return {
+                ...state,
                 loading: false,
                 success: true,
                 list: payload

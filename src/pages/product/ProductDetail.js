@@ -32,7 +32,7 @@ const ProductDetail = ({match}) => {
     const history = useHistory()
     useEffect(() => {
         dispatch(getProductDetail(slug))
-        if (product.ratings && userInfo) {
+        if (product&&product.ratings && userInfo) {
             let existingRatingObject = product.ratings.find(
                 (ele) => ele.postedBy === userInfo._id
             );
