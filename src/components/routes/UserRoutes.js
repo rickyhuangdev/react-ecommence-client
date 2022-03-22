@@ -7,22 +7,22 @@ const UserRoutes = ({children, ...rest}) => {
     const loginInfo = useSelector(state => state.login)
     const {userInfo} = loginInfo
     const [islogin, setIslogin] = useState(false)
-    useEffect(() => {
-        if (userInfo) {
-            const config = {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userInfo.token}`
-            }
-            getUserProfileApi(config).then(re => {
-                if (re) {
-                    setIslogin(true)
-                } else {
-                    setIslogin(false)
-                }
-            })
-        }
-    }, [])
-    return userInfo && islogin ? (
+    // useEffect(() => {
+    //     if (userInfo) {
+    //         const config = {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${userInfo.token}`
+    //         }
+    //         getUserProfileApi(config).then(re => {
+    //             if (re) {
+    //                 setIslogin(true)
+    //             } else {
+    //                 setIslogin(false)
+    //             }
+    //         })
+    //     }
+    // }, [])
+    return userInfo ? (
         <Route {...rest} render={() => children}/>) : (
         <Redirect to="/login?redirect=user"></Redirect>
     )

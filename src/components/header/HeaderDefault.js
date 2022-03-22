@@ -10,7 +10,7 @@ import {removeItemFromCart} from "../../store/actions/cart";
 import {logout} from "../../store/actions/login";
 import HeaderSearch from "../form/HeaderSearch";
 import {getWishlist} from "../../store/actions/wishlist";
-import logo from '../../assets/images/logo.png'
+
 const HeaderDefault = () => {
     const cart = useSelector(state => state.cart.cartItems)
     const loginInfo = useSelector(state => state.login)
@@ -32,7 +32,10 @@ const HeaderDefault = () => {
         dispatch(logout())
     }
     useEffect(() => {
+        if (userInfo) {
             dispatch(getWishlist())
+        }
+
     }, [dispatch,saveWishlistSuccess])
 
     const LangMenu = (
@@ -213,7 +216,6 @@ const HeaderDefault = () => {
                                                     {cart && cart.length > 0 ?(
                                                     <li>
                                                         <Link to='/cart' className="btn btn-warning mb-10 text-white w-100 shadow-1 mb-2">View cart</Link>
-                                                        <Link to='/checkout' className="btn btn-info w-100 shadow-0">Checkout</Link>
                                                     </li>
                                                     ):(
                                                         <li className="d-flex align-items-center">

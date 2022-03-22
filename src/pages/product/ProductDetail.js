@@ -33,6 +33,7 @@ const ProductDetail = ({match}) => {
     const dispatch = useDispatch()
     const history = useHistory()
     useEffect(() => {
+        console.log(slug)
         dispatch(getProductDetail(slug))
         if (product && product.ratings && userInfo) {
             let existingRatingObject = product.ratings.find(
@@ -46,10 +47,6 @@ const ProductDetail = ({match}) => {
                 type: 'SAVE_WISHLIST_RESET'
             })
         }
-        if (Object.keys(product).length > 0 || saveWishlistSuccess) {
-            console.log(filterWishList())
-        }
-
     }, [match, dispatch, history, saveWishlistSuccess])
     const filterWishList = () => {
         return product && list && list.some(item => {
@@ -57,17 +54,7 @@ const ProductDetail = ({match}) => {
         })
 
     }
-    // const getProductDetail = () => {
-    //     readProductApi(slug).then(res => {
-    //         if (res) {
-    //             setProduct(res)
-    //             setImageSlider(res.images)
-    //             getRelativeProductApi(res._id).then(res => {
-    //                 setRelativeProduct(res)
-    //             })
-    //         }
-    //     })
-    // }
+
     const onChange = (e) => {
         setQty(e)
     }
